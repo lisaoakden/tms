@@ -1,14 +1,14 @@
 user_list = [ 
-	{ name: "MuiNV", email: "mui@framgia.com", password_digest: "123456" },
-	{ name: "OanhLK", email: "oanh@framgia.com", password_digest: "123456" },
-	{ name: "KhanhCD", email: "khanh@framgia.com", password_digest: "123456" },
-	{ name: "QuanNT", email: "quan@framgia.com", password_digest: "123456" },
-	{ name: "VuLD", email: "vu@framgia.com", password_digest: "123456" },
-	{ name: "CongHD", email: "cong@framgia.com", password_digest: "123456" },
-	{ name: "TamDT", email: "tam@framgia.com", password_digest: "123456" },
-	{ name: "DungDT", email: "dung@framgia.com", password_digest: "123456" },
-	{ name: "ChuyenVV", email: "chuyen@framgia.com", password_digest: "123456" },
-	{ name: "HoangTN", email: "hoang@framgia.com", password_digest: "123456" }
+	{ name: "MuiNV", email: "mui@framgia.com", password: "123456", password_confirmation: "123456" },
+	{ name: "OanhLK", email: "oanh@framgia.com", password: "123456", password_confirmation: "123456" },
+	{ name: "KhanhCD", email: "khanh@framgia.com", password: "123456", password_confirmation: "123456" },
+	{ name: "QuanNT", email: "quan@framgia.com", password: "123456", password_confirmation: "123456" },
+	{ name: "VuLD", email: "vu@framgia.com", password: "123456", password_confirmation: "123456" },
+	{ name: "CongHD", email: "cong@framgia.com", password: "123456", password_confirmation: "123456" },
+	{ name: "TamDT", email: "tam@framgia.com", password: "123456", password_confirmation: "123456" },
+	{ name: "DungDT", email: "dung@framgia.com", password: "123456", password_confirmation: "123456" },
+	{ name: "ChuyenVV", email: "chuyen@framgia.com", password: "123456", password_confirmation: "123456" },
+	{ name: "HoangTN", email: "hoang@framgia.com", password: "123456", password_confirmation: "123456" }
 ]
 user_list.each do |user|
   User.create!(user)
