@@ -1,0 +1,7 @@
+<h1>Users#show</h1>
+<p>Find me in app/views/users/show.html.erb</p>
+<% if signed_in? %>
+  <%= link_to "Sign out", signout_path, method: "delete" %>
+<% else %>
+  <li><%= link_to "Sign in", signin_path %></li>
+<% end %>
