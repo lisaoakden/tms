@@ -1,2 +1,2 @@
-class Enrollment_subject < ActiveRecord::Base
+class EnrollmentSubject < ActiveRecord::Base
 end
