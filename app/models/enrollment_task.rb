@@ -1,2 +1,2 @@
-class Enrollment_task < ActiveRecord::Base
+class EnrollmentTask < ActiveRecord::Base
 end

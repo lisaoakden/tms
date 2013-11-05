@@ -1,2 +1,2 @@
-class Customer_course < ActiveRecord::Base
+class CustomerCourse < ActiveRecord::Base
 end
