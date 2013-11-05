@@ -1,11 +1,37 @@
-
-  <h1>Users#show</h1>
-  <p>Find me in app/views/users/show.html.erb</p>
-  <% if current_user? @user %>
-  	<%= link_to "Sign out", signout_path, method: "delete" %>
-  	<% unless @user.enrollments.first.activation? %>
-    	<br>
-    	<%= button_to "Start Course", activation_path, method: :post, class: "btn btn-large btn-primary" %>
-    <% end %>
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h1><%= @user.name %></h1>
+      <h2>
+        email: <%= @user.email %>
+        <%= form_for(@user) do |f| %>
+          <%= f.submit "Edit Profile", class: "btn btn-primary" %>
+        <% end %>
+      </h2>
+    </section>
+  </aside>
+</div>
+<div class="span8">
+  <% if @subjects.any? %>
+    <h3> Subjects (<%= @subjects.count %>)</h3>
+    <ul class="activities">
+      <% @subjects.each do |subject| %>
+        <li>
+          <%= subject.name %>
+          <h2> Started at: <%= subject.start_date %> ,
+            <%= subject.enrollment_tasks.where(status: "done").count %> /
+            <%= subject.enrollment_tasks.count %> tasks done
+            <%= subject.status %> 
+          </h2>  
+        </li>
+      <% end %>
+    </ul>
+    <%= will_paginate @subjects %>
   <% end %>
+</div>
 
+<%= link_to "Sign out", signout_path, method: "delete" %>
+<% unless @user.enrollments.first.activation? %>
+  <br>
+<%= button_to "Start Course", activation_path, method: :post, class: "btn btn-large btn-primary" %>
+<% end %>
