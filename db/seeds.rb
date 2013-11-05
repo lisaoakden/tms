@@ -130,7 +130,3 @@ ensub.each { |es|
 	}
 }
 
-(1..10).each do |num|
-	Activity.create!( user_id: u[num].id, message:"start new course", time: "1-10-2013")
-	Activity.create!( user_id: u[num].id, message:"reading chapter", time: "1-10-2013")
-end

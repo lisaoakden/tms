@@ -5,6 +5,7 @@ class UsersController < ApplicationController
 
   def show
     @subjects = @user.have_subjects.paginate page: params[:page], per_page: 3
+    @activities = current_user.activities
     if signed_in?
       render :show
     else
@@ -18,7 +19,9 @@ class UsersController < ApplicationController
   def update
     if @user.update_attributes(user_params)
       flash[:success] = "Profile updated"
+      user_edit(@user.id)
       redirect_to @user
+
     else
       render :edit
     end
@@ -28,6 +31,10 @@ class UsersController < ApplicationController
     @user = User.find(params[:id], include: :enrollments)
     enrollment = @user.enrollments.choose_current_course(@user.current_course_id).first
     unless enrollment.blank? || enrollment.activation?
+    # use .first because at the moment we consider that each trainee only has 1 course
+    # in future need to add column current_course :boolean to improve this function
+    user_enroll(@user.id,enrollment.course_id)
+    # need exception to improve but I do not know it yet
       enrollment.toggle! :activation
       enrollment.course.course_subjects.each do |subject|
         subject_name = Subject.find(subject.subject_id).name
@@ -41,6 +48,10 @@ class UsersController < ApplicationController
       end
     end
     redirect_to @user
+  end
+
+  def start_course
+
   end
 
   def create
@@ -59,12 +70,19 @@ class UsersController < ApplicationController
     end
   end
 
-  def correct_user
-    @user = User.find params[:id]
-    redirect_to root_url unless current_user?(@user)
-  end 
-
   def load_object
     @user = User.find params[:id]
+  end
+  def correct_user
+    @user = User.find params[:id]
+    redirect_to root_url unless current_user? @user
+  end 
+
+  def user_enroll user_id,course_id
+    Activity.create! user_id: user_id,course_id: course_id, temp_type: 1
+  end
+
+  def user_edit user_id
+    Activity.create! user_id: user_id, temp_type: 2
   end
 end

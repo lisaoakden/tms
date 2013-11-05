@@ -1,11 +1,4 @@
 <% provide(:title, "Home") %>
-<header class="navbar navbar-fixed-top navbar-inverse">
-  <div class="navbar-inner">
-    <div class="container">
-      <%= link_to "Framgia TMS", root_path, id: "logo" %>
-    </div>
-  </div>
-</header>
  <% if signed_in? %>
  <h1>welcome <%= current_user.courses.first.name %></h1>
   <section>
@@ -13,6 +6,9 @@
   </section>
   <section>
     <%= render "review_subject" %>
+  </section>
+  <section>
+    <%= render "shared/activities" %>
   </section>
   <% else %>
 <div class="container">

@@ -11,8 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131106041217) do
+ActiveRecord::Schema.define(version: 20131106022052) do
 
+  create_table "activities", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "course_id"
+    t.integer  "subject_id"
+    t.integer  "task_id"
+    t.integer  "temp_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
   create_table "conclusions", force: true do |t|
     t.integer "enrollment_id",           null: false
     t.string  "content",   limit: 4, null: false
@@ -67,8 +76,8 @@ ActiveRecord::Schema.define(version: 20131106041217) do
   add_index "enrollment_tasks", ["enrollment_subject_id"], name: "fk_Subject_idx", using: :btree
 
   create_table "enrollments", force: true do |t|
-    t.integer  "user_id",                     null: false
-    t.integer  "course_id",                   null: false
+    t.integer  "user_id",     null: false
+    t.integer  "course_id",   null: false
     t.datetime "joined_date"
     t.boolean  "activation",  default: false
     t.integer "active_flag",               null: 1
@@ -105,13 +114,4 @@ ActiveRecord::Schema.define(version: 20131106041217) do
 
   add_index "users", ["email"], name: "email_UNIQUE", unique: true, using: :btree
   add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
-
-  create_table "activities", force: true do |t|
-    t.integer "user_id",            null: false
-    t.string  "message",            limit: 45, null: false
-    t.datetime  "time",             null: false
-    t.integer "active_flag",        null: 1
-  end
-
-  add_index "activities", ["user_id"], name: "fk_Users_idx", using: :btree
 end
