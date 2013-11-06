@@ -1,0 +1,6 @@
+<% if @user.enrollments.choose_current_course(@user.current_course_id).first %>
+  <% unless @user.enrollments.choose_current_course(@user.current_course_id).first.activation? %>
+  	<br>
+  	<%= button_to "Start Course", activate_user_path, method: :post, class: "btn btn-large btn-primary" %>
+  <% end %>
+<% end %>

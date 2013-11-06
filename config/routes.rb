@@ -1,6 +1,9 @@
 Tms::Application.routes.draw do
-
-  resources :users
+  resources :users do
+    member do
+      post :activate
+    end
+  end
   resources :sessions, only: [:new, :create, :destroy]
   resources :enrollment_subjects
 
@@ -8,9 +11,7 @@ Tms::Application.routes.draw do
 
   match "/signin",  to: "sessions#new",         via: "get"
   match "/signout", to: "sessions#destroy",     via: "delete"
-  match "/users/:id/activate", to: "users#start_course", as: "activation",  via: "post"
 
-  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
