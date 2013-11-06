@@ -3,7 +3,9 @@
   <p>Find me in app/views/users/show.html.erb</p>
   <% if current_user? @user %>
   	<%= link_to "Sign out", signout_path, method: "delete" %>
-    <br>
-    <button class="btn btn-large btn-primary"> Start Course </button>
+  	<% unless @user.enrollments.first.activation? %>
+    	<br>
+    	<%= button_to "Start Course", activation_path, method: :post, class: "btn btn-large btn-primary" %>
+    <% end %>
   <% end %>
 
