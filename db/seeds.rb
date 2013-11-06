@@ -26,10 +26,10 @@ course_list.each do |user|
 end
 
 subject_list = [
-	{ name: "Ruby on Rails", description: "abc123" },
-	{ name: "Git", description: "abc123" },
-	{ name: "MySQL", description: "abc123" },
-	{ name: "PHP", description: "abc123" }
+	{ name: "Ruby on Rails", description: "abc123", start_date: "1-10-2013", end_date: "15-10-2013"},
+	{ name: "Git", description: "abc123", start_date: "15-10-2013", end_date: "25-10-2013" },
+	{ name: "MySQL", description: "abc123", start_date: "25-10-2013", end_date: "1-11-2013" },
+	{ name: "PHP", description: "abc123", start_date: "1-11-2013", end_date: "15-11-2013" }
 ]
 
 subject_list.each do |subject|
@@ -118,7 +118,7 @@ enrollment = Enrollment.all
 subject = Subject.all
 enrollment.each { |er|
 	subject.each { |sb|
-		EnrollmentSubject.create!(enrollment_id: er.id, name: sb.name, status: "new" )
+		EnrollmentSubject.create!(enrollment_id: er.id, name: sb.name, status: "new", start_date: sb.start_date )
 	}
 }
 
@@ -130,4 +130,7 @@ ensub.each { |es|
 	}
 }
 
-
+(1..10).each do |num|
+	Activity.create!( user_id: u[num].id, message:"start new course", time: "1-10-2013")
+	Activity.create!( user_id: u[num].id, message:"reading chapter", time: "1-10-2013")
+end

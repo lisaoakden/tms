@@ -1,3 +1,3 @@
 class EnrollmentTask < ActiveRecord::Base
-	belongs_to :enroll_subject
+	belongs_to :enrollment_subject
 end
