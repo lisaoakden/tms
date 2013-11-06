@@ -1,8 +1,9 @@
 class User < ActiveRecord::Base
   has_secure_password
-
+  has_many :enrollment_subjects, through: :enrollments
 	has_many :enrollments, dependent: :destroy
   has_many :activites
+  has_many :courses, through: :enrollments
   has_many :have_subjects, through: :enrollments, source: :enrollment_subjects
 
 	before_save {self.email = email.downcase}

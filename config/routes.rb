@@ -2,6 +2,7 @@ Tms::Application.routes.draw do
 
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
+  resources :enrollment_subjects
 
   root "static_pages#home"
 
