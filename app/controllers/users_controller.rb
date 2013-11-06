@@ -24,13 +24,10 @@ class UsersController < ApplicationController
     end
   end
 
-  def start_course
+  def activate
     @user = User.find(params[:id], include: :enrollments)
     enrollment = @user.enrollments.choose_current_course(@user.current_course_id).first
-    # use .first because at the moment we consider that each trainee only has 1 course
-    # in future need to add column current_course :boolean to improve this function
-    unless enrollment.activation?
-    # need exception to improve but I do not know it yet
+    unless enrollment.blank? || enrollment.activation?
       enrollment.toggle! :activation
       enrollment.course.course_subjects.each do |subject|
         subject_name = Subject.find(subject.subject_id).name

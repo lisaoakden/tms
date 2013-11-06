@@ -26,14 +26,10 @@
         </li>
       <% end %>
     </ul>
+    <% end %>
     <%= will_paginate @subjects %>
+  <% if current_user? @user %>
+  	<%= link_to "Sign out", signout_path, method: "delete" %>
+  	<%= render "activate" %>
   <% end %>
 </div>
-
-<%= link_to "Sign out", signout_path, method: "delete" %>
-<% unless @user.enrollments.first.activation? %>
-  <br>
-  <% if current_user? @user %>
-    <%= button_to "Start Course", activation_path, method: :post, class: "btn btn-large btn-primary" %>
-  <% end %>
-<% end %>
