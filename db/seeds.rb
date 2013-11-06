@@ -1,14 +1,14 @@
 user_list = [ 
-	{ name: "MuiNV", email: "mui@framgia.com", password: "123456", password_confirmation: "123456" },
-	{ name: "OanhLK", email: "oanh@framgia.com", password: "123456", password_confirmation: "123456" },
-	{ name: "KhanhCD", email: "khanh@framgia.com", password: "123456", password_confirmation: "123456" },
-	{ name: "QuanNT", email: "quan@framgia.com", password: "123456", password_confirmation: "123456" },
-	{ name: "VuLD", email: "vu@framgia.com", password: "123456", password_confirmation: "123456" },
-	{ name: "CongHD", email: "cong@framgia.com", password: "123456", password_confirmation: "123456" },
-	{ name: "TamDT", email: "tam@framgia.com", password: "123456", password_confirmation: "123456" },
-	{ name: "DungDT", email: "dung@framgia.com", password: "123456", password_confirmation: "123456" },
-	{ name: "ChuyenVV", email: "chuyen@framgia.com", password: "123456", password_confirmation: "123456" },
-	{ name: "HoangTN", email: "hoang@framgia.com", password: "123456", password_confirmation: "123456" }
+	{ name: "MuiNV", email: "mui@framgia.com", password: "123456", password_confirmation: "123456", current_course_id: 1},
+	{ name: "OanhLK", email: "oanh@framgia.com", password: "123456", password_confirmation: "123456", current_course_id: 2 },
+	{ name: "KhanhCD", email: "khanh@framgia.com", password: "123456", password_confirmation: "123456", current_course_id: 1 },
+	{ name: "QuanNT", email: "quan@framgia.com", password: "123456", password_confirmation: "123456", current_course_id: 1 },
+	{ name: "VuLD", email: "vu@framgia.com", password: "123456", password_confirmation: "123456", current_course_id: 1 },
+	{ name: "CongHD", email: "cong@framgia.com", password: "123456", password_confirmation: "123456", current_course_id: 1 },
+	{ name: "TamDT", email: "tam@framgia.com", password: "123456", password_confirmation: "123456", current_course_id: 1 },
+	{ name: "DungDT", email: "dung@framgia.com", password: "123456", password_confirmation: "123456", current_course_id: 1 },
+	{ name: "ChuyenVV", email: "chuyen@framgia.com", password: "123456", password_confirmation: "123456", current_course_id: 1 },
+	{ name: "HoangTN", email: "hoang@framgia.com", password: "123456", password_confirmation: "123456", current_course_id: 1 }
 ]
 user_list.each do |user|
   User.create!(user)
@@ -88,7 +88,7 @@ e = Array.new(11)
 end
 
 (1..10).each do |num|
-	Conclusion.create!(enroll_id: e[num].id, content: "fail", comment: "anfdfdf dfdfd g")
+	Conclusion.create!(enrollment_id: e[num].id, content: "fail", comment: "anfdfdf dfdfd g")
 end
 
 c = Array.new(5) 
@@ -110,7 +110,7 @@ coursesubjects = CourseSubject.all
 tasks = Task.all
 coursesubjects.each { |cs|
 	tasks.each { |task|
-		CustomCourse.create!(course_sub_id: cs.id, task_id: task.id)
+		CustomCourse.create!(course_subject_id: cs.id, task_id: task.id)
 	}
 }
 
@@ -118,7 +118,7 @@ enrollment = Enrollment.all
 subject = Subject.all
 enrollment.each { |er|
 	subject.each { |sb|
-		EnrollmentSubject.create!(enroll_id: er.id, name: sb.name, status: "new" )
+		EnrollmentSubject.create!(enrollment_id: er.id, name: sb.name, status: "new" )
 	}
 }
 
@@ -126,7 +126,7 @@ ensub = EnrollmentSubject.all
 task = Task.all
 ensub.each { |es|
 	task.each { |ta|
-		EnrollmentTask.create!(enroll_subject_id: es.id, name: ta.name, status: "new")
+		EnrollmentTask.create!(enrollment_subject_id: es.id, name: ta.name, status: "new")
 	}
 }
 
