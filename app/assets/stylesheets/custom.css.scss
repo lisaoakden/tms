@@ -1,5 +1,27 @@
 @import "bootstrap";
 
+/* Varible definitions */
+$site_width: 940px;
+
+$color_black: #333538;
+$color_white: #fffcf5;
+$color_link_hover: #3498db;
+$color_primary_button: #2269b7;
+$color_primary_button_hover: #5489c4;
+$color_separator: #34495e;
+$color_mil_new: #51b11d;
+$color_mil_finished: #bdc3c7;
+
+$font_title: "Ubuntu", "Segoe UI";
+$font_paragraph: "Helvetica", "Arial";
+
+/* Mixin definitions */
+@mixin box_sizing {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
 /* universal */
 
 html {
@@ -26,7 +48,6 @@ textarea {
   margin-bottom: 10px;
 }
 
-
 /* typography */
 
 h1, h2, h3, h4, h5, h6 {
@@ -34,19 +55,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 3em;
+  font-size: 36px;
+  font-family: $font_title;
   letter-spacing: -2px;
   margin-bottom: 30px;
   text-align: center;
+  font-weight: normal;
 }
 
 h2 {
-  font-size: 1.2em;
-  letter-spacing: -1px;
-  margin-bottom: 30px;
-  text-align: center;
+  font-size: 20px;
+  font-family: $font_title;
+  margin-bottom: 20px;
   font-weight: normal;
-  color: #999;
 }
 
 p {
@@ -54,31 +75,237 @@ p {
   line-height: 1.7em;
 }
 
+a:hover {
+  text-decoration: none;
+  color: $color_link_hover ;
+}
+
 /* header */
+
+.navbar-inverse .navbar-inner {
+  background-color: $color_black;
+  background-image: none;
+  border-color: $color_black;
+}
 
 #logo {
   float: left;
-  margin-right: 10px;
-  font-size: 1.7em;
+  margin: 5px 0 0 10px;
+  font-size: 20px;
   color: #fff;
-  text-transform: uppercase;
   letter-spacing: -1px;
   padding-top: 9px;
-  font-weight: bold;
   line-height: 1;
+  font-family: $font_title;
 }
 
 #logo:hover {
-  color: #fff;
+  color: $color_white;
   text-decoration: none;
 }
 
-.activitiess {
-  list-style: none;
-  margin: 10px 0 0 0;
+.logo-img {
+  float: left;
+  width: 40px;
+  height: 40px;
+  margin: 5px 0;
+}
 
-  li {
-    padding: 10px 0;
-    border-top: 1px solid #e8e8e8;
+.navbar .nav {
+  margin-top: 5px;
+}
+
+.navbar-inverse .nav li.dropdown.open > .dropdown-toggle {
+  background-color: $color_black;
+}
+
+.navbar .nav > li {
+  border-left: 1px solid $color_separator;
+}
+
+.navbar .nav > li:last-child {
+  border-right: 1px solid $color_separator;
+}
+
+.navbar .nav > li a {
+  text-transform: uppercase;
+  font-size: 13px;
+  font-family: $font_title;
+}
+
+.navbar .pull-right > li > .dropdown-menu {
+  top: 50px;
+}
+
+/* footer */
+
+footer {
+  margin: 35px 0 10px 0;
+  padding-top: 5px;
+  border-top: 1px solid $color_black;
+  color: $color_black;
+  clear: both;
+  text-align: center;
+}
+
+footer a {
+  color: #555;
+}
+
+footer a:hover {
+  color: #222;
+}
+
+footer small {
+  line-height: 15px;
+}
+
+/* forms */
+
+input, textarea, select, .uneditable-input {
+  border: 1px solid #bbb;
+  width: 100%;
+  margin-bottom: 15px;
+  @include box_sizing;
+}
+
+input {
+  height: auto !important;
+}
+
+.btn-primary {
+  text-shadow: none;
+  background-image: none;
+  color: $color_white;
+  background-color: $color_primary_button;
+  border-radius: 0;
+  border: none;
+  font-family: $font_title;
+  font-size: 15px;
+  text-transform: uppercase;
+
+  &:hover, &:focus {
+    background-color: $color_primary_button_hover;
   }
+}
+
+#error_explanation {
+  color: #f00;
+  ul {
+    list-style: none;
+    margin: 0 0 18px 0;
+  }
+}
+
+.field_with_errors {
+  @extend .control-group;
+  @extend .error;
+}
+
+/* List - index */
+
+.list-wrap {
+  list-style: none;
+  margin: 0;
+  li {
+    overflow: auto;
+    padding: 10px 0 20px 0;
+    border-top: 1px solid $color_black;
+    display: inline;
+    float: left;
+    width: 48%;
+    margin-left: 15px;
+  }
+}
+
+.list-wrap.in-profile {
+  li {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+
+.list-item-avatar {
+  overflow: auto;
+  margin-top: 10px;
+  width: 60px;
+  height: 60px;
+  float: left;
+}
+
+.list-item-info {
+  float: left;
+  margin: 20px 0 0 20px;
+}
+
+.pagination {
+  clear: both;
+}
+
+/* User */
+
+.user-avatar {
+  overflow: auto;
+  margin-top: 10px;
+  width: 60px;
+  height: 60px;
+  float: left;
+}
+
+.user-info {
+  float: left;
+  margin: 20px 0 0 20px;
+  .object-type {
+    color: $grayLight;
+  }
+}
+
+a.dangerous-link {
+  color: #e74c3c;
+}
+
+/* Home page */
+h1.home-welcome {
+  margin-top: 20px;
+}
+
+/* Milestones */
+
+.milestones-wrap {
+  text-align: center;
+}
+
+ul.milestones {
+  width: 620px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+ul.milestones li {
+  height: 90px;
+  width: 90px;
+  padding: 5px;
+  display: inline-block;
+  vertical-align: top;
+  background-color: $color_mil_new;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  font-size: 13px;
+  margin-bottom: 10px;
+
+  .milestone-name {
+    font-weight: bold;
+    height: 70px;
+  }
+}
+
+ul.milestones li.finished {
+  background-color: $color_mil_finished;
+}
+
+/* body paragraph */
+.container p {
+  padding: 0 10px;
 }
