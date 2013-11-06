@@ -4,8 +4,8 @@
       <h1><%= @user.name %></h1>
       <h2>
         email: <%= @user.email %>
-        <%= form_for(@user) do |f| %>
-          <%= f.submit "Edit Profile", class: "btn btn-primary" %>
+        <% if current_user? @user %>
+          <%= button_to "Edit Profile", edit_user_path, method: :get, class: "btn btn-primary" %>
         <% end %>
       </h2>
     </section>
@@ -33,5 +33,7 @@
 <%= link_to "Sign out", signout_path, method: "delete" %>
 <% unless @user.enrollments.first.activation? %>
   <br>
-<%= button_to "Start Course", activation_path, method: :post, class: "btn btn-large btn-primary" %>
+  <% if current_user? @user %>
+    <%= button_to "Start Course", activation_path, method: :post, class: "btn btn-large btn-primary" %>
+  <% end %>
 <% end %>

@@ -1,14 +1,26 @@
 class UsersController < ApplicationController
   before_action :signed_in_user, only: [:index, :edit, :update, :show]
   before_action :correct_user,   only: [:edit, :update]
+  before_action :load_object,    only: [:show, :edit, :update]
 
   def show
-  	@user = User.find params[:id]
     @subjects = @user.have_subjects.paginate page: params[:page], per_page: 3
     if signed_in?
       render :show
     else
       redirect_to root_url
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    if @user.update_attributes(user_params)
+      flash[:success] = "Profile updated"
+      redirect_to @user
+    else
+      render :edit
     end
   end
 
@@ -38,18 +50,24 @@ class UsersController < ApplicationController
   end
 
   private
-    def user_params
-      params.require(:user)
-        .permit(:name, :email, :password, :password_confirmation)
-    end
+  def user_params
+    params.require(:user)
+      .permit(:name, :password, :password_confirmation)
+  end
 
-    def signed_in_user
-      redirect_to signin_url, notice: "Please sign in." unless signed_in?
-      
+  def signed_in_user
+    unless signed_in?
+      store_location!
+      redirect_to signin_url, notice: "Please sign in."
     end
+  end
 
-    def correct_user
-      @user = User.find params[:id]
-      redirect_to root_url unless current_user?(@user)
-    end 
+  def correct_user
+    @user = User.find params[:id]
+    redirect_to root_url unless current_user?(@user)
+  end 
+
+  def load_object
+    @user = User.find params[:id]
+  end
 end
