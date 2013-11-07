@@ -1,23 +1,4 @@
 <% provide(:title, "Home") %>
- <% if signed_in? %>
- <h1>welcome <%= current_user.courses.first.name %></h1>
-  <section>
-    <%= render "user_subject" %>
-  </section>
-  <section>
-    <%= render "review_subject" %>
-  </section>
-  <section>
-    <%= render "shared/activities" %>
-  </section>
-  <% else %>
-<div class="container">
-  <div class="center hero-unit">
-<h1>Welcome to Framgia TMS</h1>
-  <h2>
-    Please sign in to work on your course
-  </h2>
-		  <%= link_to "Sign in", signin_path, class: "btn btn-large btn-primary" %>
-	</div>
-</div>
-<% end %>
+
+<%= render signed_in? ? "general_instruction" : "welcome" %>
+

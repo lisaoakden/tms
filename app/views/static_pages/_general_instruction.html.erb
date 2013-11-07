@@ -1,0 +1,26 @@
+<h1>Your course: <%= course_name(@current_user.current_course_id).name %></h1>
+
+<h2>Course Progress</h2>
+
+<ul class="milestones">
+	<% @enrollment_subjects.each do |enrollment_subjects| %>
+	<li class="<%= enrollment_subjects.status %>"
+		title="Started on <%= enrollment_subjects.start_date.strftime("%d/%m/%Y") %>">
+		
+		<div class="milestone-name">
+			<%= link_to enrollment_subjects.name, enrollment_subjects %>
+		</div>
+		<div class="milestone-status"><a href="#">✓</a></div>
+		<div class="line-linkage">
+		</div>
+	</li>
+	<% end %>
+</ul>
+
+<h2>Course Introduction</h2>
+
+<p>All data in this page is hard-coded, and will be filled with dynamic data later.</p>
+
+<p>Welcome to the Ruby on Rails Tutorial. The goal of this book is to be the best answer to the question, “If I want to learn web development with Ruby on Rails, where should I start?” By the time you finish the Ruby on Rails Tutorial, you will have all the skills you need to develop and deploy your own custom web applications with Rails. You will also be ready to benefit from the many more advanced books, blogs, and screencasts that are part of the thriving Rails educational ecosystem. Finally, since the Ruby on Rails Tutorial uses Rails 4, the knowledge you gain here represents the state of the art in web development. (The most up-to-date version of the Ruby on Rails Tutorial can be found on the book’s website at http://railstutorial.org/; if you are reading this book offline, be sure to check the online version of the Rails Tutorial book at http://railstutorial.org/book for the latest updates.)</p>
+
+<p>(Note: The present volume is the Rails 4.0 version of the book, which means that it has been revised to be compatible with Rails 4.0, but it is not yet a new edition because the changes in Rails don’t yet justify it. From the perspective of an introductory tutorial, the differences between Rails 4.0 and the previous version, Rails 3.2, are slight. Indeed, although there are a large number of miscellaneous small changes (Box 1.1), for our purposes there is only one significant difference, a new security technique called strong parameters, covered in Section 7.3.2. Once the changes in Rails justify the effort, I plan to prepare a full new edition of the Rails Tutorial, including coverage of topics such as Turbolinks and Russian doll caching, as well as some new aspects of RSpec, such as feature specs.)</p>
