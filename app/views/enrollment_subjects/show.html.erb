@@ -1,8 +1,33 @@
 <h1><%= @enrollment.course.name %></h1>
 <h1><%= @enrollment_subject.name %></h1>
 <% if current_user? @user %>
+  <div class="row">
+      <div class="span6 offset3">
+        <%= form_for @enrollment_task, url: user_enrollment_enrollment_subject_path, method: :patch do |f| %>
+          <%= render "shared/error_messages" %>
+          <% @enrollment_subject.enrollment_tasks.each do |task| %>
+            <%= task.name %>
+            <% if task.task_done? %>
+              <%= check_box_tag "enrollment_task[checkbox]", task.id, true, disabled: true  %> finish<br/>
+            <% else  %>
+              <%= check_box_tag "enrollment_task[checkbox]", task.id, false,disabled: true  %> finish<br/>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  <h3>Basic information</h3>
+  <ol>
+    <section>Start date: <%= @enrollment_subject.start_date %></section>
+    <section>Status: <%= @enrollment_subject.status %></section>
+  </ol>
+  <h3>Instruction </h3>
+  <%= @subject.description %>
+  <%= @subject.name %>
+  <h3>Activity log</h3> 
+    <%= link_to "Edit Profile Subject", user_enrollment_task_list_path, class: "btn btn-primary" %>
+  </div>
+		<br>
   	<% unless @enrollment_subject.status == "done" %>
-  		<%= render "report" %>
   		<%= button_to "Finish Subject", user_enrollment_enrollment_subject_path, method: :patch, class: "btn btn-large btn-primary" %>
-  	<% end %>
 <% end %>

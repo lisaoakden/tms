@@ -5,4 +5,8 @@ class EnrollmentSubject < ActiveRecord::Base
 	def self.finish_subject subject
 		subject.update_attributes status: "done"
 	end
+	
+	def task_done?
+    self.status == "done"
+  end
 end

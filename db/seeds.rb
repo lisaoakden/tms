@@ -113,20 +113,3 @@ coursesubjects.each { |cs|
 		CustomCourse.create!(course_subject_id: cs.id, task_id: task.id)
 	}
 }
-
-enrollment = Enrollment.all 
-subject = Subject.all
-enrollment.each { |er|
-	subject.each { |sb|
-		EnrollmentSubject.create!(enrollment_id: er.id, name: sb.name, status: "new", start_date: sb.start_date )
-	}
-}
-
-ensub = EnrollmentSubject.all
-task = Task.all
-ensub.each { |es|
-	task.each { |ta|
-		EnrollmentTask.create!(enrollment_subject_id: es.id, name: ta.name, status: "done")
-	}
-}
-
