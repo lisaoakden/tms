@@ -1,0 +1,32 @@
+<h3>Users Activities </h3>
+    <ul>
+      <% @activities.each do |activitie| %>
+    <li>
+      <%= link_to user_name(activitie.user_id).name, user_name(activitie.user_id) %>
+      <% case activitie.temp_type %>
+      <% when 1 %>
+        Start Course 
+        <%= link_to course_name(activitie.course_id).name, course_name(activitie.course_id) %>
+      <% when 2 %>
+        Edit profile
+      <% when 3 %>
+        Finish task
+        <%= link_to task_name(activitie.task_id).name,task_name(activitie.task_id) %>
+        Subject
+        <%= link_to subject_name(activitie.subject_id).name,subject_name(activitie.subject_id) %>
+        Course
+        <%= link_to course_name(activitie.course_id).name, course_name(activitie.course_id) %>
+      <% when 4 %>
+        Finish Subject
+        <%= link_to task_name(activitie.task_id).name,task_name(activitie.task_id) %>
+        <%= link_to subject_name(activitie.subject_id).name,subject_name(activitie.subject_id) %>
+            Course
+        <%= link_to course_name(activitie.course_id).name, course_name(activitie.course_id) %>
+      <% when 5 %>
+        Finish Course
+        <%= link_to course_name(activitie.course_id).name, course_name(activitie.course_id) %>
+      <% end %>
+        <%= time_ago_in_words activitie.created_at %> ago
+     <% end %>
+    </li>
+  </ul>

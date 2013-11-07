@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   has_secure_password
   has_many :enrollment_subjects, through: :enrollments
 	has_many :enrollments, dependent: :destroy
-  has_many :activites
+  has_many :activities
   has_many :courses, through: :enrollments
   has_many :have_subjects, through: :enrollments, source: :enrollment_subjects
 
