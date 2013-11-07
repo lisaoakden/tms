@@ -1,7 +1,13 @@
 Tms::Application.routes.draw do
+  get "enrollment_subjects/show"
+  get "courses/show"
+  get "subjects/show"
   resources :users do
     member do
       post :activate
+    end
+    resources :enrollments do
+      resources :enrollment_subjects
     end
   end
   resources :courses

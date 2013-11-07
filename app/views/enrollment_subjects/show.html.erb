@@ -1,0 +1,9 @@
+<h1><%= @enrollment.course.name %></h1>
+<h1><%= @enrollment_subject.name %></h1>
+<% if current_user? @user %>
+		Subject status: <%= @enrollment_subject.status %>
+		<br>
+  	<% unless @enrollment_subject.status == "done" %>
+  		<%= button_to "Finish Subject", user_enrollment_enrollment_subject_path, method: :patch, class: "btn btn-large btn-primary" %>
+  	<% end %>
+<% end %>

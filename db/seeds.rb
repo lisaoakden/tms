@@ -126,7 +126,7 @@ ensub = EnrollmentSubject.all
 task = Task.all
 ensub.each { |es|
 	task.each { |ta|
-		EnrollmentTask.create!(enrollment_subject_id: es.id, name: ta.name, status: "new")
+		EnrollmentTask.create!(enrollment_subject_id: es.id, name: ta.name, status: "done")
 	}
 }
 
