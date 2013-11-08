@@ -3,12 +3,11 @@
 <h2>Course Progress</h2>
 
 <ul class="milestones">
-	<% @enrollment_subjects.each do |enrollment_subjects| %>
-	<li class="<%= enrollment_subjects.status %>"
-		title="Started on <%= enrollment_subjects.start_date.strftime("%d/%m/%Y") %>">
-		
+	<% @enrollment_subjects.each do |enrollment_subject| %>
+	<li class="<%= enrollment_subject.status %>" 
+			title="<%= get_start_date(enrollment_subject) %>">
 		<div class="milestone-name">
-			<%= link_to enrollment_subjects.name, enrollment_subjects %>
+			<%= link_to enrollment_subject.name, enrollment_subject %>
 		</div>
 		<div class="milestone-status"><a href="#">✓</a></div>
 		<div class="line-linkage">

@@ -371,7 +371,7 @@ ul.milestones li {
     opacity: 1;
   }
 
-  &:last-child {
+  &:last-child, &:nth-child(6n) {
     .line-linkage {
       display: none;
     }
