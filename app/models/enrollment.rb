@@ -3,7 +3,6 @@ class Enrollment < ActiveRecord::Base
   belongs_to :course
   has_many :conclusions 
   has_many :enrollment_subjects
-
   class << self 
     def activate! enrollment
     	enrollment.toggle! :activation
