@@ -1,0 +1,18 @@
+<ul>
+	<h3>Your <%= @enrollment_subject.name %></h3>
+		<% @enrollment_task = EnrollmentTask.where(enrollment_subject_id: @enrollment_subject.enrollment_id).each do |eroll| %>
+			<li>
+				<%= eroll.name%><br/> 
+				Finish <%= check_box "", eroll.status %>
+			</li>
+		<% end %>
+	<h3>Basic information</h3>
+	<ol>
+		<section>Start date: <%= @enrollment_subject.start_date %></section>
+		<section>Status: <%= @enrollment_subject.status %></section>
+	</ol>
+	<h3>Instruction </h3>
+	<%= @subject.description %>
+	<%= @subject.name %>
+	<h3>Activity log</h3>	
+</ul>

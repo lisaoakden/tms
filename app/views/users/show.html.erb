@@ -17,12 +17,12 @@
     <ul class="activities">
       <% @subjects.each do |subject| %>
         <li>
-          <%= subject.name %>
-          <h2> Started at: <%= subject.start_date %> ,
+          <h2><%= link_to subject.name, user_enrollment_enrollment_subject_path(@user.id, subject.enrollment_id, subject.id) %></h2>
+          <p> Started at: <%= subject.start_date %> ,
             <%= subject.enrollment_tasks.where(status: "done").count %> /
             <%= subject.enrollment_tasks.count %> tasks done
             <%= subject.status %> 
-          </h2>  
+          </p>
         </li>
       <% end %>
     </ul>
@@ -30,7 +30,6 @@
     <%= will_paginate @subjects %>
     <% if current_user? @user %>
     <%= render "shared/activities" %>
-  	<%= link_to "Sign out", signout_path, method: "delete" %>
   	<%= render "activate" %>
   <% end %>
 </div>
