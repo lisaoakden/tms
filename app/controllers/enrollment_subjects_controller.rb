@@ -42,7 +42,7 @@ class EnrollmentSubjectsController < ApplicationController
   end
 
   def current_enrollment? enrollment
-  	current_enrollment = @user.enrollments.choose_current_course(@user.current_course_id).take!
+  	current_enrollment = @user.enrollments.find_by course_id: @user.current_course_id
   	enrollment.id == current_enrollment.id
   end
 
