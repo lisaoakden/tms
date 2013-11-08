@@ -49,8 +49,4 @@ class EnrollmentSubjectsController < ApplicationController
   def current_subject? enrollment_subject
   	enrollment_subject.enrollment_id == @enrollment.id
   end
-
-  def enrollment_activation? enrollment
-  	enrollment.activation
-  end
 end
