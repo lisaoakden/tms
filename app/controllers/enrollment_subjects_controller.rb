@@ -8,7 +8,8 @@ class EnrollmentSubjectsController < ApplicationController
   end
 
   def show
-    @subject = Subject.where(name: @enrollment_subject.name).take!
+    @subject = Subject.find_by name: @enrollment_subject.name
+    @enrollment_task = @enrollment_subject.enrollment_tasks.build
   end
 
   def update

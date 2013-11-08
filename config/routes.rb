@@ -5,6 +5,7 @@ Tms::Application.routes.draw do
   resources :users do
     resources :enrollments do
       resources :enrollment_subjects
+      resources :task_lists
     end
   end
   resources :courses
