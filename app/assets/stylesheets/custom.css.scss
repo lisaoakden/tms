@@ -64,8 +64,13 @@ h1 {
 h2 {
   font-size: 20px;
   font-family: $font_title;
-  margin-bottom: 20px;
+  margin: 30px 0;
   font-weight: normal;
+}
+
+h3 {
+  font-size: 16px;
+  margin: 15px 0 10px 0;
 }
 
 p {
@@ -119,16 +124,17 @@ a:hover {
 
 .navbar .nav > li {
   border-left: 1px solid $color_separator;
-}
 
-.navbar .nav > li:last-child {
-  border-right: 1px solid $color_separator;
-}
+  a {
+    text-transform: uppercase;
+    font-size: 13px;
+    font-family: $font_title;
+  }
 
-.navbar .nav > li a {
-  text-transform: uppercase;
-  font-size: 13px;
-  font-family: $font_title;
+  &:last-child {
+    border-right: 1px solid $color_separator;
+  }
+
 }
 
 .navbar .pull-right > li > .dropdown-menu {
@@ -189,6 +195,14 @@ input {
   }
 }
 
+.btn-primary.small {
+  text-transform: capitalize;
+  font-weight: bold;
+  font-size: 11px;
+  margin: 0 0 2px 5px;
+  padding: 0 7px;
+}
+
 #error_explanation {
   color: #f00;
   ul {
@@ -241,9 +255,14 @@ input {
 
 .pagination {
   clear: both;
+  text-align: center;
 }
 
 /* User */
+
+.user-info-wrap {
+  margin: 10px 0;
+}
 
 .user-avatar {
   overflow: auto;
@@ -255,9 +274,57 @@ input {
 
 .user-info {
   float: left;
-  margin: 20px 0 0 20px;
-  .object-type {
-    color: $grayLight;
+  margin: 10px 0 0 20px;
+
+  h1 {
+    font-size: 28px;
+    margin: 0;
+    display: inline-block;
+    vertical-align: bottom;
+  }
+
+  .user-desc {
+    font-style: italic;
+    margin-top: 5px;
+  }
+
+  form {
+    margin: 0;
+    display: inline-block;
+  }
+}
+
+/* Subject list */
+.subject-list {
+  clear:both ;
+  margin: 0;
+
+  ul {
+    list-style: none;
+    margin-bottom: 20px;
+
+    li {
+      position: relative;
+      
+      .subject-status {
+        text-transform: uppercase;
+        font-weight: bold;
+        position: absolute;
+        text-align: center;
+        width: 100px;
+        font-size: 11px;
+        @include border-radius(5px);
+        top: 0;
+        right: 0;
+        background-color: $color_mil_new;
+        color: $color_black;
+      }
+
+      .subject-status.done {
+        background-color: $color_mil_finished;
+        color: $color_white;
+      }
+    }
   }
 }
 
@@ -296,6 +363,7 @@ ul.milestones li.done {
 ul.milestones li {
   display: inline-block;
   width: 150px;
+  margin-bottom: 10px;
 
   .milestone-name {
     position: relative;
@@ -305,7 +373,7 @@ ul.milestones li {
     background: $color_white;
     @include border_radius(5px);
     border: 1px solid $color_black;
-    margin: 0 auto;
+    margin: 10px auto 0;
 
     &:after {
       content: '';
@@ -380,6 +448,16 @@ ul.milestones li {
 
 /* body paragraph */
 .container p {
-  padding: 0 10px;
+  font-size: 14px;
+  padding: 0 25px;
   text-align: justify;
+}
+
+/* Activities */
+ul.activities {
+  opacity: 0.8;
+  font-size: 12px;
+  li {
+    margin-bottom: 10px;
+  }
 }
