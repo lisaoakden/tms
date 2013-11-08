@@ -1,5 +1,7 @@
 <% if @enrollment %>
   <% if @enrollment.activation? %>
+  	<% @intro_toggle_btn_value = "Show" %>
+  	<% @intro_display = "none" %>
   	<ul class="milestones">
 			<% @enrollment_subjects.each do |subject| %>
 			<li class="<%= subject.status %>" 
@@ -7,13 +9,18 @@
 				<div class="milestone-name">
 					<%= link_to subject.name, user_enrollment_enrollment_subject_path(current_user.id, subject.enrollment_id, subject.id) %>
 				</div>
-				<div class="milestone-status"></div>
+				<div class="milestone-status">
+					<%= link_to "✓", user_enrollment_enrollment_subject_path(current_user.id, 
+						subject.enrollment_id, subject.id) %>
+				</div>
 				<div class="line-linkage">
 				</div>
 			</li>
 			<% end %>
 		</ul>	
   <% else %>
+  	<% @intro_toggle_btn_value = "Hide" %>
+  	<% @intro_display = "block" %>
   	<%= button_to "Start Course", user_enrollment_path(current_user.id,@enrollment.id), method: :patch, class: "btn btn-large btn-primary" %>
   <% end %>
 <% end %>
