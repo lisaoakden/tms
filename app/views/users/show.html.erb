@@ -35,7 +35,7 @@
     <div class="span4">
       <h2>Activity log</h2>
       <% if current_user? @user %>
-        <%= render "shared/activities" %>
+        <%= render "shared/all_activities" %>
         <%= will_paginate @activities %>
       <% end %>
     </div>

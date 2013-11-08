@@ -14,7 +14,7 @@ end
 
 # Use Sass with Bootstrap
 gem 'bootstrap-sass', '2.3.2.0'
-
+gem "rails_config"
 # Pagination
 gem 'will_paginate', '3.0.4'
 # Configure will_paginate to use Bootstrap's pagination styles

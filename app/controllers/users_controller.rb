@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 
   def show
     @subjects = @user.have_subjects
-    @activities = current_user.activities.paginate page: params[:page], per_page: 10
+    @activities = current_user.activities.order_desc_created_at.paginate page: params[:page], per_page: 10
     if signed_in?
       render :show
     else
@@ -19,7 +19,7 @@ class UsersController < ApplicationController
   def update
     if @user.update_attributes(user_params)
       flash[:success] = "Profile updated"
-      user_edit(@user.id)
+      Activity.user_edit! @user.id
       redirect_to @user
     else
       render :edit
@@ -49,12 +49,4 @@ class UsersController < ApplicationController
     @user = User.find params[:id]
     redirect_to root_url unless current_user? @user
   end 
-
-  def user_enroll user_id,course_id
-    Activity.create! user_id: user_id,course_id: course_id, temp_type: 1
-  end
-
-  def user_edit user_id
-    Activity.create! user_id: user_id, temp_type: 2
-  end
 end
