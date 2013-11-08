@@ -2,7 +2,13 @@ class EnrollmentSubjectsController < ApplicationController
 	before_action :signed_in_user
 	before_action :create_objects, only: [:show, :update]
 
+  def index
+    @user = User.find params[:user_id]
+    @enrollment = Enrollment.find params[:enrollment_id]
+  end
+
   def show
+    @subject = Subject.where(name: @enrollment_subject.name).take!
   end
 
   def update
