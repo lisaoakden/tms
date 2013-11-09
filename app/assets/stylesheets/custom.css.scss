@@ -10,7 +10,7 @@ $color_link_hover: #3498db;
 $color_primary_button: #2269b7;
 $color_primary_button_hover: #5489c4;
 $color_separator: #34495e;
-$color_mil_new: #ecf0f1;
+$color_mil_new: #bdc3c7;
 $color_mil_hover: #74c14a;
 $color_mil_finished: #51b11d;
 
@@ -425,7 +425,7 @@ ul.milestones li {
     a {
       color: $color_mil_finished;
       font-size: 30px;
-    }
+    }    
   }
 
   .line-linkage {
@@ -435,6 +435,71 @@ ul.milestones li {
     position: relative;
     top: -26px;
     left: 100px;
+    z-index: -1000;
+    opacity: 1;
+  }
+
+  &:last-child, &:nth-child(6n) {
+    .line-linkage {
+      display: none;
+    }
+  }
+}
+
+/* task */
+
+ul.tasks li.done {
+  background-color: $color_mil_new;
+  opacity: $mil_finished_opacity;
+
+  .task-status {
+    visibility: visible;
+    color: $color_mil_finished;
+    font-size: 75px;
+    position: absolute;
+    bottom: 15px;
+    left: 45px;
+    opacity: $mil_finished_opacity;
+  }
+
+  .line-linkage {
+    border: 1px solid $color_mil_finished;
+    top: -25px;
+  }
+}
+
+ul.tasks li {
+  width: 90px;
+  height: 90px;
+  display: inline-block;
+  background-color: $color_mil_finished;
+  @include border-radius(5px);
+  margin: 0 20px 10px;
+  padding: 5px;
+  text-align: center;
+  vertical-align: top;
+  position: relative;
+
+  .task-name {
+    height: 70px;
+    color: $color_white;
+    font-size: 13px;
+    font-family: $font_title;
+    font-weight: bold;
+    text-transform: capitalize;
+  }
+
+  .task-status {
+    visibility: hidden;
+  }
+
+  .line-linkage {
+    width: 40px;
+    height: 0px;
+    border: 2px dashed $color_mil_new;
+    position: relative;
+    top: -45px;
+    left: 95px;
     z-index: -1000;
     opacity: 1;
   }
