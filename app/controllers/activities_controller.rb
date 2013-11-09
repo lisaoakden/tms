@@ -3,7 +3,7 @@ class ActivitiesController < ApplicationController
   end
   
   def show
-  	@activities = current_user.activities
+  	@activities = current_user.activities.order_desc_created_at
   	if signed_in?
   		render :show
   	else

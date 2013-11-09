@@ -13,8 +13,10 @@ class TaskListsController < ApplicationController
       finish_tasks = EnrollmentTask.find params[:enrollment_task][:finish]
       finish_tasks.each do |task|
       	task.update_attributes status: "done"
+        
         flash[:success] = "Updated"
       end
+
     end
     redirect_to user_enrollment_enrollment_subject_path(params[:user_id], params[:enrollment_id], params[:id])
   end
