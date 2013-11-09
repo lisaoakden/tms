@@ -1,9 +1,21 @@
 <h1>Your course: <%= current_course.name %></h1>
 
 <h2>Course Progress</h2>
-
+<ul class="milestones">
+			<% @enrollment_subjects.each do |enrollment_subject| %>
+			<li class="<%= enrollment_subject.status %>" 
+					title="<%= enrollment_subject.subject.duration.to_s + " days" %>">
+				<div class="milestone-name">
+					<%= link_to enrollment_subject.subject.name, user_enrollment_enrollment_subject_path(@current_user, @enrollment, enrollment_subject) %>
+				</div>
+				<div class="milestone-status"></div>
+				<div class="line-linkage">
+				</div>
+			</li>
+			<% end %>
+		</ul>	
 <div class="center">
-	<%= render "activate" %>
+<%= render "activate" %>
 </div>
 
 <h2>Course Introduction
