@@ -10,6 +10,7 @@ class EnrollmentSubjectsController < ApplicationController
   def show
     @subject = @enrollment_subject.subject
     @enrollment_task = @enrollment_subject.enrollment_tasks
+    @activities = current_user.activities.activities_subject @subject.id
   end
 
   def update

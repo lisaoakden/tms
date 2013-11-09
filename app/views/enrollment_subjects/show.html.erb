@@ -1,32 +1,34 @@
-<h1><%= @enrollment.course.name %></h1>
 <h1><%= @enrollment_subject.subject.name %></h1>
+<%= render "shared/error_messages" %>
 <% if current_user? @user %>
-  <div class="row">
-      <div class="span6 offset3">
-        <%= form_for([@current_user, @enrollment, @enrollment_subject]) do |f| %>
-          <%= render "shared/error_messages" %>
-          <% @enrollment_subject.enrollment_tasks.each do |enrollment_tasks| %>
-            <%= enrollment_tasks.task.name %>
-            <% if enrollment_tasks.task_done? %>
-              <%= f.check_box "enrollment_task[checkbox]", enrollment_tasks.task.id, true, disabled: true  %> finish<br/>
-            <% else  %>
-            <% end %>
-          <% end %>
-        <% end %>
-      </div>
+  <h2>Subject progress</h2>
+  <ul class="tasks">
+    <% @enrollment_subject.enrollment_tasks.each do |enrollment_tasks| %>
+      <li class="<%= enrollment_tasks.status %>">
+        <div class="task-name"><%= enrollment_tasks.task.name %></div>
+        <div class="task-status">
+          <% if enrollment_tasks.task_done? %>
+          <%= f.check_box "enrollment_task[checkbox]", enrollment_tasks.task.id, true, disabled: true  %> finish<br/>
+          <% end %>✓
+        </div>
+        <div class="line-linkage">
+        </div>
+      </li>
     <% end %>
-  <h3>Basic information</h3>
-  <ol>
-    <section>Start date: <%= @enrollment_subject.start_date %></section>
-    <section>Status: <%= @enrollment_subject.status %></section>
-  </ol>
-  <h3>Instruction </h3>
-  <%= @subject.description %>
-  <%= @subject.name %>
-  <h3>Activity log</h3> 
-    <%= link_to "Edit Profile Subject", user_enrollment_task_list_path, class: "btn btn-primary" %>
+  </ul>
+
+  <div class="center">
+    <%= link_to "Subject Report", user_enrollment_task_list_path,
+    class: "btn btn-large btn-primary" %>
   </div>
-		<br>
-  	<% unless @enrollment_subject.status == "done" %>
-  		<%= button_to "Finish Subject", user_enrollment_enrollment_subject_path, method: :patch, class: "btn btn-large btn-primary" %>
+
+  <h2>Basic information</h2>
+  <p>Subject <%= get_start_date(@enrollment_subject) %></p>
+
+  <h2>Instruction </h2>
+  <p><%= @subject.description %></p>
+
+  <h2>Activity log</h2>
+  <%= render "shared/activities" %>
+
 <% end %>
