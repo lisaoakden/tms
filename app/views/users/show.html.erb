@@ -12,18 +12,20 @@
   </div>
 </div>
 <div class="span7 subject-list">
-  <% if @subjects.any? %>
-  <h2> Subjects (<%= @subjects.count %>)</h2>
+  <% if @enrollment_subjects.any? %>
+  <h2> Subjects (<%= @enrollment_subjects.count %>)</h2>
   <ul>
-    <% @subjects.each do |subject| %>
+    <% @enrollment_subjects.each do |enrollment_subject| %>
     <li>
-      <h3 class="subject-name"><%= link_to subject.name, user_enrollment_enrollment_subject_path(@user.id,
-        subject.enrollment_id, subject.id) %></h3>
-        <p> <%= get_start_date subject %>,
-          <b><%= subject.enrollment_tasks.done_status.count %> /
-            <%= subject.enrollment_tasks.count %></b> tasks done
-          </p>
-          <div class="subject-status <%= subject.status %>"><%= subject.status %>
+      <h3 class="subject-name"><%= link_to enrollment_subject.subject.name, user_enrollment_enrollment_subject_path(@user.id,
+        enrollment_subject.enrollment_id, enrollment_subject.subject.id) %></h3>
+        <p> <%= get_start_date enrollment_subject %>,
+          <b><%= enrollment_subject.enrollment_tasks.done_status.count %> /
+            <%= enrollment_subject.enrollment_tasks.count %></b> tasks done
+        </p>
+        <p>Duration: <%= enrollment_subject.subject.duration.to_s + " days" %></p>
+            <p>Expect start date:<%= enrollment_subject.start_date %></p>
+        <div class="subject-status <%= enrollment_subject.status %>"><%= enrollment_subject.status %>
           </div>
         </li>
         <% end %>

@@ -8,8 +8,8 @@ class EnrollmentSubjectsController < ApplicationController
   end
 
   def show
-    @subject = Subject.find_by name: @enrollment_subject.name
-    @enrollment_task = @enrollment_subject.enrollment_tasks.build
+    @subject = @enrollment_subject.subject
+    @enrollment_task = @enrollment_subject.enrollment_tasks
   end
 
   def update
@@ -49,9 +49,5 @@ class EnrollmentSubjectsController < ApplicationController
 
   def current_subject? enrollment_subject
   	enrollment_subject.enrollment_id == @enrollment.id
-  end
-
-  def enrollment_activation? enrollment
-  	enrollment.activation
   end
 end

@@ -4,7 +4,8 @@ class UsersController < ApplicationController
   before_action :load_object,    only: [:show, :edit, :update]
 
   def show
-    @subjects = @user.have_subjects
+    enrollment = @user.enrollments.find_by course_id: @user.current_course_id
+    @enrollment_subjects = enrollment.enrollment_subjects
     @activities = current_user.activities.paginate page: params[:page], per_page: 10
     if signed_in?
       render :show
