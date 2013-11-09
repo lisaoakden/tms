@@ -22,8 +22,9 @@ class EnrollmentSubjectsController < ApplicationController
   	end
 
   	if complete_all_tasks
-  		EnrollmentSubject.finish_subject @enrollment_subject
+  		EnrollmentSubject.finish_subject! @enrollment_subject
   		flash[:success] = "Congratulation! You have completed the " + @enrollment_subject.name + " subject"
+      Activity.finish_subject! current_user.id, current_user.current_course_id, @enrollment_subject.id
   	else
   		flash[:error] = "You need to complete all tasks before finish subject"
   	end

@@ -6,20 +6,7 @@ module UsersHelper
     gravatar_url = "https://secure.gravatar.com/avatar/#{gravatar_id}?s=#{size}"
     image_tag gravatar_url, alt: user.name, class: "gravatar"
   end
-
-  def user_name user_id
-  	@user = User.find user_id
-  end
-
-  def course_name course_id
-  	@course = Course.find course_id
-  end
-
-  def task_name task_id
-    @task = EnrollmentTask.find task_id
-  end
-
-  def subject_name subject_id
-    @subject = EnrollmentSubject.find subject_id
+  def current_course
+  	Course.find(current_user.current_course_id)
   end
 end
