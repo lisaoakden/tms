@@ -13,6 +13,7 @@ class Activity < ActiveRecord::Base
 	scope :activities_course, ->course_id, temp_type do 
     where(course_id: course_id).where.not(temp_type: temp_type)
   end
+  scope :activities_subject, ->subject_id {where subject_id: subject_id}
   class << self
     def user_enroll! user_id, course_id
       Activity.create! user_id: user_id, course_id: course_id, temp_type: START_COURSE
