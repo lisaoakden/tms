@@ -7,4 +7,5 @@ class EnrollmentSubject < ActiveRecord::Base
 	def finish_subject!
 		self.update_attributes! status: "done"
 	end
+
 end

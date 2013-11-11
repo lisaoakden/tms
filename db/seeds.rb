@@ -123,10 +123,9 @@ enrollments.each { |el|
 }
 
 enrollment_subjects = EnrollmentSubject.all
-enrollment_subjects.each { |es|
-	course_subject = es.enrollment.course.course_subjects.find_by es.subject_id
-	tasks = course_subject.course_subject_tasks
-	tasks.each { |t|
-		EnrollmentTask.create! enrollment_subject_id: es.id, subject_id: es.subject_id, task_id: t.task_id, status: "done"
-	}
-}
+enrollment_subjects.each do |es|
+	course_subject = es.enrollment.course.course_subjects.find_by subject_id: es.subject_id
+	course_subject.course_subject_tasks.each do |t|
+		EnrollmentTask.create! enrollment_subject_id: es.id, subject_id: es.subject_id, task_id: t.task_id, status: "new"
+	end
+end

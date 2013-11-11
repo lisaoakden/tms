@@ -3,8 +3,9 @@ Tms::Application.routes.draw do
   root "static_pages#home"
   resources :users do
     resources :enrollments do
-      resources :enrollment_subjects
-      resources :task_lists
+      resources :enrollment_subjects do
+        resource :task_list, only: [:show, :update]
+      end
     end
   end
   resources :courses

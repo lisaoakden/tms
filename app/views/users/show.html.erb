@@ -12,32 +12,38 @@
   </div>
 </div>
 <div class="span7 subject-list">
-  <% if @enrollment_subjects.any? %>
-  <h2> Subjects (<%= @enrollment_subjects.count %>)</h2>
-  <ul>
-    <% @enrollment_subjects.each do |enrollment_subject| %>
-    <li>
-      <h3 class="subject-name"><%= link_to enrollment_subject.subject.name, user_enrollment_enrollment_subject_path(@user.id,
-        enrollment_subject.enrollment_id, enrollment_subject.subject.id) %></h3>
-        <p> <%= get_start_date enrollment_subject %>,
-          <b><%= enrollment_subject.enrollment_tasks.done_status.count %> /
-            <%= enrollment_subject.enrollment_tasks.count %></b> tasks done
-        </p>
-        <p>Duration: <%= enrollment_subject.subject.duration.to_s + " days" %></p>
-            <p>Expect start date:<%= enrollment_subject.start_date %></p>
-        <div class="subject-status <%= enrollment_subject.status %>"><%= enrollment_subject.status %>
+  <% if @enrollment.enrollment_subjects.any? %>
+    <h2> Subjects (<%= @enrollment.enrollment_subjects.count %>)</h2>
+    <ul>
+      <% @enrollment.enrollment_subjects.each do |enrollment_subject| %>
+        <li>
+          <h3 class="subject-name">
+            <%= link_to enrollment_subject.subject.name, user_enrollment_enrollment_subject_path(@user.id,
+            enrollment_subject.enrollment_id, enrollment_subject.subject.id) %>
+          </h3>
+          <p><%= get_start_date enrollment_subject %>,
+            <strong>
+              <%= enrollment_subject.enrollment_tasks.done_status.count %>
+               /
+              <%= enrollment_subject.enrollment_tasks.count %>
+            </strong> tasks done
+          </p>
+          <p>Duration: <%= pluralize(enrollment_subject.subject.duration, "day") %>
+          </p>
+          <p>Expect start date:<%= enrollment_subject.start_date %></p>
+          <div class="subject-status <%= enrollment_subject.status %>">
+            <%= enrollment_subject.status %>
           </div>
         </li>
-        <% end %>
-      </ul>
       <% end %>
-    </div>
-    <div class="span1">
-    </div>
-    <div class="span4">
-      <h2>Activity log</h2>
-      <% if current_user? @user %>
-        <%= render "shared/all_activities" %>
-        <%= will_paginate @activities %>
-      <% end %>
-    </div>
+    </ul>
+  <% end %>
+</div>
+<div class="span1"></div>
+<div class="span4">
+  <h2>Activity log</h2>
+  <% if current_user? @user %>
+    <%= render "shared/all_activities" %>
+    <%= will_paginate @activities %>
+  <% end %>
+</div>
