@@ -14,22 +14,13 @@ class EnrollmentSubjectsController < ApplicationController
   end
 
   def update
-  	complete_all_tasks = true
-
-  	@enrollment_subject.enrollment_tasks.all.each do |task|
-  		if task.status != "done"
-  			complete_all_tasks = false
-  		end
-  	end
-
-  	if complete_all_tasks
-  		EnrollmentSubject.finish_subject! @enrollment_subject
-  		flash[:success] = "Congratulation! You have completed the " + @enrollment_subject.name + " subject"
+  	if complete_all_tasks?
+      @enrollment_subject.finish_subject! 
+      flash[:success] = "Congratulation! You have completed the  #{@enrollment_subject.subject.name} subject"
       Activity.finish_subject! current_user.id, current_user.current_course_id, @enrollment_subject.id
-  	else
-  		flash[:error] = "You need to complete all tasks before finish subject"
-  	end
-
+    else
+      flash[:error] = "You need to complete all tasks before finish subject"
+    end
   	redirect_to user_enrollment_enrollment_subject_path
   end
 
@@ -38,18 +29,20 @@ class EnrollmentSubjectsController < ApplicationController
   	@user = User.find params[:user_id]
   	@enrollment = Enrollment.find params[:enrollment_id]
   	@enrollment_subject = EnrollmentSubject.find params[:id]
-  	unless (current_user?(@user) && current_enrollment?(@enrollment) && 
-  		current_subject?(@enrollment_subject) && enrollment_activation?(@enrollment))
+  	unless current_user?(@user) && current_enrollment? && current_subject? && @enrollment.activated?
   		redirect_to @user
   	end
   end
 
-  def current_enrollment? enrollment
-  	current_enrollment = @user.enrollments.find_by course_id: @user.current_course_id
-  	enrollment.id == current_enrollment.id
+  def current_enrollment?
+    @enrollment.course_id == @user.current_course_id
   end
 
-  def current_subject? enrollment_subject
-  	enrollment_subject.enrollment_id == @enrollment.id
+  def current_subject? 
+  	@enrollment_subject.enrollment_id == @enrollment.id
+  end
+
+  def complete_all_tasks?
+    @enrollment_subject.enrollment_tasks.all?{|task| task.done?}
   end
 end

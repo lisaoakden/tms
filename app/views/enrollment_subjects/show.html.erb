@@ -3,16 +3,10 @@
 <% if current_user? @user %>
   <h2>Subject progress</h2>
   <ul class="tasks">
-    <% @enrollment_subject.enrollment_tasks.each do |enrollment_tasks| %>
-      <li class="<%= enrollment_tasks.status %>">
-        <div class="task-name"><%= enrollment_tasks.task.name %></div>
-        <div class="task-status">
-          <% if enrollment_tasks.task_done? %>
-          <%= f.check_box "enrollment_task[checkbox]", enrollment_tasks.task.id, true, disabled: true  %> finish<br/>
-          <% end %>✓
-        </div>
-        <div class="line-linkage">
-        </div>
+    <% @enrollment_subject.enrollment_tasks.each do |enrollment_task| %>
+      <li class="<%= enrollment_task.status %>">
+        <div class="task-name"><%= enrollment_task.task.name %></div>
+        <div class="line-linkage"></div>
       </li>
     <% end %>
   </ul>
@@ -30,5 +24,4 @@
 
   <h2>Activity log</h2>
   <%= render "shared/activities" %>
-
 <% end %>

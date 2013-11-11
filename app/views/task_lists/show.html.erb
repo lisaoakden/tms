@@ -1,21 +1,8 @@
 <h1><%= @enrollment.course.name %></h1>
-<h1><%= @enrollment_subject.name %></h1>
+<h1><%= @enrollment_subject.subject.name %></h1>
 <% if current_user? @user %>
   <div class="row">
       <div class="span6 offset3">
-        <%= form_for @enrollment_task, url: user_enrollment_task_list_path, method: :patch do |f| %>
-          <%= render "shared/error_messages" %>
-          <% @enrollment_subject.enrollment_tasks.each do |task| %>
-            <%= task.name %>
-            <% if task.task_done? %>
-              <%= check_box_tag "enrollment_task[checkbox]", task.id, true, disabled: true %> finish<br/>
-            <% else %>
-              <%= check_box_tag "enrollment_task[finish][]", task.id %> finish<br/>
-            <% end %>
-          <% end %>
-
-          <%= f.submit "Update", class: "btn btn-primary" %>
-        <% end %>
       </div>
     <% end %>
   </div>
