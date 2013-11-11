@@ -10,14 +10,14 @@
       Edit profile
     <% when Activity::FINISH_TASK %>
       Finish task
-      <%= activity.enrollment_task.name %>
+      <%= activity.enrollment_task.task.name %>
         Subject
-      <%= link_to activity.enrollment_subject.name, user_enrollment_enrollment_subject_path(activity.user.id, activity.enrollment_subject.enrollment_id, activity.enrollment_subject.id) %>
+      <%= link_to activity.enrollment_subject.subject.name, user_enrollment_enrollment_subject_path(activity.user.id, activity.enrollment_subject.enrollment_id, activity.enrollment_subject.id) %>
       Course
       <%= link_to  activity.course.name, activity.course %>
     <% when Activity::FINISH_SUBJECT %>
       Finish Subject
-       <%= link_to activity.enrollment_subject.name, user_enrollment_enrollment_subject_path(activity.user.id, activity.enrollment_subject.enrollment_id, activity.enrollment_subject.id) %>
+       <%= link_to activity.enrollment_subject.subject.name, user_enrollment_enrollment_subject_path(activity.user.id, activity.enrollment_subject.enrollment_id, activity.enrollment_subject.id) %>
       Course
       <%= link_to  activity.course.name, activity.course %>
     <% when Activity::FINISH_COURSE %>

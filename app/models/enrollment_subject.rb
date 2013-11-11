@@ -4,13 +4,7 @@ class EnrollmentSubject < ActiveRecord::Base
 	belongs_to :enrollment
 	belongs_to :subject
 
-	class << self
-		def finish_subject! subject
-			subject.update_attributes! status: "done"
-		end
+	def finish_subject!
+		self.update_attributes! status: "done"
 	end
-	
-	def task_done?
-    self.status == "done"
-  end
 end
