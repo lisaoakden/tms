@@ -1,4 +1,5 @@
 class Activity < ActiveRecord::Base
+  TEMP_TYPE = 2
   belongs_to :user
   belongs_to :enrollment_task, foreign_key: "task_id", class_name: "EnrollmentTask"
   belongs_to :enrollment_subject, foreign_key: "subject_id", class_name: "EnrollmentSubject"
