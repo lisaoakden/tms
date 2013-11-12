@@ -1,5 +1,5 @@
 class Enrollment < ActiveRecord::Base
-	ACTIVATED = 1
+  ACTIVATED = 1
 
   belongs_to :user
   belongs_to :course
