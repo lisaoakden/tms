@@ -8,7 +8,7 @@ class EnrollmentsController < ApplicationController
     if params[:activate] == "activate"
     	unless enrollment.blank? || enrollment.activated?
     		enrollment.update_attributes status: Enrollment::ACTIVATED
-    		Activity.user_enroll! current_user.id, enrollment.course.id
+        Activity.user_enroll! enrollment
     		redirect_to root_url
     	end
     end
@@ -17,7 +17,7 @@ class EnrollmentsController < ApplicationController
     @enrollment = current_user.enrollments
       .find_by course_id: current_user.current_course_id
     @enrollment_subjects = @enrollment.enrollment_subjects 
-    @activities = current_user.activities
+    @activities = current_user.activities.order_desc_created_at
       .activities_course current_user.current_course_id, Activity::TEMP_TYPE
   end
 

@@ -6,7 +6,6 @@ class Enrollment < ActiveRecord::Base
   
   has_many :conclusions 
   has_many :enrollment_subjects
-
   def activated?
 		self.status == ACTIVATED
 	end

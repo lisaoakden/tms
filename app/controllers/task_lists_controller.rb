@@ -9,7 +9,7 @@ class TaskListsController < ApplicationController
     if params[:task_ids]
       enrollment_tasks = @enrollment_subject.enrollment_tasks
         .find_all_by_id params[:task_ids]
-      flash[:success] = "Update successfull!" if mark_as_done enrollment_tasks
+      flash[:success] = "Update successfull!" if check_update_done! enrollment_tasks
     end
     
     redirect_to user_enrollment_enrollment_subject_path params[:user_id], 
@@ -41,5 +41,12 @@ class TaskListsController < ApplicationController
 
   def current_enrollment?
     @enrollment.course_id == @user.current_course_id
+  end
+  def check_update_done! tasks
+    if mark_as_done tasks
+      tasks.map do |task|
+        Activity.finish_task! @user, task
+      end.all?
+    end
   end
 end
