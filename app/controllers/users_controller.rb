@@ -5,9 +5,9 @@ class UsersController < ApplicationController
 
   def show
     enrollment = @user.enrollments.find_by course_id: @user.current_course_id
-    @enrollment_subjects = enrollment.enrollment_subjects
-    @subjects = @user.have_subjects
-    @activities = current_user.activities.order_desc_created_at.paginate page: params[:page], per_page: 10
+    @enrollment = @user.enrollments.find_by course_id: @user.current_course_id 
+    @activities = current_user.activities.order_desc_created_at
+      .paginate page: params[:page], per_page: Settings.items.per_page
     if signed_in?
       render :show
     else
@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   def update
     if @user.update_attributes(user_params)
       flash[:success] = "Profile updated"
-      Activity.user_edit! @user.id
+      Activity.user_edit! @user
       redirect_to @user
     else
       render :edit

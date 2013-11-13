@@ -10,14 +10,15 @@ class EnrollmentSubjectsController < ApplicationController
   def show
     @subject = @enrollment_subject.subject
     @enrollment_task = @enrollment_subject.enrollment_tasks
-    @activities = current_user.activities.activities_subject @subject.id
+    @activities = current_user.activities.order_desc_created_at
+      .activities_subject @subject.id
   end
 
   def update
   	if complete_all_tasks?
-      @enrollment_subject.finish_subject! 
+      @enrollment_subject.finish_subject!
+      Activity.finish_subject! @user, @enrollment_subject
       flash[:success] = "Congratulation! You have completed the  #{@enrollment_subject.subject.name} subject"
-      Activity.finish_subject! current_user.id, current_user.current_course_id, @enrollment_subject.id
     else
       flash[:error] = "You need to complete all tasks before finish subject"
     end
