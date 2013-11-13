@@ -53,6 +53,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
+  @include clearfix;
   font-size: 36px;
   font-family: $font_title;
   letter-spacing: -2px;
@@ -62,6 +63,7 @@ h1 {
 }
 
 h2 {
+  @include clearfix;
   font-size: 20px;
   font-family: $font_title;
   margin: 30px 0;
@@ -448,23 +450,22 @@ ul.milestones li {
 
 /* task */
 
+ul.tasks {
+  display: inline-block;
+  margin: 0 auto 10px;
+}
+
 ul.tasks li.done {
   background-color: $color_mil_new;
   opacity: $mil_finished_opacity;
 
   .task-status {
-    visibility: visible;
     color: $color_mil_finished;
-    font-size: 75px;
-    position: absolute;
-    bottom: 15px;
-    left: 45px;
-    opacity: $mil_finished_opacity;
+    margin: 0 auto;
   }
 
   .line-linkage {
     border: 1px solid $color_mil_finished;
-    top: -25px;
   }
 }
 
@@ -490,7 +491,14 @@ ul.tasks li {
   }
 
   .task-status {
-    visibility: hidden;
+    color: $color_white;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    
+    input {
+      vertical-align: top;
+    }
   }
 
   .line-linkage {
@@ -508,6 +516,18 @@ ul.tasks li {
     .line-linkage {
       display: none;
     }
+  }
+}
+
+ul.users {
+  list-style: none;
+  li {
+    overflow: auto;
+    padding-bottom: 20px;
+    display: inline;
+    float: left;
+    width: 48%;
+    margin-left: 15px;
   }
 }
 

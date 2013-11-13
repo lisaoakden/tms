@@ -11,7 +11,7 @@ class EnrollmentSubjectsController < ApplicationController
     @subject = @enrollment_subject.subject
     @enrollment_task = @enrollment_subject.enrollment_tasks
     @activities = current_user.activities.order_desc_created_at
-      .activities_subject @subject.id
+      .activities_subject @enrollment_subject.id
   end
 
   def update
