@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   def update
     if @user.update_attributes(user_params)
       flash[:success] = "Profile updated"
-      Activity.user_edit! @user.id
+      Activity.user_edit! @user
       redirect_to @user
     else
       render :edit
