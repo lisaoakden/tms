@@ -10,3 +10,7 @@
   -webkit-border-radius: $size;
   border-radius: $size;
 }
+
+@mixin clearfix {
+	clear: both;
+}

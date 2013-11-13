@@ -1,23 +1,22 @@
-<h1><%= @enrollment_subject.enrollment.course.name %></h1>
-<h1><%= @enrollment_subject.subject.name %></h1>
-<div class="row">
-  <div class="span6 offset3">   
-    <%= form_tag(user_enrollment_enrollment_subject_task_list_path(current_user, @enrollment_subject.enrollment, @enrollment_subject), {method: :patch}) do |f| %>
-      <ul>
-        <% @enrollment_subject.enrollment_tasks.each do |enrollment_task| %>
-          <li class="<%= enrollment_task.status %>">
-            <div class="task-name"><%= enrollment_task.task.name %></div>
-            <div class="task-status">
-              <% if enrollment_task.done? %>
-                <%= check_box_tag "", "0", true, disabled: true %> finish
-              <% else %>
-                <%= check_box_tag "task_ids[]", enrollment_task.id %> finish
-              <% end %>
-            </div>
-          </li>
-        <% end %>
-      </ul>
-      <%= submit_tag "Update", class: "btn btn-primary" %>
-    <% end %>
+<%= form_tag(user_enrollment_enrollment_subject_task_list_path(current_user, @enrollment_subject.enrollment, @enrollment_subject), method: :patch) %>
+  <div class="center">
+    <ul class="tasks">
+      <% @enrollment_subject.enrollment_tasks.each do |enrollment_task| %>
+        <li class="<%= enrollment_task.status %>">
+          <div class="task-name"><%= enrollment_task.task.name %></div>
+          <div class="task-status">
+            <% if enrollment_task.done? %>
+            <%= check_box_tag "", "0", true, disabled: true %> finish
+            <% else %>
+            <%= check_box_tag "task_ids[]", enrollment_task.id %> finish
+            <% end %>
+          </div>
+          <div class="line-linkage"></div>
+        </li>
+      <% end %>
+    </ul>
   </div>
-</div>
+  <div class="center">
+    <%= submit_tag "Update Progress", class: "btn btn-large btn-primary" %>
+  </div>
+</form>
