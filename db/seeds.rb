@@ -1,24 +1,25 @@
+PASSWORD = "123456"
 user_list = [ 
-	{ name: "MuiNV", email: "mui@framgia.com", password: "123456", password_confirmation: "123456", current_course_id: 1},
-	{ name: "OanhLK", email: "oanh@framgia.com", password: "123456", password_confirmation: "123456", current_course_id: 1 },
-	{ name: "KhanhCD", email: "khanh@framgia.com", password: "123456", password_confirmation: "123456", current_course_id: 1 },
-	{ name: "QuanNT", email: "quan@framgia.com", password: "123456", password_confirmation: "123456", current_course_id: 2 },
-	{ name: "VuLD", email: "vu@framgia.com", password: "123456", password_confirmation: "123456", current_course_id: 2 },
-	{ name: "CongHD", email: "cong@framgia.com", password: "123456", password_confirmation: "123456", current_course_id: 2 },
-	{ name: "TamDT", email: "tam@framgia.com", password: "123456", password_confirmation: "123456", current_course_id: 3 },
-	{ name: "DungDT", email: "dung@framgia.com", password: "123456", password_confirmation: "123456", current_course_id: 3 },
-	{ name: "ChuyenVV", email: "chuyen@framgia.com", password: "123456", password_confirmation: "123456", current_course_id: 4 },
-	{ name: "HoangTN", email: "hoang@framgia.com", password: "123456", password_confirmation: "123456", current_course_id: 4 }
+	{name: "MuiNV", email: "mui@framgia.com", password: PASSWORD, password_confirmation: PASSWORD, current_course_id: 1},
+	{name: "OanhLK", email: "oanh@framgia.com", password: PASSWORD, password_confirmation: PASSWORD, current_course_id: 1},
+	{name: "KhanhCD", email: "khanh@framgia.com", password: PASSWORD, password_confirmation: PASSWORD, current_course_id: 1},
+	{name: "QuanNT", email: "quan@framgia.com", password: PASSWORD, password_confirmation: PASSWORD, current_course_id: 2},
+	{name: "VuLD", email: "vu@framgia.com", password: PASSWORD, password_confirmation: PASSWORD, current_course_id: 2},
+	{name: "CongHD", email: "cong@framgia.com", password: PASSWORD, password_confirmation: PASSWORD, current_course_id: 2},
+	{name: "TamDT", email: "tam@framgia.com", password: PASSWORD, password_confirmation: PASSWORD, current_course_id: 3},
+	{name: "DungDT", email: "dung@framgia.com", password: PASSWORD, password_confirmation: PASSWORD, current_course_id: 3},
+	{name: "ChuyenVV", email: "chuyen@framgia.com", password: PASSWORD, password_confirmation: PASSWORD, current_course_id: 4},
+	{name: "HoangTN", email: "hoang@framgia.com", password: PASSWORD, password_confirmation: PASSWORD, current_course_id: 4}
 ]
 user_list.each do |user|
   User.create! user
 end
 
 course_list = [
-	{ name: "TrainingProject0110", start_date: "01-10-2013", end_date: "01-12-2013" },
-	{ name: "TrainingProject0710", start_date: "07-10-2013", end_date: "07-12-2013" },
-	{ name: "TrainingProject2010", start_date: "20-10-2013", end_date: "20-12-2013" },
-	{ name: "TrainingProject2710", start_date: "27-10-2013", end_date: "27-12-2013" },
+	{name: "TrainingProject0110", start_date: "01-10-2013", end_date: "01-12-2013"},
+	{name: "TrainingProject0710", start_date: "07-10-2013", end_date: "07-12-2013"},
+	{name: "TrainingProject2010", start_date: "20-10-2013", end_date: "20-12-2013"},
+	{name: "TrainingProject2710", start_date: "27-10-2013", end_date: "27-12-2013"},
 ]
 
 course_list.each do |course|
@@ -26,12 +27,21 @@ course_list.each do |course|
 end
 
 subject_list = [
-	{ name: "Ruby on Rails", description: "abc123", duration: 12},
-	{ name: "Git", description: "abc123", duration: 1},
-	{ name: "MySQL", description: "abc123", duration: 5},
-	{ name: "PHP", description: "abc123", duration: 12}
+	{name: "Ruby on Rails", description: "abc123", duration: 12},
+	{name: "Git", description: "abc123", duration: 1},
+	{name: "MySQL", description: "abc123", duration: 5},
+	{name: "PHP", description: "abc123", duration: 12}
 ]
 
+supervisors_list = [
+	{name: "TuanCA", email: "tuan@framgia.com", password: PASSWORD, password_confirmation: PASSWORD},
+	{name: "KienBT", email: "kien@framgia.com", password: PASSWORD, password_confirmation: PASSWORD},
+	{name: "KhanhHD", email: "khanh.hd@framgia.com", password: PASSWORD, password_confirmation: PASSWORD}
+]
+
+supervisors_list.each do |supervisor|
+	Supervisor.create! supervisor
+end
 subject_list.each do |subject|
 	Subject.create! subject
 end
@@ -106,24 +116,20 @@ end
 	CourseSubject.create! course_id: c[4].id, subject_id: s3.id
 	CourseSubject.create! course_id: c[4].id, subject_id: s4.id
 
-course_subjects = CourseSubject.all
-course_subjects.each { |cs|
-	subject = Subject.find cs.subject_id
-	subject.tasks.each { |task|
-		CourseSubjectTask.create! course_subject_id: cs.id, subject_id: subject.id, task_id: task.id
-	}
-}
+ Supervisor.all.each do |supervisor|
+	Course.all.each do |course|
+		SupervisorCourse.create! supervisor_id: supervisor.id, course_id: course.id
+	end
+end
 
-enrollments = Enrollment.all
-enrollments.each { |el|
+Enrollment.all.each do |el|
 	subjects = el.course.subjects
-	subjects.each { |sj|
+	subjects.each do |sj|
 		EnrollmentSubject.create! enrollment_id: el.id, subject_id: sj.id, status: "new", start_date: "01-10-2013"
-	}
-}
+	end
+end
 
-enrollment_subjects = EnrollmentSubject.all
-enrollment_subjects.each do |es|
+EnrollmentSubject.all.each do |es|
 	course_subject = es.enrollment.course.course_subjects.find_by subject_id: es.subject_id
 	course_subject.course_subject_tasks.each do |t|
 		EnrollmentTask.create! enrollment_subject_id: es.id, subject_id: es.subject_id, task_id: t.task_id, status: "new"
