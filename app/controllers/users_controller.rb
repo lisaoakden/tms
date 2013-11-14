@@ -19,7 +19,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update_attributes(user_params)
+    if @user.update_attributes user_params
       flash[:success] = "Profile updated"
       Activity.user_edit! @user
       redirect_to @user
@@ -33,8 +33,7 @@ class UsersController < ApplicationController
 
   private
   def user_params
-    params.require(:user)
-      .permit(:name, :password, :password_confirmation)
+    params.require(:user).permit :name, :password, :password_confirmation
   end
 
   def signed_in_user
@@ -47,6 +46,7 @@ class UsersController < ApplicationController
   def load_object
     @user = User.find params[:id]
   end
+  
   def correct_user
     @user = User.find params[:id]
     redirect_to root_url unless current_user? @user

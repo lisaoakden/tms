@@ -1,0 +1,8 @@
+<h1>Test</h1>
+<p>Managed Courses</p>
+<ul>
+	<% current_supervisor.courses.each do |course| %>
+	<li><%= course.name %></li>
+	<% end %>
+</ul>
+<%= link_to "Sign out", signout_path, method: "delete" %>
