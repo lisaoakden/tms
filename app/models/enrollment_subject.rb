@@ -1,4 +1,5 @@
 class EnrollmentSubject < ActiveRecord::Base
+	DURATION_SUBJECT = 10
 	has_many :enrollment_tasks
 	belongs_to :enrollment
 	belongs_to :subject
