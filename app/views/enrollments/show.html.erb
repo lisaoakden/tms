@@ -20,25 +20,28 @@
 <div class="center">
   <%= render "activate" %>
 </div>
-<h2>Course Introduction
-  <span id="intro_toggle_btn" class="btn btn-primary small">Hide</span>
-</h2>
-<div id="intro">
-  <% I18n.locale = :vi %>
-  <%= t "course_intro.text_html", trainee: current_user.name,
-    doc_link: t("course_intro.doc_link"), 
-    duration: (distance_of_time_in_words(current_course.start_date, 
-      current_course.end_date)), 
-    start_date: l(current_course.start_date),
-    end_date: l(current_course.end_date), 
-    test_date: l(current_course.end_date + 1.day) %>
+<div class="span8">  
+  <h2>Course Introduction
+    <span id="intro_toggle_btn" class="btn btn-primary small">Hide</span>
+  </h2>
+  <div id="intro">
+    <% I18n.locale = :vi %>
+    <%= t "course_intro.text_html", trainee: current_user.name,
+      doc_link: t("course_intro.doc_link"), 
+      duration: (distance_of_time_in_words(current_course.start_date, 
+        current_course.end_date)), 
+      start_date: l(current_course.start_date),
+      end_date: l(current_course.end_date), 
+      test_date: l(current_course.end_date + 1.day) %>
+  </div>
+  <h2>Activity log</h2>
+  <%= render "shared/activities" %>
+  <%= will_paginate @activities %>
 </div>
-<h2>Trainees</h2>
-<%= render "shared/show_user" %>
-<h2>Activity log</h2>
-<%= render "shared/activities" %>
-<%= will_paginate @activities %>
-
+<div class="span3">
+  <h2>In the same course</h2>
+  <%= render "shared/show_user" %>
+</div>
 <script>
   $(function(){
     if (<%= @enrollment.activated? %>)

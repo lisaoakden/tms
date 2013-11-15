@@ -17,6 +17,6 @@
     </ul>
   </div>
   <div class="center">
-    <%= submit_tag "Update Progress", class: "btn btn-large btn-primary" %>
+    <%= submit_tag "Update Progress", class: "btn btn-large btn-primary" unless @enrollment_subject.done? %>
   </div>
 </form>

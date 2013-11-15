@@ -62,6 +62,18 @@ h1 {
   font-weight: normal;
 }
 
+h1.page-title {
+  /* To create a button / status next to title */
+  form, form div {
+    display: inline;
+  }
+  span.completed {
+    font-size: 18px;
+    color: $color_mil_finished;
+    letter-spacing: 0;
+  }
+}
+
 h2 {
   @include clearfix;
   font-size: 20px;
@@ -203,6 +215,7 @@ input {
   font-size: 11px;
   margin: 0 0 2px 5px;
   padding: 0 7px;
+  letter-spacing: 0;
 }
 
 #error_explanation {
@@ -516,6 +529,15 @@ ul.tasks li {
     .line-linkage {
       display: none;
     }
+  }
+}
+
+ul.users-aside {
+  list-style: none;
+  margin-left: 10px;
+  padding-bottom: 10px;
+  li {
+    margin-bottom: 10px
   }
 }
 

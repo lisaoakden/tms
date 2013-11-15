@@ -1,4 +1,11 @@
-<h1><%= @subject.name %></h1>
+<h1 class="page-title"><%= @subject.name %>
+<% if @enrollment_subject.done? %>
+  <span class="completed">(Completed)</span>
+<% else %>
+  <%= link_to "Finish Subject", user_enrollment_enrollment_subject_path, 
+    method: :patch, class: "btn small btn-primary" %>
+<% end %>
+</h1>
 <%= render "shared/error_messages" %>
 <% if current_user? @user %>
   <h2>Subject progress</h2>
@@ -7,14 +14,6 @@
   <p>Subject <%= get_start_date(@enrollment_subject) %></p>
   <h2>Instruction </h2>
   <p><%= @subject.description %></p>
-  <div class="center">
-  	<% if @enrollment_subject.done? %>
-      <strong>You have completed this subject</strong>
-  	<% else %>
-  		<%= button_to "Finish Subject", user_enrollment_enrollment_subject_path, 
-        method: :patch, class: "btn btn-large btn-primary" %>
-  	<% end %>
-  </div>
   <h2>Activity log</h2>
   <%= render "shared/activities" %>
 <% end %>
