@@ -1,0 +1,13 @@
+<div class="user-info-wrap">
+  <%= image_tag "default_user.png", alt: @supervisor.name, class: "user-avatar" %>
+  <div class="user-info">
+    <div class="user-name">
+      <h1><%= @supervisor.name %></h1>
+      <% if current_supervisor? @supervisor %>
+      <%= link_to "Edit Profile", edit_admin_supervisor_path,
+        class: "btn btn-primary small" %>
+      <% end %>
+    </div>
+    <div class="user-desc"> <%= @supervisor.email %> </div>
+  </div>
+</div>
