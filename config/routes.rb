@@ -24,8 +24,9 @@ Tms::Application.routes.draw do
     resources :supervisors do
       resources :courses, only: [:show, :index]
     end
+    resources :supervisors
+    resources :users
     match "/signin",  to: "sessions#new",        via: "get"
     match "/signout", to: "sessions#destroy",    via: "delete"
-    resources :trainees
   end
 end
