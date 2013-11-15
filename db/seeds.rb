@@ -107,10 +107,10 @@ c = Array.new(5)
 end
 
 (1..3).each do |num|
-	CourseSubject.create! course_id: c[num].id, subject_id: s1.id
-	CourseSubject.create! course_id: c[num].id, subject_id: s2.id
-	CourseSubject.create! course_id: c[num].id, subject_id: s3.id
-	CourseSubject.create! course_id: c[num].id, subject_id: s4.id
+	CourseSubject.create! course_id: c[num].id, subject_id: s1.id, duration: 10, start_date: "2013-11-11"
+	CourseSubject.create! course_id: c[num].id, subject_id: s2.id, duration: 10, start_date: "2013-11-11"
+	CourseSubject.create! course_id: c[num].id, subject_id: s3.id, duration: 10, start_date: "2013-11-11"
+	CourseSubject.create! course_id: c[num].id, subject_id: s4.id, duration: 10, start_date: "2013-11-11"
 end
 	CourseSubject.create! course_id: c[4].id, subject_id: s1.id
 	CourseSubject.create! course_id: c[4].id, subject_id: s3.id

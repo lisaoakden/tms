@@ -1,0 +1,40 @@
+<% provide(:title, "All users") %>
+<h1><%= @course.name %></h1>
+<h2> All Supervisor in Course </h2>
+<ul>
+	<% @course.course_subjects.each do |course_subject| %>
+    <li>
+      <%= course_subject.subject.name %>: <%= l(course_subject.start_date) %> - 
+      <%= l(course_subject.end_date) %>
+      <% course_subject.course_subject_tasks.each do |course_subject_task| %>
+      <ul>
+      	<li>
+      		<%= course_subject_task.task.name %>
+      	</li>
+      </ul>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+<h2> All Supervisor in Course </h2>
+<ul>
+  <% @course.supervisors.each do |supervisor| %>
+    <li>
+      <%= gravatar_for supervisor %>
+      <%= supervisor.name %>
+    </li>
+  <% end %>
+</ul>
+<h2> All Users in Course </h2>
+<ul class="users">
+		<% @course.users.each do |user| %>
+    <li>
+      <%= gravatar_for user %>
+      <%= user.name %>
+    </li>
+  <% end %>
+</ul>
+
+<%= link_to "Edit Member", '#', 
+        method: :patch, class: "btn btn-large btn-primary" %>
+<%= link_to "Finish Course", '#', class: "btn btn-large btn-primary" %>
