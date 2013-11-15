@@ -116,9 +116,10 @@ end
 	CourseSubject.create! course_id: c[4].id, subject_id: s3.id
 	CourseSubject.create! course_id: c[4].id, subject_id: s4.id
 
- Supervisor.all.each do |supervisor|
-	Course.all.each do |course|
-		SupervisorCourse.create! supervisor_id: supervisor.id, course_id: course.id
+CourseSubject.all.each do |cs|
+	subject = Subject.find cs.subject_id
+	subject.tasks.each do |task|
+		task.course_subject_tasks.create! course_subject_id: cs.id, subject_id: subject.id
 	end
 end
 
@@ -133,5 +134,11 @@ EnrollmentSubject.all.each do |es|
 	course_subject = es.enrollment.course.course_subjects.find_by subject_id: es.subject_id
 	course_subject.course_subject_tasks.each do |t|
 		EnrollmentTask.create! enrollment_subject_id: es.id, subject_id: es.subject_id, task_id: t.task_id, status: "new"
+	end
+end
+
+Supervisor.all.each do |supervisor|
+	Course.all.each do |course|
+		SupervisorCourse.create! supervisor_id: supervisor.id, course_id: course.id
 	end
 end

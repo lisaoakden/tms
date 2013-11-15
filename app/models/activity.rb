@@ -9,7 +9,6 @@ class Activity < ActiveRecord::Base
   belongs_to :enrollment_task, foreign_key: "task_id", class_name: EnrollmentTask.name
   belongs_to :enrollment_subject, foreign_key: "subject_id", class_name: EnrollmentSubject.name
   belongs_to :course, foreign_key: "course_id", class_name: "Course"
-	belongs_to :user
 	scope :order_desc_created_at, ->{order "created_at DESC"}
 	scope :activities_course, ->course_id, temp_type do 
     where(course_id: course_id).where.not(temp_type: temp_type)

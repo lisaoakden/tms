@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131114074640) do
+ActiveRecord::Schema.define(version: 20131115061028) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -19,16 +19,16 @@ ActiveRecord::Schema.define(version: 20131114074640) do
     t.integer  "subject_id"
     t.integer  "task_id"
     t.integer  "temp_type"
+    t.integer  "active_flag", default: 1
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "active_flag",       default: 1
   end
 
   create_table "conclusions", force: true do |t|
-    t.integer  "enrollment_id",           null: false
-    t.string   "content",       limit: 4, null: false
-    t.text     "comment",                 null: false
-    t.integer  "active_flag",       default: 1
+    t.integer  "enrollment_id"
+    t.string   "content",       limit: 4,             null: false
+    t.text     "comment",                             null: false
+    t.integer  "active_flag",             default: 1
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -45,9 +45,10 @@ ActiveRecord::Schema.define(version: 20131114074640) do
   end
 
   create_table "course_subjects", force: true do |t|
-    t.integer  "course_id",               null: false
-    t.integer  "subject_id",              null: false
+    t.integer  "course_id"
+    t.integer  "subject_id"
     t.integer  "active_flag", default: 1
+    t.integer  "duration"
     t.datetime "start_date"
     t.datetime "end_date"
     t.datetime "created_at"
@@ -67,8 +68,8 @@ ActiveRecord::Schema.define(version: 20131114074640) do
   end
 
   create_table "enrollment_subjects", force: true do |t|
-    t.integer  "enrollment_id",                        null: false
-    t.integer  "subject_id",                           null: false
+    t.integer  "subject_id"
+    t.integer  "enrollment_id"
     t.string   "status",        limit: 11,             null: false
     t.datetime "start_date"
     t.integer  "active_flag",              default: 1
@@ -79,9 +80,9 @@ ActiveRecord::Schema.define(version: 20131114074640) do
   add_index "enrollment_subjects", ["enrollment_id"], name: "fk_Enroll_idx", using: :btree
 
   create_table "enrollment_tasks", force: true do |t|
+    t.integer  "subject_id"
+    t.integer  "task_id"
     t.integer  "enrollment_subject_id",                        null: false
-    t.integer  "subject_id",                                   null: false
-    t.integer  "task_id",                                      null: false
     t.string   "status",                limit: 11,             null: false
     t.integer  "active_flag",                      default: 1
     t.datetime "created_at"
@@ -91,8 +92,8 @@ ActiveRecord::Schema.define(version: 20131114074640) do
   add_index "enrollment_tasks", ["enrollment_subject_id"], name: "fk_Subject_idx", using: :btree
 
   create_table "enrollments", force: true do |t|
-    t.integer  "user_id",                 null: false
-    t.integer  "course_id",               null: false
+    t.integer  "user_id"
+    t.integer  "course_id"
     t.datetime "joined_date"
     t.integer  "status",                  null: false
     t.integer  "active_flag", default: 1
@@ -115,9 +116,9 @@ ActiveRecord::Schema.define(version: 20131114074640) do
   create_table "supervisor_courses", force: true do |t|
     t.integer  "supervisor_id"
     t.integer  "course_id"
+    t.integer  "active_flag",   default: 1
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "active_flag",       default: 1
   end
 
   create_table "supervisors", force: true do |t|
@@ -125,9 +126,9 @@ ActiveRecord::Schema.define(version: 20131114074640) do
     t.string   "email"
     t.string   "password_digest"
     t.string   "remember_token"
+    t.integer  "active_flag",     default: 1
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "active_flag",       default: 1
   end
 
   create_table "tasks", force: true do |t|
