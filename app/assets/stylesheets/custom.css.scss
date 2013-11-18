@@ -282,8 +282,6 @@ input {
 .user-avatar {
   overflow: auto;
   margin-top: 10px;
-  width: 60px;
-  height: 60px;
   float: left;
 }
 
@@ -629,3 +627,8 @@ ul.activities {
   }
 }
 
+/* Select_tag */
+.select {
+  width: 200px;
+  display: inline-block;
+}

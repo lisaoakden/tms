@@ -3,7 +3,10 @@ class EnrollmentSubject < ActiveRecord::Base
 	has_many :enrollment_tasks
 	belongs_to :enrollment
 	belongs_to :subject
-  has_many :activities, foreign_key: "subject_id", class_name: "Activity"
+  has_many :activities, foreign_key: "subject_id", class_name: Activity.name
+  	
+  scope :subject_done, -> {where status: "done"}
+
 	def finish_subject!
 		self.update_attributes! status: "done"
 	end

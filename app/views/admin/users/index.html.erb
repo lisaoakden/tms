@@ -1,0 +1,32 @@
+<% provide :title, "All users" %>
+<h1>All trainees</h1>
+<h3>Courses:</h3>
+<div class ="select">
+<%= select_tag "course_id", options_from_collection_for_select(@courses, "id", "name", params["course_id"]), include_blank: true, id: "course_select" %> 
+</div>
+<ul class="users">
+  <% @users.each do |user| %>
+  <li>
+    <%= gravatar_for user %>
+    <div class="user-info">
+      <%= link_to user.name, "#" %><br/>
+      <%= link_to user.current_course.name, "#" %><br/>
+      Status:<%= user.enrollments.by_course(user.current_course_id).first.status %><br/>
+      Subjects:<%= user.enrollments.by_course(user.current_course_id).first.enrollment_subjects.subject_done.count %>/<%= user.current_course.subjects.count %><br/>
+      <%= link_to "delete", user, method: :delete, data:{confirm: "Are you sure?"}, title: user.name %></td>
+    </div>
+  </li>
+  <% end %>
+</ul>
+<%= will_paginate @users %>
+<script>
+  $(function() {
+    $('#course_select').change(function() {
+      if($(this).val()) {
+        window.location.href = '<%= admin_users_path %>?course_id=' + $(this).val();
+      } else {
+        window.location.href = '<%= admin_users_path %>';
+      }
+    });
+  });
+</script>
