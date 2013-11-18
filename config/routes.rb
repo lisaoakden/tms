@@ -1,4 +1,5 @@
 Tms::Application.routes.draw do
+  get "subjects/show"
   root "static_pages#home"
   resources :users do
     resources :enrollments do
@@ -18,7 +19,7 @@ Tms::Application.routes.draw do
     to: "enrollments#update", as: "activate", via: "patch"
 
   namespace :admin do
-    root "static_pages#home"
+    root "static_pages#dashboard"
     resources :sessions, only: [:new, :create, :destroy]
     resources :supervisors
     match "/signin",  to: "sessions#new",        via: "get"

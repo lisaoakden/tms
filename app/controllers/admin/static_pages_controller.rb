@@ -1,4 +1,5 @@
 class Admin::StaticPagesController < ApplicationController
-  def home
+	layout "admin"
+  def dashboard
   end
 end

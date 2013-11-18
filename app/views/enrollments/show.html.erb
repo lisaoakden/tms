@@ -5,13 +5,13 @@
     <li class="<%= enrollment_subject.status %>" 
       title="Duration: <%= pluralize(enrollment_subject.subject.duration, "day") %>">
       <div class="milestone-name">
-        <%= link_to enrollment_subject.subject.name, 
-          user_enrollment_enrollment_subject_path(@current_user, 
-          @enrollment, enrollment_subject) %>
+      <%= link_to enrollment_subject.subject.name, 
+        user_enrollment_enrollment_subject_path @current_user, 
+        @enrollment, enrollment_subject %>
       </div>
       <div class="milestone-status">
-        <%= link_to "✓", user_enrollment_enrollment_subject_path(@current_user,
-          @enrollment, enrollment_subject) %>
+      <%= link_to "✓", user_enrollment_enrollment_subject_path(@current_user,
+        @enrollment, enrollment_subject) %>
       </div>
       <div class="line-linkage">  </div>
     </li>
@@ -44,15 +44,14 @@
 </div>
 <script>
   $(function(){
-    if (<%= @enrollment.activated? %>)
-    {
+    if (<%= @enrollment.activated? %>) {
       $("#intro").hide();
       $("#intro_toggle_btn").text("Show");
     }
 
     $("#intro_toggle_btn").click(function() {
-      $("#intro").toggle("slow").attr("text", 
-        $(this).text() == "Hide" ? $(this).text("Show") : $(this).text("Hide"));
+      $("#intro").toggle("slow");
+      $(this).text() == "Hide" ? $(this).text("Show") : $(this).text("Hide");
     });
   })
 </script>

@@ -309,6 +309,66 @@ input {
   }
 }
 
+.user-info-wrap.dashboard {
+  margin: 0;
+
+  .user-avatar {
+    overflow: auto;
+    margin-bottom: 30px;
+    width: 60px;
+    height: 60px;
+    float: left;
+  }
+
+  h2 {
+    font-size: 18px;
+    margin: 7px 0; 
+  }
+}
+
+ul.user-sidebar {
+  list-style: none;
+  margin-left: 10px;
+
+  
+
+  li.sub-list {
+    ul {
+      list-style: none;
+
+      li {
+        margin-bottom: 10px;
+        font-size: 13px;
+      }            
+    }
+
+    h3.list-header {
+      font-weight: normal;
+      font-family: $font_title;
+
+      a {
+        color: $color_black;
+      }
+    }
+    .caret {
+      border-top: none;
+      border-bottom: 5px solid $color_link_hover;
+      margin: 7px 0 0 5px; 
+    }
+  }
+
+  li.sub-list.closed {
+    .caret {
+      border-top: 5px solid $color_link_hover;
+      border-bottom: none;
+    }
+
+    ul {
+      display: none;
+    }
+  }
+}
+
 /* Subject list */
 .subject-list {
   clear:both ;
@@ -568,3 +628,4 @@ ul.activities {
     margin-bottom: 10px;
   }
 }
+
