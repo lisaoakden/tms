@@ -12,7 +12,7 @@ vi:
   time:
     formats:
       default: "%d/%m/%Y"
-
+      
   datetime:    
     distance_in_words:
       about_x_hours:

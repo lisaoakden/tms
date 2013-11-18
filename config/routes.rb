@@ -20,7 +20,9 @@ Tms::Application.routes.draw do
   namespace :admin do
     root "static_pages#home"
     resources :sessions, only: [:new, :create, :destroy]
-    resources :supervisors
+    resources :supervisors do
+      resources :courses, only: [:show]
+    end
     match "/signin",  to: "sessions#new",        via: "get"
     match "/signout", to: "sessions#destroy",    via: "delete"
   end
