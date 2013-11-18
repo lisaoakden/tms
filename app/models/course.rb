@@ -8,4 +8,8 @@ class Course < ActiveRecord::Base
 	has_many :supervisors, through: :supervisor_courses
 
   scope :choose_course, ->course_id {find course_id}
+
+  def course_duration
+  	((self.end_date - self.start_date) / 1.day).to_i
+  end
 end

@@ -21,7 +21,7 @@ Tms::Application.routes.draw do
     root "static_pages#home"
     resources :sessions, only: [:new, :create, :destroy]
     resources :supervisors do
-      resources :courses, only: [:show]
+      resources :courses, only: [:show, :index]
     end
     match "/signin",  to: "sessions#new",        via: "get"
     match "/signout", to: "sessions#destroy",    via: "delete"

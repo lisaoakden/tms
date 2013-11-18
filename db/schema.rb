@@ -59,10 +59,11 @@ ActiveRecord::Schema.define(version: 20131115061028) do
   add_index "course_subjects", ["subject_id"], name: "fk_Course_Subject_2", using: :btree
 
   create_table "courses", force: true do |t|
-    t.string   "name",        limit: 128,             null: false
+    t.string   "name",        limit: 128,                 null: false
     t.datetime "start_date"
     t.datetime "end_date"
     t.integer  "active_flag",             default: 1
+    t.string   "status",                  default: "new", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

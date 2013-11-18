@@ -1,0 +1,26 @@
+<% provide :title, "All courses" %>
+<h1>All Course </h1>
+<%= link_to "New", "#" %>
+<table>
+	<tr>
+		<th> Course </th>
+		<th> Started on </th>
+		<th> Duration (days) </th>
+		<th> Subject </th>
+		<th> Trainee </th>
+		<th> Status </th>
+		<th> Action </th>
+	</tr>
+	<% @courses.each do |course| %>
+		<tr>
+			<td><%= course.name %></td>
+			<td><%= course.start_date %></td>
+			<td><%= course.course_duration %></td>
+			<td><%= course.subjects.count %></td>
+			<td><%= course.users.count %></td>
+			<td><%= course.status %></td>
+			<td><%= link_to "edit", "#" %>|<%= link_to "delete", course, method: :delete, data: {confirm: "Are you sure?"}, title: course.name %></td>
+		</tr>
+	<% end %>
+</table>
+<%= will_paginate @activities %>
