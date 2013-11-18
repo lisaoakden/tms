@@ -1,5 +1,4 @@
 class Activity < ActiveRecord::Base
-  TEMP_TYPE = 2
   START_COURSE = 1
   EDIT_PROFILE = 2
   FINISH_TASK = 3

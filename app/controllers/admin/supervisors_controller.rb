@@ -2,6 +2,7 @@ class Admin::SupervisorsController < ApplicationController
   before_action :signed_in_supervisor, only: :show
   before_action :correct_supervisor,   only: [:edit, :update]
   before_action :load_object,          only: [:show, :edit, :update]
+  layout "admin"
 
   def show
   end

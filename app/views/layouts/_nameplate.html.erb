@@ -1,0 +1,9 @@
+<div class="user-info-wrap dashboard">
+  <%= image_tag "default_user.png", alt: @current_supervisor.name, class: "user-avatar" %>
+  <div class="user-info">
+    <div class="user-name">
+      <h2><%= @current_supervisor.name %></h2>
+    </div>
+    <div class="user-desc"> <%= @current_supervisor.email %> </div>
+  </div>
+</div>

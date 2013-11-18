@@ -17,7 +17,7 @@ class EnrollmentsController < ApplicationController
       .find_by course_id: current_user.current_course_id
     @enrollment_subjects = @enrollment.enrollment_subjects 
     @activities = current_user.activities.order_desc_created_at
-      .activities_course(current_user.current_course_id, Activity::TEMP_TYPE)
+      .activities_course(current_user.current_course_id, Activity::EDIT_PROFILE)
       .paginate(page: params[:page], per_page: Settings.items.per_page)
     @course = @enrollment.course
   end

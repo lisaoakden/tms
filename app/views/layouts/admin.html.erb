@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= full_title yield(:title) %></title>
+  <%= favicon_link_tag "logo.png" %>
+  <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <%= render "layouts/header" %>
+  <div class="container">
+    <h1><%= yield(:title) %></h1>
+    <% flash.each do |key, value| %>
+    <div class="alert alert-<%= key %>"><%= value %></div>
+    <% end %>
+    <div class="row">
+      <div class="span12">
+      <%= render "layouts/nameplate" %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span3 dashboard-left">
+        <%= render "admin/static_pages/user_sidebar" %>
+      </div>
+      <div class="span9 dashboard-right">
+        <%= yield %>
+      </div>
+    </div>
+    <%= render "layouts/footer" %>
+  </div>
+</body>
+</html>
