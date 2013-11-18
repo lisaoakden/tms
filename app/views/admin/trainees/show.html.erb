@@ -1,0 +1,53 @@
+<div class="user-info-wrap">
+  <%= image_tag "default_user.png", alt: @user.name, class: "user-avatar" %>
+  <div class="user-info">
+    <div class="user-name">
+      <h1><%= @user.name %></h1>
+      <%= link_to "Edit Profile", "#", class: "btn btn-primary small" %>
+    </div>
+    <div class="user-desc"> <%= @user.email %> </div>
+  </div>
+</div>
+<div class="span7 subject-list">
+  <% if @enrollment.enrollment_subjects.any? %>
+    <h2> courses (<%= @course.name %>) 
+      <span> 
+        start_date: <%= l(@course.start_date) %> 
+        end_date: <%= l(@course.end_date) %>
+      </span>
+      <span>
+        <%= @enrollment.status %>
+      </span>
+    </h2>
+    <ul>
+      <% @enrollment.enrollment_subjects.each do |enrollment_subject| %>
+        <li>
+          <h3 class="subject-name">
+            <%= link_to enrollment_subject.subject.name, user_enrollment_enrollment_subject_path(@user.id,
+            enrollment_subject.enrollment_id, enrollment_subject.subject.id) %>
+              <span> 
+                start_date: <%= l(enrollment_subject.start_date) %> 
+                end_ date : <%= l(enrollment_subject.start_date + EnrollmentSubject::DURATION_SUBJECT.day) %> 
+              </span>
+             <span>
+              <%= enrollment_subject.status %>
+            </span>
+          </h3>
+          <% enrollment_subject.enrollment_tasks.each do |enrollment_task| %>
+            <h2>
+              <%= enrollment_task.task.name %>  
+              <span>
+                <%= enrollment_task.status %>
+              </span>
+            </h2>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
+<div class="span4">
+  <h2>Activity log</h2>
+  <%= render "shared/all_activities" %>
+  <%= will_paginate @activities %>
+</div>

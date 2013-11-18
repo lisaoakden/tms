@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_secure_password
+  belongs_to :current_course, class_name: Course.name
   has_many :enrollment_subjects, through: :enrollments
 	has_many :enrollments, dependent: :destroy
   has_many :activities

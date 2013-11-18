@@ -25,5 +25,6 @@ Tms::Application.routes.draw do
     end
     match "/signin",  to: "sessions#new",        via: "get"
     match "/signout", to: "sessions#destroy",    via: "delete"
+    resources :trainees
   end
 end
