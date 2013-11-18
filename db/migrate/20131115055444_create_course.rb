@@ -5,6 +5,7 @@ class CreateCourse < ActiveRecord::Migration
 	    t.datetime "start_date"
 	    t.datetime "end_date"
 	    t.integer  "active_flag",             default: 1
+	    t.string   "status",									default: "new",      null: false
       t.timestamps
    	end
   end
