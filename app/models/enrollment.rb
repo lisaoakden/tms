@@ -12,5 +12,5 @@ class Enrollment < ActiveRecord::Base
 		self.status == ACTIVATED
 	end
   
-  scope :current_enrollment, ->course_id {find course_id}
+  scope :current_enrollment, -> course_id{where course_id: course_id}
 end
