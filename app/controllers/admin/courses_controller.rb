@@ -1,4 +1,5 @@
 class Admin::CoursesController < ApplicationController
+  layout "admin"
   before_action :choose_course, only: [:show, :index]
   before_action :correct_supervisor, only: [:update]
 

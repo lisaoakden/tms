@@ -21,6 +21,8 @@
           </li>
           <% elsif supervisor_signed_in? %>
           <li><%= link_to "Home", admin_root_path %></li>
+          <li><%= link_to "Trainees", admin_users_path %></li>
+          <li><%= link_to "Courses", admin_supervisor_courses_path(current_supervisor.id) %></li>
           <li id="" class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               Welcome, <i> <%= current_supervisor.name %> </i> <b class="caret"></b>
