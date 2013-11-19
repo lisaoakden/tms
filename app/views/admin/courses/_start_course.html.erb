@@ -1,0 +1,4 @@
+<%= link_to "Start Course", 
+	admin_supervisor_course_path(current_supervisor.id, @course.id), 
+	method: :patch,
+	class: "btn btn-large btn-primary" unless @course.activated? %>
