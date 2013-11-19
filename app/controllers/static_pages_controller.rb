@@ -6,6 +6,8 @@ class StaticPagesController < ApplicationController
       redirect_to user_enrollment_path current_user, enrollment
     elsif supervisor_signed_in?
     	redirect_to admin_root_path
+    else
+    	redirect_to signin_path
     end
   end
 end
