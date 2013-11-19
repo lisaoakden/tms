@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
   has_many :activities
   has_many :courses, through: :enrollments
   has_many :have_subjects, through: :enrollments, source: :enrollment_subjects
+  has_one :current_enrollment, class_name: Enrollment.name,
+    foreign_key: :course_id, primary_key: :current_course_id
 
 	before_save {self.email = email.downcase}
   before_create :create_remember_token

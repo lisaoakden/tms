@@ -21,6 +21,7 @@ Tms::Application.routes.draw do
     resources :supervisors do
       resources :courses do
         resource :user_list, only: [:show, :update]
+        resources :course_subjects, only: :update
       end
     end
     resources :users

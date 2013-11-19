@@ -21,6 +21,8 @@
       <p>
         <%= "#{l(course_subject.start_date)} - #{l(course_subject.finish_date)}" %>
         <%= course_subject.status %>
+        <%= link_to "Finish", admin_supervisor_course_course_subject_path(current_supervisor.id, 
+          @course.id, course_subject.id), method: :patch, class: "btn btn-large btn-primary" unless course_subject.done? %>
       </p>
     </td>
     <td>
@@ -55,4 +57,8 @@
   <div>
     <%= render "admin/shared/assign_trainees" %>
   </div>
+<<<<<<< HEAD
 <% end %>
+=======
+</div>
+>>>>>>> finish subject

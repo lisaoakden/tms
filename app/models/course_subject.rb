@@ -1,4 +1,5 @@
 class CourseSubject < ActiveRecord::Base
+  FINISH = "done"
   belongs_to :course
   belongs_to :subject
   has_many :course_subject_tasks
@@ -8,5 +9,9 @@ class CourseSubject < ActiveRecord::Base
 
   def finish_date
   	self.start_date + self.duration.days
+  end
+  
+  def done?
+    self.status == FINISH
   end
 end
