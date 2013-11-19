@@ -17,6 +17,8 @@ class Admin::CoursesController < ApplicationController
 
   def show
   	if supervisor_signed_in? 
+      @supervisor_courses = current_supervisor.supervisor_courses
+       .find params[:id]
       @course = current_supervisor.courses.find params[:id]
       @enrollment_subject = EnrollmentSubject.find params[:id]
       @enrollment_task = EnrollmentTask.find params[:id]
@@ -46,7 +48,5 @@ class Admin::CoursesController < ApplicationController
 
   def choose_course
     @supervisor = Supervisor.find params[:supervisor_id]
-    @supervisor_courses = current_supervisor.supervisor_courses
-      .find params[:id]
-  end
+  end  
 end
