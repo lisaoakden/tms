@@ -22,7 +22,7 @@ Tms::Application.routes.draw do
     root "static_pages#dashboard"
     resources :sessions, only: [:new, :create, :destroy]
     resources :supervisors do
-      resources :courses, only: [:show, :index]
+      resources :courses, only: [:show, :index, :update]
     end
     resources :supervisors
     resources :users
