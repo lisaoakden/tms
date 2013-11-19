@@ -1,4 +1,5 @@
 class Admin::CoursesController < ApplicationController
+  before_action :choose_course, only: [:show, :index]
   before_action :correct_supervisor, only: [:update]
 
   def update
@@ -14,9 +15,14 @@ class Admin::CoursesController < ApplicationController
   end
 
   def show
-  	if supervisor_signed_in?
-      @supervisor = Supervisor.find params[:supervisor_id]
-      @course = @supervisor.courses.find params[:id]
+  	if supervisor_signed_in? 
+      @course = current_supervisor.courses.find params[:id]
+      @enrollment_subject = EnrollmentSubject.find params[:id]
+      @enrollment_task = EnrollmentTask.find params[:id]
+      unless @supervisor_courses.course_id == @course.id && 
+        current_supervisor?(@supervisor)
+        redirect_to root_path
+      end
   	else
   		redirect_to root_path
   	end
@@ -24,7 +30,6 @@ class Admin::CoursesController < ApplicationController
 
   def index
     if supervisor_signed_in?
-      @supervisor = Supervisor.find params[:supervisor_id]
       @courses = @supervisor.courses.paginate page: params[:page],
         per_page:Settings.items.per_page
     else
@@ -37,4 +42,10 @@ class Admin::CoursesController < ApplicationController
     supervisor = Supervisor.find params[:supervisor_id]
     redirect_to root_url unless current_supervisor? supervisor
   end 
+
+  def choose_course
+    @supervisor = Supervisor.find params[:supervisor_id]
+    @supervisor_courses = current_supervisor.supervisor_courses
+      .find params[:id]
+  end
 end
