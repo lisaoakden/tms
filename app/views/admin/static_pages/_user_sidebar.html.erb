@@ -10,7 +10,7 @@
 			<% all_supervisors.each do |sup| %>
 			<li>
 				<%= gravatar_for sup, size: 30 %>
-				<%= link_to sup.name, admin_supervisor_path(sup) %>
+				<%= link_to sup.name, admin_supervisor_path(sup), class: "user-name" %>
 			</li>
 			<% end %>
 		</ul>
@@ -26,7 +26,7 @@
 			<% course.users.each do |user| %>
 			<li>
 				<%= gravatar_for user, size: 30 %>
-				<%= link_to user.name, user %>
+				<%= link_to user.name, user, class: "user-name" %>
 			</li>
 			<% end %>	
 		</ul>

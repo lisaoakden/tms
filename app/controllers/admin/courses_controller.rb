@@ -33,7 +33,7 @@ class Admin::CoursesController < ApplicationController
 
   def index
     if supervisor_signed_in?
-      @courses = @supervisor.courses.paginate page: params[:page],
+      @courses = current_supervisor.courses.paginate page: params[:page],
         per_page:Settings.items.per_page
     else
       redirect_to root_url

@@ -357,11 +357,7 @@ ul.user-sidebar {
       border-top: none;
       border-bottom: 5px solid $color_link_hover;
       margin: 7px 0 0 5px; 
-    }
-
-    .user-avatar {
-      float: none;
-    }
+    }    
   }
 
   li.sub-list.closed {
@@ -373,6 +369,16 @@ ul.user-sidebar {
     ul {
       display: none;
     }
+  }
+
+  .user-avatar {
+    float: none;
+  }
+
+  .user-name {
+    margin: 13px 0 0 5px;
+    display: inline-block;
+    vertical-align: top;
   }
 }
 
@@ -599,15 +605,6 @@ ul.tasks li {
   }
 }
 
-ul.users-aside {
-  list-style: none;
-  margin-left: 10px;
-  padding-bottom: 10px;
-  li {
-    margin-bottom: 10px
-  }
-}
-
 ul.users {
   list-style: none;
   li {
@@ -730,6 +727,5 @@ table {
 
   td {
     font-size: 13px;
-
   }
 }
