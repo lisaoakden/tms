@@ -1,6 +1,8 @@
 <% provide(:title, "All users") %>
 <h1><%= @course.name %></h1>
 <h2> All Supervisor in Course </h2>
+<%= link_to "Start Course", admin_supervisor_course_path(current_supervisor.id, 
+  @course.id), method: :patch, class: "btn btn-large btn-primary" %>
 <ul>
 	<% @course.course_subjects.each do |course_subject| %>
     <li>
