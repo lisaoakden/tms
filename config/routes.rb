@@ -8,8 +8,10 @@ Tms::Application.routes.draw do
     end
   end
   resources :sessions, only: [:new, :create, :destroy]
-  match "/signin",  to: "sessions#new",         via: "get"
-  match "/signout", to: "sessions#destroy",     via: "delete"
+  resources :enrollment_subjects
+  resources :activities
+  match "/signin",  to: "sessions#new",         via: :get
+  match "/signout", to: "sessions#destroy",     via: :delete
   match "/users/:user_id/enrollments/:enrollment_id/:activate", 
     to: "enrollments#update", as: "activate", via: "patch"
 
@@ -17,10 +19,11 @@ Tms::Application.routes.draw do
     root "static_pages#dashboard"
     resources :sessions, only: [:new, :create, :destroy]
     resources :supervisors do
-      resources :courses, only: [:show, :index, :update]
+      resources :courses
     end
     resources :users
-    match "/signin",  to: "sessions#new",        via: "get"
-    match "/signout", to: "sessions#destroy",    via: "delete"
+
+    match "/signin",  to: "sessions#new",        via: :get
+    match "/signout", to: "sessions#destroy",    via: :delete
   end
 end

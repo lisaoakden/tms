@@ -1,19 +1,9 @@
 class Admin::CoursesController < ApplicationController
   layout "admin"
-  before_action :choose_course, only: [:show, :index]
-  before_action :correct_supervisor, only: [:update]
-
-  def update
-    if supervisor_signed_in?
-      @course = current_supervisor.courses.find params[:id]
-      unless @course.activated?
-        @course.update_attributes status: "start"
-      end
-      redirect_to admin_supervisor_course_path(current_supervisor.id, @course.id)
-    else
-      redirect_to root_path
-    end
-  end
+  before_action :choose_course,        only: [:show, :index]
+	before_action :signed_in_supervisor, only: :show
+  before_action :correct_supervisor,   except: :destroy
+  before_action :load_object,          except: :destroy
 
   def show
   	if supervisor_signed_in? 
@@ -38,7 +28,44 @@ class Admin::CoursesController < ApplicationController
     end
   end
 
+  def new
+  	@course = Course.new
+  	@course.generate_form_data
+  end
+
+  def create
+  	@course = Course.new course_params
+  	if @course.save
+      if @supervisor.courses << @course
+  		  flash[:success] = "You have created a new course"
+      end
+      redirect_to [:admin, @supervisor, @course]
+    else
+    	render :new
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    if supervisor_signed_in?
+      @course = current_supervisor.courses.find params[:id]
+      unless @course.activated?
+        #TODO Lan must make it as a Course Model method
+        @course.update_attributes status: Course::ACTIVATED
+      end
+      redirect_to [:admin, current_supervisor, @course]
+    else
+      redirect_to root_path
+    end
+  end
+
   private
+  def load_object
+    @supervisor = Supervisor.find params[:supervisor_id]
+  end
+
   def correct_supervisor
     supervisor = Supervisor.find params[:supervisor_id]
     redirect_to root_url unless current_supervisor? supervisor
@@ -47,4 +74,11 @@ class Admin::CoursesController < ApplicationController
   def choose_course
     @supervisor = Supervisor.find params[:supervisor_id]
   end  
+
+  def course_params
+    params.require(:course).permit :name, :start_date, :end_date,
+      course_subjects_attributes: [:course_id, :subject_id, :duration,
+        course_subject_tasks_attributes: [:course_subject_id, :task_id,
+          :subject_id]]
+  end
 end
