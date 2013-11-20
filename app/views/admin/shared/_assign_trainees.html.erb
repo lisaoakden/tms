@@ -1,0 +1,24 @@
+<%= form_tag(admin_supervisor_course_user_list_path(@supervisor_course, @course), id: "user_list_form", method: :patch) %>
+	<%= select_tag :select_trainees, options_from_collection_for_select(@users, "id", "name"), multiple: true %>
+
+		 <input type="button" value=">>" id="left">
+		 <input type="button" value="<<" id="right">
+
+	<%= select_tag :trainees, options_from_collection_for_select(@trainees, "id", "name"), multiple: true %>
+	<div class="center">
+	<%= submit_tag "Update Member", class: "btn btn-large btn-primary" %>
+	<div>
+</form>
+<script>
+  $(function(){
+    $('#user_list_form').on("submit", function(){
+      selectAll($('#trainees'));
+    });
+    $('#left').click(function(){
+      moveSelect($('#select_trainees'), $('#trainees'));
+    });
+    $('#right').click(function(){
+      moveSelect($('#trainees'), $('#select_trainees'));
+    });
+  });
+</script>
