@@ -1,20 +1,54 @@
 PASSWORD = "123456"
-user_list = [ 
-	{name: "MuiNV", email: "mui@framgia.com", password: PASSWORD, password_confirmation: PASSWORD, current_course_id: 1},
-	{name: "OanhLK", email: "oanh@framgia.com", password: PASSWORD, password_confirmation: PASSWORD, current_course_id: 1},
-	{name: "KhanhCD", email: "khanh@framgia.com", password: PASSWORD, password_confirmation: PASSWORD, current_course_id: 1},
-	{name: "QuanNT", email: "quan@framgia.com", password: PASSWORD, password_confirmation: PASSWORD, current_course_id: 2},
-	{name: "VuLD", email: "vu@framgia.com", password: PASSWORD, password_confirmation: PASSWORD, current_course_id: 2},
-	{name: "CongHD", email: "cong@framgia.com", password: PASSWORD, password_confirmation: PASSWORD, current_course_id: 2},
-	{name: "TamDT", email: "tam@framgia.com", password: PASSWORD, password_confirmation: PASSWORD, current_course_id: 3},
-	{name: "DungDT", email: "dung@framgia.com", password: PASSWORD, password_confirmation: PASSWORD, current_course_id: 3},
-	{name: "ChuyenVV", email: "chuyen@framgia.com", password: PASSWORD, password_confirmation: PASSWORD, current_course_id: 4},
-	{name: "HoangTN", email: "hoang@framgia.com", password: PASSWORD, password_confirmation: PASSWORD, current_course_id: 4}
-]
-user_list.each do |user|
-  User.create! user
+
+(1..20).each do |i|
+	name = "Example #{i}"
+	email = "example-#{i}@framgia.com"
+  	User.create!(name: name,
+  						 email: email,
+  						 password: PASSWORD,
+  						 password_confirmation: PASSWORD,
+  						 current_course_id: 1)
 end
 
+(21..40).each do |i|
+	name = "Example #{i}"
+	email = "example-#{i}@framgia.com"
+		User.create!(name: name,
+  						 email: email,
+  						 password: PASSWORD,
+  						 password_confirmation: PASSWORD,
+  						 current_course_id: 2)
+end
+
+(41..60).each do |i|
+	name = "Example #{i}"
+	email = "example-#{i}@framgia.com"
+		User.create!(name: name,
+  						 email: email,
+  						 password: PASSWORD,
+  						 password_confirmation: PASSWORD,
+  						 current_course_id: 3)
+end
+
+(61..70).each do |i|
+	name = "Example #{i}"
+	email = "example-#{i}@framgia.com"
+		User.create!(name: name,
+  						 email: email,
+  						 password: PASSWORD,
+  						 password_confirmation: PASSWORD,
+  						 current_course_id: 4)
+end
+
+(71..99).each do |i|
+	name = "Example #{i}"
+	email = "example-#{i}@framgia.com"
+		User.create!(name: name,
+  						 email: email,
+  						 password: PASSWORD,
+  						 password_confirmation: PASSWORD,
+  						 current_course_id: 0)
+end
 course_list = [
 	{name: "TrainingProject0110", start_date: "01-10-2013", end_date: "01-12-2013"},
 	{name: "TrainingProject0710", start_date: "07-10-2013", end_date: "07-12-2013"},
@@ -72,23 +106,23 @@ s4 = Subject.find(4)
 	Task.create!(subject_id: s4.id, name: "PHP lecture", description: "abc1234566")
 	Task.create!(subject_id: s4.id, name: "final PHP test", description: "abc1234566")
 u = Array.new(11) 
-(1..10).each do |num|
+(1..99).each do |num|
 	u[num] = User.find num
 end
 
-(1..3).each do |num1|
+(1..20).each do |num1|
 	Enrollment.create! user_id: u[num1].id, course_id: 1, joined_date: "01-10-2013", status: 0
 end
 
-(4..6).each do |num2|
+(21..40).each do |num2|
 	Enrollment.create! user_id: u[num2].id, course_id: 2, joined_date: "07-10-2013", status: 0
 end
 
-(7..8).each do |num3|
+(41..60).each do |num3|
 	Enrollment.create! user_id: u[num3].id, course_id: 3, joined_date: "20-10-2013", status: 0
 end
 
-(9..10).each do |num4|
+(61..70).each do |num4|
 	Enrollment.create! user_id: u[num4].id, course_id: 4, joined_date: "27-10-2013", status: 0
 end
 
