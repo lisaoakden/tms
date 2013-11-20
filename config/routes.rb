@@ -1,5 +1,4 @@
 Tms::Application.routes.draw do
-  get "subjects/show"
   root "static_pages#home"
   resources :users do
     resources :enrollments do
@@ -8,11 +7,7 @@ Tms::Application.routes.draw do
       end
     end
   end
-  resources :courses
-  resources :enrollment_tasks
   resources :sessions, only: [:new, :create, :destroy]
-  resources :enrollment_subjects
-  resources :activities
   match "/signin",  to: "sessions#new",         via: "get"
   match "/signout", to: "sessions#destroy",     via: "delete"
   match "/users/:user_id/enrollments/:enrollment_id/:activate", 
@@ -24,7 +19,6 @@ Tms::Application.routes.draw do
     resources :supervisors do
       resources :courses, only: [:show, :index, :update]
     end
-    resources :supervisors
     resources :users
     match "/signin",  to: "sessions#new",        via: "get"
     match "/signout", to: "sessions#destroy",    via: "delete"
