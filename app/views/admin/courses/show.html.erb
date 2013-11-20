@@ -18,7 +18,10 @@
   <tr>
     <td class="subject-info">
       <h4><%= link_to course_subject.subject.name, "#" %></h4>
-      <p><%= "#{l(course_subject.start_date)} - #{l(course_subject.finish_date)}" %></p>
+      <p>
+        <%= "#{l(course_subject.start_date)} - #{l(course_subject.finish_date)}" %>
+        <%= course_subject.status %>
+      </p>
     </td>
     <td>
       <ul class="tasks-sup">
@@ -41,11 +44,11 @@
   </div>
   <div class="span1"></div>
   <div class="span4 dashboard-sector">
-    <h2> Trainees (<%= @course.users.count %>) </h2>
+    <h2> Trainees (<%= @course.users.choose_user_in_course(@course.id).count %>) </h2>
     <div class="command">
       <%= link_to "Edit", "#", method: :patch, class: "btn btn-large btn-primary" %>
     </div>
-    <%= render "shared/show_user_sidebar", users: @course.users, type: "user" %>
+    <%= render "shared/show_user_sidebar", users: @course.users.choose_user_in_course(@course.id), type: "user" %>
   </div>
 </div>
   <div>
