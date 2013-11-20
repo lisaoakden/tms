@@ -12,7 +12,7 @@
       <%= link_to user.name, admin_user_path(user.id) %><br/>
       <%= link_to user.current_course.name, "#" %><br/>
       Status:<%= user.enrollments.by_course(user.current_course_id).first.status %><br/>
-      Subjects:<%= user.enrollments.by_course(user.current_course_id).first.enrollment_subjects.subject_done.count %>/<%= user.current_course.subjects.count %><br/>
+      Subjects:<%= user.enrollments.by_course(user.current_course_id).first.enrollment_subjects.done_subject.count %>/<%= user.current_course.course_subjects.count %><br/>
       <%= link_to "delete", user, method: :delete, data:{confirm: "Are you sure?"}, title: user.name %></td>
     </div>
   </li>
