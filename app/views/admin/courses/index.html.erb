@@ -28,7 +28,7 @@
 				<td><%= course.users.count %></td>
 				<td><%= course.status %></td>
 				<td><%= link_to "edit", "#", class: "btn btn-primary small" %>
-						<%= link_to "delete", course, method: :delete,
+						<%= link_to "delete", admin_supervisor_course_path(current_supervisor, course), method: :delete,
 							confirm: "Are you sure?", class: "btn btn-danger small" %>
 				</td>
 			</tr>
