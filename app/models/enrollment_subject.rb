@@ -1,6 +1,6 @@
 class EnrollmentSubject < ActiveRecord::Base
 	DURATION_SUBJECT = 10
-	
+	DONE = "done"
 	belongs_to :enrollment
 	belongs_to :subject
 	has_many :enrollment_tasks
@@ -8,14 +8,13 @@ class EnrollmentSubject < ActiveRecord::Base
 
   accepts_nested_attributes_for :enrollment_tasks
   
-  #TODO Hang must change this scope name to make it better, such as "done_subject" or "completed_subject"
-  scope :subject_done, ->{where status: "done"}
+  scope :done_subject, ->{where status: DONE}
  
 	def finish_subject!
-		self.update_attributes! status: "done"
+		self.update_attributes! status: DONE
 	end
 
 	def done?
-		self.status == "done"
+		self.status == DONE
 	end
 end
