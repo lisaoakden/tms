@@ -38,7 +38,8 @@ class Course < ActiveRecord::Base
 
   def duration
     ((self.end_date - self.start_date) / 1.day).to_i
-
+  end
+  
   def start
     self.update_attributes status: Course::ACTIVATED
   end 
