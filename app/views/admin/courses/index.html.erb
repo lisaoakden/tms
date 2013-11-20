@@ -3,8 +3,9 @@
 <h1>
 	<%= yield :title %>
 	<small>( <%= @courses.count %> )</small>
-	<%= link_to "Add new", "#", class: "btn btn-primary small" %>
 </h1>
+
+<%= link_to "Add new", "#", class: "btn btn-primary small right above-table" %>
 
 <div class="center">
 	<table>
@@ -23,8 +24,8 @@
 				<td><%= item_index i %></td>
 				<td><%= link_to course.name, admin_supervisor_course_path(current_supervisor, course) %></td>
 				<td><%= l course.start_date %></td>
-				<td><%= pluralize course.course_duration, "day" %></td>
-				<td><%= course.course_subjects.count %></td>
+				<td><%= pluralize course.duration, "day" %></td>
+				<td><%= course.subjects.count %></td>
 				<td><%= course.users.count %></td>
 				<td><%= course.status %></td>
 				<td><%= link_to "edit", "#", class: "btn btn-primary small" %>

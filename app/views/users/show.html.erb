@@ -30,7 +30,7 @@
           </p>
           <p>Duration: <%= pluralize(enrollment_subject.subject.duration, "day") %>
           </p>
-          <p>Expect start date:<%= enrollment_subject.start_date %></p>
+          <p>Expect start date: <%= l enrollment_subject.start_date %></p>
           <div class="subject-status <%= enrollment_subject.status %>">
             <%= enrollment_subject.status %>
           </div>

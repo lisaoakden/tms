@@ -1,7 +1,9 @@
 class Course < ActiveRecord::Base
   ACTIVE = 1
   INACTIVE = 0
+  NEW = "new"
 	ACTIVATED = "start"
+  DONE = "done"
   has_many :enrollments
 	has_many :activities,  foreign_key: "course_id", class_name: Activity.name
 	has_many :users, through: :enrollments
@@ -19,16 +21,27 @@ class Course < ActiveRecord::Base
   validates :start_date, :end_date, presence: true
 
   def activated?
-    self.status == ACTIVATED
+    self.status != NEW
   end
+
+  def inactivated?
+    not activated?
+  end
+
+  def finished?
+    self.status == DONE
+  end
+
+  def unfinished?
+    not finished?
+  end
+
+  def duration
+    ((self.end_date - self.start_date) / 1.day).to_i
 
   def start
     self.update_attributes status: Course::ACTIVATED
   end 
-
-  def course_duration
-    ((self.end_date - self.start_date) / 1.day).to_i
-  end
 
   def generate_form_data
     subjects = Subject.find_all_by_active_flag ACTIVE
