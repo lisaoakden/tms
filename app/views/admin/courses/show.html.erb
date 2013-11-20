@@ -9,12 +9,11 @@
     <li>
       <%= course_subject.subject.name %>: <%= "#{l(course_subject.start_date)} - 
       #{l(course_subject.end_date)}" %>
-      <%= @enrollment_subject.status %>
+      <%= course_subject.status %>
       <% course_subject.course_subject_tasks.each do |course_subject_task| %>
       <ul>
       	<li>
       		<%= course_subject_task.task.name %>
-          <%= @enrollment_task.status %>
       	</li>
       </ul>
       <% end %>

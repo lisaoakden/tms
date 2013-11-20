@@ -18,10 +18,8 @@ class Admin::CoursesController < ApplicationController
   def show
   	if supervisor_signed_in? 
       @supervisor_courses = current_supervisor.supervisor_courses
-       .find params[:id]
+       .find_by course_id: params[:id]
       @course = current_supervisor.courses.find params[:id]
-      @enrollment_subject = EnrollmentSubject.find params[:id]
-      @enrollment_task = EnrollmentTask.find params[:id]
       unless @supervisor_courses.course_id == @course.id && 
         current_supervisor?(@supervisor)
         redirect_to root_path
