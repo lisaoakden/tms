@@ -1,42 +1,51 @@
 <% provide :title, "All users" %>
 <h1><%= @course.name %></h1>
-<%= render "start_course" %>
-<h2>start_date: <%= "#{l(@course.start_date)} - #{l(@course.end_date)}" %>
-  <%= @course.status %></h2> 
-<h2> All Subject in Course </h2>
-<ul>
-	<% @course.course_subjects.each do |course_subject| %>
-    <li>
-      <%= course_subject.subject.name %>: <%= "#{l(course_subject.start_date)} - #{l(course_subject.finish_date)}" %>
-      <% course_subject.course_subject_tasks.each do |course_subject_task| %>
-      <ul>
-      	<li>
-      		<%= course_subject_task.task.name %>
-      	</li>
-      </ul>
-      <% end %>
-    </li>
-  <% end %>
-</ul>
-<h2> All Supervisor in Course </h2>
-<ul>
-  <% @course.supervisors.each do |supervisor| %>
-    <li>
-      <%= gravatar_for supervisor %>
-      <%= link_to supervisor.name, admin_supervisor_path(supervisor) %>
-    </li>
-  <% end %>
-</ul>
-<h2> All Users in Course </h2>
-<ul class="users">
-	<% @course.users.each do |user| %>
-    <li>
-      <%= gravatar_for user %>
-      <%= link_to user.name, admin_user_path(user) %>
-    </li>
-  <% end %>
-</ul>
+<div class="dashboard-sector">
+  <h2>Course information</h2>
+  <div class="command">
+    <%= render "start_course" %>
+  </div>
+  <div class="content">
+    <p>Duration: <%= pluralize @course.duration, "day" %> 
+      (from <%= "#{ l @course.start_date } to #{ l @course.end_date }" %> )</p>
+    <p>Status: <span class="course-status <%= @course.status %>"><%= @course.status %></span></p>
+  </div>
+</div>
 
-<%= link_to "Edit Member", '#', 
-        method: :patch, class: "btn btn-large btn-primary" %>
-<%= link_to "Finish Course", '#', class: "btn btn-large btn-primary" %>
+<h2> Subjects </h2>
+<table>
+  <% @course.course_subjects.each do |course_subject| %>
+  <tr>
+    <td class="subject-info">
+      <h4><%= link_to course_subject.subject.name, "#" %></h4>
+      <p><%= "#{l(course_subject.start_date)} - #{l(course_subject.end_date)}" %></p>
+    </td>
+    <td>
+      <ul class="tasks-sup">
+        <% course_subject.course_subject_tasks.each do |course_subject_task| %>
+        <li><%= course_subject_task.task.name %></li>
+        <% end %>
+      </ul>
+    </td>
+  </tr>
+  <% end %>
+</table>
+
+<div class="row">
+  <div class="span4 dashboard-sector">
+    <h2> Supervisors (<%= @course.supervisors.count %>) </h2>
+    <div class="command">
+      <%= link_to "Edit", "#", method: :patch, class: "btn btn-large btn-primary" %>
+    </div>
+    <%= render "shared/show_user_sidebar", users: @course.supervisors, type: "supervisor" %>
+  </div>
+  <div class="span1"></div>
+  <div class="span4 dashboard-sector">
+    <h2> Trainees (<%= @course.users.count %>) </h2>
+    <div class="command">
+      <%= link_to "Edit", "#", method: :patch, class: "btn btn-large btn-primary" %>
+    </div>
+    <%= render "shared/show_user_sidebar", users: @course.users, type: "user" %>
+  </div>
+</div>
+

@@ -6,6 +6,8 @@ $site_width: 940px;
 
 $color_black: #333538;
 $color_white: #fffcf5;
+$color_gray: #cccccc;
+$color_gray_light: #f3f3f3;
 $color_link_hover: #3498db;
 $color_primary_button: #2269b7;
 $color_primary_button_hover: #5489c4;
@@ -16,7 +18,6 @@ $color_mil_new: #bdc3c7;
 $color_mil_hover: #74c14a;
 $color_mil_finished: #51b11d;
 $color_table_header: #1abc9c;
-$color_table_border: #fefefe;
 $color_table_alt: #f7f7f7;
 $color_table_row_hover: #d0f1ea;
 
@@ -46,6 +47,10 @@ textarea {
 
 .center {
   text-align: center;
+}
+
+.right {
+  text-align: right;
 }
 
 .center h1 {
@@ -242,6 +247,14 @@ input {
   letter-spacing: 0;
 }
 
+.btn.small.above-table {
+  margin-top: -25px;
+}
+
+.btn.right {
+  float: right;
+}
+
 #error_explanation {
   color: #f00;
   ul {
@@ -336,6 +349,8 @@ ul.user-sidebar {
   margin-left: 10px;
 
   li.sub-list {
+    margin-bottom: 15px;
+
     ul {
       list-style: none;
 
@@ -348,6 +363,7 @@ ul.user-sidebar {
     h3.list-header {
       font-weight: normal;
       font-family: $font_title;
+      cursor: pointer;
 
       a {
         color: $color_black;
@@ -373,12 +389,14 @@ ul.user-sidebar {
 
   .user-avatar {
     float: none;
+    width: 30px;
+    height: 30px;
   }
 
   .user-name {
-    margin: 13px 0 0 5px;
-    display: inline-block;
     vertical-align: top;
+    display: inline-block;
+    margin: 13px 0 0 5px;
   }
 }
 
@@ -414,10 +432,6 @@ ul.user-sidebar {
       }
     }
   }
-}
-
-a.dangerous-link {
-  color: #e74c3c;
 }
 
 /* Home page */
@@ -605,6 +619,19 @@ ul.tasks li {
   }
 }
 
+ul.tasks-sup {
+  margin: 0;
+  list-style: none;
+
+  li {
+    display: inline-block;
+    margin: 5px 10px;
+    color: $color_black;
+  }
+}
+
+/* User list */
+
 ul.users {
   list-style: none;
   li {
@@ -614,6 +641,11 @@ ul.users {
     float: left;
     width: 48%;
     margin-left: 15px;
+  }
+
+  .user-avatar {
+    width: 50px;
+    height: 50px;    
   }
 }
 
@@ -639,10 +671,66 @@ ul.activities {
   display: inline-block;
 }
 
+/* Table */
+table {
+  margin: 0 auto 20px;
+  border: 2px solid $color_gray_light;
+  border-top: none;
+
+  tr:nth-child(2n+1) {
+    background-color: $color_table_alt;
+  }
+
+  tr:first-child {
+    th {
+      text-transform: uppercase;
+      background-color: $color_table_header!important;
+      color: $color_white;
+    }
+  }
+
+  tr:hover {
+    background-color: $color_table_row_hover;
+  }
+
+  th, td {
+    font-family: $font_title;
+    padding: 10px;
+    border-left: 1px solid $color_gray_light;
+    text-transform: capitalize;
+  }
+
+  td {
+    color: $color_black;
+  }
+}
+
+/* Special purpose cells */
+td.subject-info {
+
+  h4 {
+    font-size: 16px;
+    font-weight: normal;
+  }
+
+  p {
+    white-space: nowrap;
+  }
+
+  .status {
+    display: none;
+  }
+
+  .status.done {
+    display: block;
+    color: $color_mil_finished;
+  }
+}
+
 /* Dashboard */
 .dashboard-left {
   h2 {
-    background-color: #D9D9D9;
+    background-color: $color_gray;
     padding: 10px;
     color: $color_white;
     margin: 0;
@@ -673,48 +761,13 @@ ul.activities {
 .dashboard-right {
   h1 {
     line-height: 60px;
-    margin-bottom: 28px;
   }
 
   h2 {
-    background-color: #D9D9D9;
+    background-color: $color_gray;
     padding: 10px;
     color: $color_white;
     margin: 0;
-  }
-}
-
-/* Table */
-table {
-  margin: 0 auto;
-  border: 2px solid $color_table_border;
-
-  tr:nth-child(2n+1) {
-    background-color: $color_table_alt;
-  }
-
-  tr:first-child {
-    background-color: $color_table_header!important;
-    color: $color_white;    
-
-    th {
-      text-transform: uppercase;
-    }
-  }
-
-  tr:hover {
-    background-color: $color_table_row_hover;
-  }
-
-  th, td {
-    font-family: $font_title;
-    padding: 10px;
-    border-left: 1px solid $color_table_border;
-    text-transform: capitalize;
-  }
-
-  td {
-    color: $color_black;
   }
 }
 
@@ -728,4 +781,26 @@ table {
   td {
     font-size: 13px;
   }
+}
+
+/* Dashboard sectors */
+.dashboard-sector {
+  position: relative;
+
+  .command {
+    position: absolute;
+    top: -1px;
+    right: 0;
+  }
+
+  .content {
+    margin-top: 10px;
+  }
+}
+
+/* Course status */
+.course-status.done {
+  text-transform: uppercase;
+  font-weight: bold;
+  color: $color_mil_finished;
 }

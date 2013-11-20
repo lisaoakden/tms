@@ -1,20 +1,23 @@
-<h2>All Users</h2>
+<h2>Supervisors</h2>
 <ul class="user-sidebar">
 	<li class="sub-list">
 		<h3 class="list-header">
-			<%= link_to "Supervisors", "javascript: void(0);" %>
+			<%= link_to "All Supervisors", "javascript: void(0);" %>
 			(<%= all_supervisors.count %>)
 			<b class="caret"></b>
 		</h3>
 		<ul>
 			<% all_supervisors.each do |sup| %>
 			<li>
-				<%= gravatar_for sup, size: 30 %>
+				<%= gravatar_for sup %>
 				<%= link_to sup.name, admin_supervisor_path(sup), class: "user-name" %>
 			</li>
 			<% end %>
 		</ul>
 	</li> 
+</ul>
+<h2>Courses</h2>
+<ul class="user-sidebar">
 	<% all_courses.each do |course| %>
 	<li class="sub-list closed">
 		<h3 class="list-header">
@@ -25,8 +28,8 @@
 		<ul>
 			<% course.users.each do |user| %>
 			<li>
-				<%= gravatar_for user, size: 30 %>
-				<%= link_to user.name, user, class: "user-name" %>
+				<%= gravatar_for user %>
+				<%= link_to user.name, admin_user_path(user), class: "user-name" %>
 			</li>
 			<% end %>	
 		</ul>
