@@ -24,7 +24,7 @@
 				<td><%= link_to course.name, admin_supervisor_course_path(current_supervisor, course) %></td>
 				<td><%= l course.start_date %></td>
 				<td><%= pluralize course.course_duration, "day" %></td>
-				<td><%= course.subjects.count %></td>
+				<td><%= course.course_subjects.count %></td>
 				<td><%= course.users.count %></td>
 				<td><%= course.status %></td>
 				<td><%= link_to "edit", "#", class: "btn btn-primary small" %>
