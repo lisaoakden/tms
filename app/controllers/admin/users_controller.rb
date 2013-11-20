@@ -1,4 +1,5 @@
 class Admin::UsersController < ApplicationController
+  layout "admin"
   before_action :signed_in_supervisors, only: [:show, :index]
   before_action :load_object, only: [:show]
   def index

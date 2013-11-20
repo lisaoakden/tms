@@ -1,6 +1,6 @@
 class EnrollmentSubject < ActiveRecord::Base
-	DURATION_SUBJECT = 10
 	DONE = "done"
+
 	belongs_to :enrollment
 	belongs_to :subject
 	has_many :enrollment_tasks
@@ -16,5 +16,9 @@ class EnrollmentSubject < ActiveRecord::Base
 
 	def done?
 		self.status == DONE
+	end
+
+	def end_date
+		self.start_date + self.subject.duration.day
 	end
 end
