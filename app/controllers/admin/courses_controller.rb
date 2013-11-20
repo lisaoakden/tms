@@ -50,12 +50,9 @@ class Admin::CoursesController < ApplicationController
 
   def update
     if supervisor_signed_in?
-      @course = current_supervisor.courses.find params[:id]
-      unless @course.activated?
-        #TODO Lan must make it as a Course Model method
-        @course.update_attributes status: Course::ACTIVATED
-      end
-      redirect_to [:admin, current_supervisor, @course]
+      course = current_supervisor.courses.find params[:id]
+      course.start unless course.activated?
+      redirect_to [:admin, current_supervisor, course]
     else
       redirect_to root_path
     end
