@@ -628,6 +628,14 @@ ul.tasks-sup {
     margin: 5px 10px;
     color: $color_black;
   }
+
+  li.new {
+    color: $color_mil_new;
+  }
+
+  li.done {
+    color: $color_mil_finished;
+  }
 }
 
 /* User list */
@@ -803,4 +811,10 @@ td.subject-info {
   text-transform: uppercase;
   font-weight: bold;
   color: $color_mil_finished;
+}
+
+.user-avatar.admin {
+  float: none;
+  width: 50px;
+  vertical-align: bottom;
 }

@@ -1,53 +1,58 @@
-<div class="user-info-wrap">
-  <%= image_tag "default_user.png", alt: @user.name, class: "user-avatar" %>
-  <div class="user-info">
-    <div class="user-name">
-      <h1><%= @user.name %></h1>
-      <%= link_to "Edit Profile", "#", class: "btn btn-primary small" %>
-    </div>
-    <div class="user-desc"> <%= @user.email %> </div>
+<% provide :title, "Trainee Profile: #{@user.name}" %>
+
+<h1>
+  <%= gravatar_for @user, css_class: "admin" %>
+  <%= @user.name %>
+</h1>
+
+<div class="dashboard-sector">
+  <h2>User information</h2>
+  <div class="command">
+    <%= link_to "Edit Profile", "#", class: "btn btn-large btn-primary" %>
+  </div>
+  <div class="content">
+    <p>Email: <%= @user.email %> </p>
+    <% if @enrollment.enrollment_subjects.any? %>
+      <p>In course: <%= link_to @course.name, admin_supervisor_course_path(current_supervisor, @course) %> 
+        (from <%= l(@course.start_date) %> to <%= l(@course.end_date) %>) </p>
+      <p>Training status: <%= @enrollment.status %></p>
+    <% else %>
+      <p>No course joined.</p>
+    <% end %>
   </div>
 </div>
-<div class="span7 subject-list">
+
+<div class="dashboard-sector">
+  <h2>
+    Training Progress 
+    (<%= @enrollment.enrollment_subjects.subject_done.count %> / <%= @enrollment.enrollment_subjects.count %>
+    subjects finished)
+  </h2>
   <% if @enrollment.enrollment_subjects.any? %>
-    <h2> courses (<%= @course.name %>) 
-      <span> 
-        start_date: <%= l(@course.start_date) %> 
-        end_date: <%= l(@course.end_date) %>
-      </span>
-      <span>
-        <%= @enrollment.status %>
-      </span>
-    </h2>
-    <ul>
-      <% @enrollment.enrollment_subjects.each do |enrollment_subject| %>
-        <li>
-          <h3 class="subject-name">
-            <%= link_to enrollment_subject.subject.name, user_enrollment_enrollment_subject_path(@user.id,
-            enrollment_subject.enrollment_id, enrollment_subject.subject.id) %>
-              <span> 
-                start_date: <%= l(enrollment_subject.start_date) %> 
-                end_ date : <%= l(enrollment_subject.start_date + EnrollmentSubject::DURATION_SUBJECT.day) %> 
-              </span>
-             <span>
-              <%= enrollment_subject.status %>
-            </span>
-          </h3>
+  <table>
+    <% @enrollment.enrollment_subjects.each do |enrollment_subject| %>
+    <tr>
+      <td class="subject-info">
+        <h4><%= link_to enrollment_subject.subject.name, user_enrollment_enrollment_subject_path(@user.id,
+          enrollment_subject.enrollment_id, enrollment_subject.subject.id) %></h4>
+        <p><%= "#{l(enrollment_subject.start_date)} - #{l(enrollment_subject.end_date)}" %></p>
+        <p class="status">
+          <%= enrollment_subject.status %>
+        </p>
+      </td>
+      <td>
+        <ul class="tasks-sup">
           <% enrollment_subject.enrollment_tasks.each do |enrollment_task| %>
-            <h2>
-              <%= enrollment_task.task.name %>  
-              <span>
-                <%= enrollment_task.status %>
-              </span>
-            </h2>
+          <li class="<%= enrollment_task.status %>"><%= enrollment_task.task.name %></li>
           <% end %>
-        </li>
-      <% end %>
-    </ul>
+        </ul>
+      </td>
+    </tr>
+    <% end %>
+  </table>
   <% end %>
 </div>
-<div class="span4">
-  <h2>Activity log</h2>
-  <%= render "shared/all_activities" %>
-  <%= will_paginate @activities %>
-</div>
+
+<h2>Activity log</h2>
+<%= render "shared/all_activities" %>
+<%= will_paginate @activities %>
