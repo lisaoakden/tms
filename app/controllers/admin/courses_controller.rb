@@ -1,21 +1,14 @@
 class Admin::CoursesController < ApplicationController
   layout "admin"
 	before_action :signed_in_supervisor, only: :show
-  before_action :correct_supervisor,   except: :destroy
+  before_action :accessible_course,     only: :show
+  before_action :correct_supervisor,   except: [:destroy, :show]
   before_action :load_object,          except: :destroy
 
   def show
-  	if supervisor_signed_in? 
-      @supervisor_course = current_supervisor.supervisor_courses
-       .find_by course_id: params[:id]
-      @course = Course.find params[:id]
-      unless @supervisor_course.course_id == @course.id && 
-        current_supervisor?(@supervisor)
-        redirect_to root_path
-      end     
-      @users = User.choose_user_in_course User::NO_COURSE
-      @trainees = User.choose_user_in_course @course.id
-    end
+    @users = User.choose_user_in_course User::NO_COURSE
+    @course = Course.find params[:id]
+    @trainees = User.choose_user_in_course @course.id
   end
 
   def index
@@ -79,5 +72,13 @@ class Admin::CoursesController < ApplicationController
       course_subjects_attributes: [:id, :course_id, :subject_id, :duration, :chosen,
         course_subject_tasks_attributes: [:id, :course_subject_id, :task_id, :chosen,
           :subject_id]]
+  end
+
+  def accessible_course
+    supervisor = Supervisor.find params[:supervisor_id]
+    if supervisor.courses.find_by(id: params[:id]).blank? || current_supervisor
+      .courses.find_by(id: params[:id]).blank?
+      redirect_to root_path
+    end
   end
 end
