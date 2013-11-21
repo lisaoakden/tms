@@ -22,11 +22,11 @@
 	<li class="sub-list closed">
 		<h3 class="list-header">
 			<%= link_to course.name, "javascript: void(0);" %>
-			(<%= course.users.count %>)
+			(<%= course.users.choose_user_in_course(course.id).count %>)
 			<b class="caret"></b>
 		</h3>
 		<ul>
-			<% course.users.each do |user| %>
+			<% course.users.choose_user_in_course(course.id).each do |user| %>
 			<li>
 				<%= gravatar_for user %>
 				<%= link_to user.name, admin_user_path(user), class: "user-name" %>

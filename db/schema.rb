@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20131118074357) do
     t.integer  "duration"
     t.datetime "start_date"
     t.datetime "end_date"
+    t.string   "status",      default: "new"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
