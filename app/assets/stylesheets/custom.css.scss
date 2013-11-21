@@ -49,6 +49,11 @@ textarea {
   text-align: center;
 }
 
+.center-child {
+  display: inline-block;
+  margin: 0 auto;
+}
+
 .right {
   text-align: right;
 }
@@ -202,39 +207,37 @@ input {
   height: auto !important;
 }
 
-.btn-primary {
+.btn {
   text-shadow: none;
   background-image: none;
-  color: $color_white;
-  background-color: $color_primary_button;
   @include border-radius(0);
   border: none;
   font-family: $font_title;
-  font-size: 15px;
   text-transform: uppercase;
 
   &:hover, &:focus {
-    background-color: $color_primary_button_hover;
     border: none;
     outline: none;
   }
 }
 
+.btn-primary {
+  color: $color_white;
+  background-color: $color_primary_button;
+  font-size: 15px;
+
+  &:hover, &:focus {
+    background-color: $color_primary_button_hover;
+  }
+}
+
 .btn-danger {
-  text-shadow: none;
-  background-image: none;
   color: $color_white;
   background-color: $color_danger_button;
-  @include border-radius(0);
-  border: none;
-  font-family: $font_title;
   font-size: 15px;
-  text-transform: uppercase;
 
   &:hover, &:focus {
     background-color: $color_danger_button_hover;
-    border: none;
-    outline: none;
   }
 }
 
@@ -253,6 +256,11 @@ input {
 
 .btn.right {
   float: right;
+}
+
+.btn.assignment {
+  display: block;
+  margin: 5px auto;
 }
 
 #error_explanation {
@@ -817,4 +825,48 @@ td.subject-info {
   float: none;
   width: 50px;
   vertical-align: bottom;
+}
+
+/* Modals */
+.modal .modal-header h3 {
+  font-family: $font_title;
+  font-weight: normal;
+}
+
+.modal.large {
+  width: 700px;
+  margin-left: -350px;
+}
+
+.modal.large.fade.in {
+  top: 20%;
+}
+
+/* User assignment */
+.assignment-list-title {
+  font-family: $font_title;
+  color: $color_primary_button;
+  font-size: 13px;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding-bottom: 5px;
+  margin-right: 20px;
+  border-bottom: 1px solid $color_gray;
+}
+
+.assignment-button-wrap {
+  margin-top: 60px;
+}
+
+select[multiple].assignment-select {
+  outline: none;
+  border: none;
+  font-size: 13px;
+  height: 150px;
+
+  option {
+    &:nth-child(2n) {
+      background-color: $color_table_alt;
+    }
+  }
 }

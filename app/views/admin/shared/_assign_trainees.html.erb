@@ -1,14 +1,36 @@
-<%= form_tag(admin_supervisor_course_user_list_path(current_supervisor, @course), id: "user_list_form", method: :patch) %>
-	<%= select_tag :select_trainees, options_from_collection_for_select(@users, "id", "name"), multiple: true %>
-
-		<input type="button" value=">>" id="left">
-		<input type="button" value="<<" id="right">
-
-	<%= select_tag :trainees, options_from_collection_for_select(@trainees, "id", "name"), multiple: true %>
-	<div class="center">
-	<%= submit_tag "Update Member", class: "btn btn-large btn-primary" %>
-	<div>
-</form>
+<div id="assign_trainee_modal" class="modal large hide fade" tabindex="-1" role="dialog" 
+  aria-labelledby="assign_trainee_modal_label" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="assign_trainee_modal_label">Assign trainee to: <%= @course.name %></h3>
+  </div>
+  <div class="modal-body">
+    <%= form_tag(admin_supervisor_course_user_list_path(@supervisor_course, @course), id: "user_list_form", method: :patch) %>
+      <div class="row center">
+        <div class="center-child">
+          <div class="span3">
+            <div class="assignment-list-title">Unassigned trainees</div>
+            <%= select_tag :select_trainees, options_from_collection_for_select(@users, "id", "name"), 
+              multiple: true, class: "assignment-select" %>
+          </div>
+          <div class="span1 center assignment-button-wrap">
+            <input type="button" value=">>" id="left" class="btn btn-success assignment">
+            <input type="button" value="<<" id="right" class="btn btn-danger assignment">
+          </div>
+          <div class="span3">
+            <div class="assignment-list-title">Trainees in course</div>
+            <%= select_tag :trainees, options_from_collection_for_select(@trainees, "id", "name"), 
+              multiple: true, class: "assignment-select" %>
+          </div>
+        </div>
+        <div class="row center">
+          <%= submit_tag "Update Member", class: "btn btn-primary" %>      
+          <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
 
 <script>
   $(function(){
