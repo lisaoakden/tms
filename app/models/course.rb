@@ -85,16 +85,16 @@ class Course < ActiveRecord::Base
 
   def save_course_subject
     course_subjects.each do |course_subject|
-      if course_subject.chosen.present?
-        if course_subject.id.present?
+      if course_subject.chosen.blank?
+        if course_subject.id.blank?
           course_subjects.remove course_subject
         else
           course_subject.active_flag = INACTIVE
         end
       else
         course_subject.course_subject_tasks.each do |course_subject_task|
-          if course_subject_task.chosen.present?
-            if course_subject_task.id.present?
+          if course_subject_task.chosen.blank?
+            if course_subject_task.id.blank?
               course_subject_tasks.remove course_subject_task
             else
               course_subject_task.active_flag = INACTIVE
