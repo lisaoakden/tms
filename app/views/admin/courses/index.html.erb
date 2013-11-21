@@ -3,9 +3,8 @@
 <h1>
 	<%= yield :title %>
 	<small>( <%= @courses.count %> )</small>
+	<%= link_to "Add new", "#", class: "btn btn-primary small" %>
 </h1>
-
-<%= link_to "Add new", "#", class: "btn btn-primary small right above-table" %>
 
 <div class="center">
 	<table>
@@ -26,7 +25,7 @@
 				<td><%= l course.start_date %></td>
 				<td><%= pluralize course.duration, "day" %></td>
 				<td><%= course.subjects.count %></td>
-				<td><%= course.users.count %></td>
+				<td><%= course.users.choose_user_in_course(course.id).count %></td>
 				<td><%= course.status %></td>
 				<td><%= link_to "edit", "#", class: "btn btn-primary small" %>
 						<%= link_to "delete", admin_supervisor_course_path(current_supervisor, course), method: :delete,
