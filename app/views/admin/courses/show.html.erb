@@ -51,7 +51,7 @@
     <%= render "shared/show_user_sidebar", users: @course.users.choose_user_in_course(@course.id), type: "user" %>
   </div>
 </div>
-<% if @supervisor_course.in?(@course.supervisors) %>
+<% if current_supervisor.in?(@course.supervisors) %>
   <div>
     <%= render "admin/shared/assign_trainees" %>
   </div>
