@@ -32,6 +32,10 @@ class User < ActiveRecord::Base
     where.not(id: ids).where current_course_id: course_id
   end
 
+  def unassigned?
+    self.current_course_id == NO_COURSE
+  end
+
   class << self
     def update_coure_id! user, course_id
       user.update_attribute :current_course_id, course_id
