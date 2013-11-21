@@ -1,6 +1,5 @@
 class Admin::CoursesController < ApplicationController
   layout "admin"
-  before_action :choose_course,        only: [:show, :index]
 	before_action :signed_in_supervisor, only: :show
   before_action :correct_supervisor,   except: :destroy
   before_action :load_object,          except: :destroy
@@ -46,12 +45,19 @@ class Admin::CoursesController < ApplicationController
   end
 
   def edit
+    @supervisor = Supervisor.find params[:supervisor_id]
+    @course = Course.find params[:id]
   end
 
   def update
     if supervisor_signed_in?
       course = current_supervisor.courses.find params[:id]
       course.start unless course.activated?
+      if course.update_attributes course_params
+        flash[:success] = "#{course.name} has been successfully edited"
+      else
+        flash[:error] = "Something happen. Course update is failed"
+      end
       redirect_to [:admin, current_supervisor, course]
     else
       redirect_to root_path
@@ -68,14 +74,10 @@ class Admin::CoursesController < ApplicationController
     redirect_to root_url unless current_supervisor? supervisor
   end 
 
-  def choose_course
-    @supervisor = Supervisor.find params[:supervisor_id]
-  end  
-
   def course_params
     params.require(:course).permit :name, :start_date, :end_date,
-      course_subjects_attributes: [:course_id, :subject_id, :duration,
-        course_subject_tasks_attributes: [:course_subject_id, :task_id,
+      course_subjects_attributes: [:id, :course_id, :subject_id, :duration, :chosen,
+        course_subject_tasks_attributes: [:id, :course_subject_id, :task_id, :chosen,
           :subject_id]]
   end
 end

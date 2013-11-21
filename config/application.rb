@@ -21,5 +21,6 @@ module Tms
     # config.i18n.default_locale = :de
     config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
     config.secret_key_base = 'tmstmstms'
+    config.autoload_paths << "#{config.root}/lib/validators"
   end
 end
