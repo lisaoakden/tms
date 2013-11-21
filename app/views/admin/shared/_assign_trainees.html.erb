@@ -1,4 +1,4 @@
-<%= form_tag(admin_supervisor_course_user_list_path(@supervisor_course, @course), id: "user_list_form", method: :patch) %>
+<%= form_tag(admin_supervisor_course_user_list_path(current_supervisor, @course), id: "user_list_form", method: :patch) %>
 	<%= select_tag :select_trainees, options_from_collection_for_select(@users, "id", "name"), multiple: true %>
 
 		<input type="button" value=">>" id="left">
@@ -9,6 +9,7 @@
 	<%= submit_tag "Update Member", class: "btn btn-large btn-primary" %>
 	<div>
 </form>
+
 <script>
   $(function(){
     $('#user_list_form').on("submit", function(){
