@@ -5,46 +5,8 @@
   <div class="span6 offset3">
     <%= form_for [:admin, @supervisor, @course] do |f| %>
       <%= render "shared/course_error_messages" %>
-      <fieldset>
-    		<legend>Basic info:</legend>
-	      <%= f.label :name, "Course Name" %>
-	      <%= f.text_field :name %>
-
-	      <%= f.label :start_date, "Start Date" %>
-	      <%= f.date_field :start_date %>
-
-	      <%= f.label :end_date, "End Date" %>
-	      <%= f.date_field :end_date %>
-    	</fieldset>
-    	<fieldset>
-    		<legend>Select Subjects:</legend> 
-		    <ul>
-	      <%= f.fields_for :course_subjects do |course_subject| %>
-	      	<li>
-	      		<%= course_subject.check_box :subject_id, {class: "subject", checked: false},
-	      			course_subject.object.subject_id, nil %>
-	      		<%= course_subject.object.subject.name unless course_subject.object.subject_id.blank? %>
-	      		<div class="subject-content" style="display:none;">
-		      		<%= course_subject.label :duration, "Subject Duration" %>
-		      		<%= course_subject.number_field :duration, value: course_subject.object.subject.duration,
-		      		  in: 1...30 %>
-		      		<ul>
-		      			<%= course_subject.fields_for :course_subject_tasks do |cst| %>
-		      	    <li>
-		      	    	<%= cst.check_box :task_id, {checked: true}, cst.object.task_id, nil %>
-		      	     	<%= cst.object.task.name if cst.object.task_id.present? %>
-		      	     	<%= cst.hidden_field :subject_id, value: course_subject.object.subject_id %>
-		      	    </li>
-		            <% end %>
-		      		</ul>
-		      	</div>
-	      	</li>
-	      <% end %>
-	      </ul>
-	    </fieldset>
-      <div class="center">
-        <%= f.submit "Create course", class: "btn btn-large btn-primary" %>
-      </div>
+      <%= render "basic_form", f: f %>
+    	<%= render "create_form", f: f %>
     <% end %>
   </div>
 </div>
@@ -52,10 +14,10 @@
 <script>
 	$('.subject').click(function() {
 		if($(this).is(':checked')) {  
-	  	$(this).next('.subject-content').show();
+	  	$(this).parent().next('.subject-content').show();
 	  }
 		else {
-	  	$(this).next('.subject-content').hide();
+	  	$(this).parent().next('.subject-content').hide();
 	  }
 });
 </script>

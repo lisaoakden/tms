@@ -1,0 +1,34 @@
+<fieldset>
+	<legend>Select Subjects:</legend> 
+  <ul>
+    <%= f.fields_for :course_subjects, @course.full_course_subjects do |builder| %>
+    <li class="subject">
+  		<h3>
+  			<%= builder.check_box :chosen, {checked: builder.object.chosen}, true, false %>
+  			<%= builder.object.subject.name if builder.object.subject_id.present? %>
+  		</h3>
+      <%= builder.hidden_field :subject_id, value: builder.object.subject_id %>
+  		
+  		<div class="subject-content">
+    		<%= builder.label :duration, "Subject Duration" %>
+    		<%= builder.number_field :duration, value: builder.object.subject.duration,
+    			in: 1...30 %>
+    		<ul>
+    			<%= builder.fields_for :course_subject_tasks, 
+    				builder.object.full_course_subject_tasks do |sub_builder| %>
+    	    <li>
+    	    	<%= sub_builder.check_box :chosen, {checked: sub_builder.object.chosen}, true, false %>
+    	      <%= sub_builder.object.task.name if sub_builder.object.task_id.present? %>
+    	      <%= sub_builder.hidden_field :task_id, value: sub_builder.object.task_id %>
+    	      <%= sub_builder.hidden_field :subject_id, value: builder.object.subject_id %>
+    	    </li>
+          <% end %>
+    		</ul>
+    	</div>
+  	</li>
+    <% end %>
+  </ul>
+</fieldset>
+<div class="center">
+  <%= f.submit "Update Course", class: "btn btn-large btn-primary" %>
+</div>
