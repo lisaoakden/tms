@@ -13,11 +13,11 @@ class Admin::UserListsController < ApplicationController
     		update_enrollment! trainees_not_in, course
     	end
     	if update_trainees! trainees, course
-		    flash[:success] = "Update successfull!"
+		    flash[:success] = "Course trainees updated successfully."
 		  else
-		  	flash[:error] = "Update failed!"
+		  	flash[:error] = "Course trainees updated failed !!"
 		  end
-	    redirect_to root_path
+	    redirect_to admin_supervisor_course_path(current_supervisor, course)
   	end
 	end
 

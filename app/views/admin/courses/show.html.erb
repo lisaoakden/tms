@@ -48,17 +48,15 @@
   <div class="span4 dashboard-sector">
     <h2> Trainees (<%= @course.users.choose_user_in_course(@course.id).count %>) </h2>
     <div class="command">
-      <%= link_to "Edit", "#", method: :patch, class: "btn btn-large btn-primary" %>
+      <%= link_to "Edit", "#assign_trainee_modal", class: "btn btn-large btn-primary",
+        data: {toggle: "modal"} %>
     </div>
-    <%= render "shared/show_user_sidebar", users: @course.users.choose_user_in_course(@course.id), type: "user" %>
+    <%= render "shared/show_user_sidebar", users: @course.users.choose_user_in_course(@course.id), 
+      type: "user" %>
   </div>
 </div>
 <% if current_supervisor.in?(@course.supervisors) %>
   <div>
     <%= render "admin/shared/assign_trainees" %>
   </div>
-<<<<<<< HEAD
 <% end %>
-=======
-</div>
->>>>>>> finish subject
