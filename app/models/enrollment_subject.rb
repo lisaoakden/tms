@@ -7,8 +7,10 @@ class EnrollmentSubject < ActiveRecord::Base
   has_many :activities, foreign_key: "subject_id", class_name: Activity.name
 
   accepts_nested_attributes_for :enrollment_tasks
-  
+ 
   scope :done_subject, ->{where status: DONE}
+  scope :current_enrollment_subject, ->subject_id{where subject_id: subject_id}
+  scope :subject_done, ->{where status: DONE}
  
 	def finish_subject!
 		self.update_attributes! status: DONE
