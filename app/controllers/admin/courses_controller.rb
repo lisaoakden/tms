@@ -13,10 +13,10 @@ class Admin::CoursesController < ApplicationController
       unless @supervisor_course.course_id == @course.id && 
         current_supervisor?(@supervisor)
         redirect_to root_path
-      end
-  	else
-  		redirect_to root_path
-  	end
+      end     
+      @users = User.choose_user_in_course User::NO_COURSE
+      @trainees = User.choose_user_in_course @course.id
+    end
   end
 
   def index
