@@ -9,12 +9,15 @@
   <li>
     <%= gravatar_for user %>
     <div class="user-info">
-      <%= link_to user.name, admin_user_path(user.id) %><br/>
-      <%= link_to user.current_course.name, "#" %><br/>
-      Status:<%= user.enrollments.current_enrollment(user.current_course_id).first.status %><br/>
-      Subjects:<%= user.enrollments.current_enrollment(user.current_course_id).first.enrollment_subjects.done_subject.count %>/<%= user.current_course.course_subjects.count %><br/>
-
-      <%= link_to "delete", user, method: :delete, data:{confirm: "Are you sure?"}, title: user.name %></td>
+      <%= link_to user.name, admin_user_path(user.id) %><br>
+      <% if user.unassigned? %>
+        No course joined<br>
+      <% else %>
+        <%= link_to user.current_course.name, "#" %><br>
+        Status:<%= user.current_enrollment.status %><br>
+        Subjects:<%= user.current_enrollment.enrollment_subjects.done_subject.count %> / <%= user.current_course.subjects.count %><br>
+      <% end %>
+      <%= link_to "delete", user, method: :delete, confirm: "Are you sure?", title: user.name %></td>
     </div>
   </li>
   <% end %>
