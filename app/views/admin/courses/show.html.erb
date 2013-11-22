@@ -21,8 +21,10 @@
       <p>
         <%= "#{l(course_subject.start_date)} - #{l(course_subject.finish_date)}" %>
         <%= course_subject.status %>
-        <%= link_to "Finish", admin_supervisor_course_course_subject_path(current_supervisor.id, 
-          @course.id, course_subject.id), method: :patch, class: "btn btn-large btn-primary" unless course_subject.done? %>
+        <% if @course.activated? && course_subject.not_done? %>
+          <%= link_to "Finish", admin_supervisor_course_course_subject_path(current_supervisor.id, 
+            @course.id, course_subject.id), method: :patch, class: "btn btn-large btn-primary" %>
+        <% end %>
       </p>
     </td>
     <td>

@@ -20,6 +20,10 @@ class CourseSubject < ActiveRecord::Base
     self.status == FINISH
   end
 
+  def not_done?
+    not done?
+  end
+
   def full_course_subject_tasks
   	course_subject_task_hash = Hash.new
     course_subject_tasks = self.course_subject_tasks.where active_flag: ACTIVE
