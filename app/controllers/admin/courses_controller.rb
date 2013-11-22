@@ -45,11 +45,14 @@ class Admin::CoursesController < ApplicationController
   def update
     if supervisor_signed_in?
       course = current_supervisor.courses.find params[:id]
-      course.start unless course.activated?
-      if course.update_attributes course_params
-        flash[:success] = "#{course.name} has been successfully edited"
+      if params[:course]
+        if course.update_attributes course_params
+          flash[:success] = "#{course.name} has been successfully edited"
+        else
+          flash[:error] = "Something happen. Course update is failed"
+        end
       else
-        flash[:error] = "Something happen. Course update is failed"
+        course.start unless course.activated?
       end
       redirect_to [:admin, current_supervisor, course]
     else
