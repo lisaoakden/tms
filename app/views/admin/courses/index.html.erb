@@ -3,9 +3,9 @@
 <h1>
 	<%= yield :title %>
 	<small>( <%= @courses.count %> )</small>
-	<%= link_to "Add new", "#", class: "btn btn-primary small" %>
 </h1>
 
+<%= link_to "Add new", new_admin_supervisor_course_path, class: "btn btn-primary small right above-table" %>
 <div class="center">
 	<table>
 		<tr>

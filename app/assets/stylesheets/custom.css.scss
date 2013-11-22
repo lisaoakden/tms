@@ -50,8 +50,13 @@ textarea {
 }
 
 .center-child {
+  @include clearfix;
   display: inline-block;
   margin: 0 auto;
+}
+
+.left {
+  text-align: left;
 }
 
 .right {
@@ -60,6 +65,10 @@ textarea {
 
 .center h1 {
   margin-bottom: 10px;
+}
+
+input[type="checkbox"] {
+  vertical-align: top;
 }
 
 /* typography */
@@ -700,7 +709,7 @@ table {
   tr:first-child {
     th {
       text-transform: uppercase;
-      background-color: $color_table_header!important;
+      background-color: $color_table_header;
       color: $color_white;
     }
   }
@@ -741,6 +750,66 @@ td.subject-info {
     display: block;
     color: $color_mil_finished;
   }
+}
+
+/* Datepicker */
+table.ui-datepicker-calendar {
+  tr:first-child {
+    th {
+      background-color: $color_gray_light;
+      color: $color_danger_button;
+      border: none;
+      font-weight: normal;
+      font-size: 13px;
+    }
+  }
+
+  tr:nth-child(2n+1) {
+    background-color: $color_gray_light;
+  }
+
+  tr {
+    background-color: $color_gray_light;
+
+    td {
+      border: none;
+      line-height: 10px;
+      text-align: center;
+
+      a {
+        color: $color_black;
+
+        &:hover {
+          color: $color_link_hover;
+        }
+      }
+    }
+
+    &:hover {
+      background-color: $color_gray_light;
+    }
+  }
+}
+
+.ui-datepicker-next {
+  @include calendar_button;
+  right: 15px;
+  border-left: 6px solid $color_gray_light;
+}
+
+.ui-datepicker-prev {
+  @include calendar_button;
+  left: 15px;
+  border-right: 6px solid $color_gray_light;
+}
+
+.ui-datepicker-title {
+  line-height: 40px;
+  font-family: $font_title;
+  font-size: 16px;
+  color: $color_gray_light;
+  background-color: $color_table_header;
+  text-align: center;  
 }
 
 /* Dashboard */
@@ -869,4 +938,30 @@ select[multiple].assignment-select {
       background-color: $color_table_alt;
     }
   }
+}
+
+/* Used in add / edit course */
+.subject-duration input, .subject-tasks ul {
+  display: none;
+}
+
+.subject-duration {
+  width: 100px;
+
+  input {
+    margin-bottom: 0;
+  }
+}
+
+.subject-tasks {
+  width: 350px;
+
+  ul {
+    list-style: none;
+  }
+}
+
+/* Fieldsets */
+fieldset legend {
+  font-family: $font_title;
 }

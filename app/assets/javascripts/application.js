@@ -11,10 +11,19 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery.ui.all
 //= require jquery_ujs
 //= require bootstrap
 //= require turbolinks
 //= require_tree .
+$(function() {
+	$('.date-field').datepicker({ 
+		nextText: "",
+		prevText: "",
+		dateFormat: "dd/mm/yy"
+	});
+})
+
 function moveSelect(source, destination) {
   $(source).find(":selected").each(function() {
     $(destination).append($(this).clone());
