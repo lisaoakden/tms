@@ -21,15 +21,15 @@
 		<% @courses.each_with_index do |course, i| %>
 			<tr>
 				<td><%= item_index i %></td>
-				<td><%= link_to course.name, admin_supervisor_course_path(current_supervisor, course) %></td>
+				<td><%= link_to course.name, [:admin, current_supervisor, course] %></td>
 				<td><%= l course.start_date %></td>
 				<td><%= pluralize course.duration, "day" %></td>
 				<td><%= course.subjects.count %></td>
 				<td><%= course.users.choose_user_in_course(course.id).count %></td>
 				<td><%= course.status %></td>
-				<td><%= link_to "edit", "#", class: "btn btn-primary small" %>
-						<%= link_to "delete", admin_supervisor_course_path(current_supervisor, course), method: :delete,
-							confirm: "Are you sure?", class: "btn btn-danger small" %>
+				<td>
+					<%= link_to "edit", [:edit_admin, current_supervisor, course], class: "btn btn-primary small" %>
+					<%= link_to "delete", [:admin, current_supervisor, course], method: :delete, confirm: "Are you sure?", class: "btn btn-danger small" %>
 				</td>
 			</tr>
 		<% end %>
