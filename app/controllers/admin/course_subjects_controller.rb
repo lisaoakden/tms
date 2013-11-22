@@ -3,7 +3,8 @@ class Admin::CourseSubjectsController < ApplicationController
 
   def update
     @course_subject = CourseSubject.find params[:id]
-    users = Enrollment.enrollment_subject_not_finish params[:course_id], params[:id]
+    users = Enrollment.enrollment_subject_not_finish params[:course_id],
+      @course_subject.subject_id
     @course = current_supervisor.courses.find params[:course_id]
     if @course_subject.not_done?
       @course_subject.update_attributes! status: CourseSubject::FINISH
