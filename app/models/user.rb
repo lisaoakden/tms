@@ -19,26 +19,12 @@ class User < ActiveRecord::Base
 
   validates :password, length: {minimum: 6}
 
-  scope :choose_user_no_course, ->current_course_id do 
-    where.not current_course_id: current_course_id
-  end
-  
-  scope :choose_user_not_in_course, ->ids, course_id do 
-    where.not(id: ids).where current_course_id: course_id
-  end
-
   scope :free, ->{where current_course_id: nil}
 
   def free?
     self.current_course_id.blank?
   end
 
-  class << self
-    def update_coure_id! user, course_id
-      user.update_attribute :current_course_id, course_id
-    end
-  end
-  
   def User.new_remember_token
     SecureRandom.urlsafe_base64
   end

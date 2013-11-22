@@ -1,7 +1,5 @@
 class Course < ActiveRecord::Base
-  EXIST     = 0
-  
-  before_update :save_course_subject
+  EXISTED = 0  
   has_many :enrollments
 	has_many :activities,  foreign_key: "course_id", class_name: Activity.name
 	has_many :users, through: :enrollments
@@ -16,8 +14,6 @@ class Course < ActiveRecord::Base
   end
   accepts_nested_attributes_for :enrollments
 
-  scope :choose_course, ->course_id {find course_id}
-
   validates :name, presence: true, length: {minimum: 6}
   validates :start_date, presence: true
   validates :end_date, presence: true, is_after_start_date: true
@@ -27,7 +23,7 @@ class Course < ActiveRecord::Base
   end
 
   def has_trainee?
-    self.users.count > EXIST
+    self.users.count > EXISTED
   end
 
   def duration
@@ -50,6 +46,25 @@ class Course < ActiveRecord::Base
       enrollment.user.current_course_id = self.id
     end
     self.update_attributes! status: Settings.status.started
+  end
+
+  def assign_unassign trainees_assign, trainees_unassign
+    trainees_assign.each do |trainee_assign|
+      enroll = trainee_assign.enrollments.find_by self.id
+      if enroll
+        enroll.active_flag = Settings.flag.active
+        self.enrollments << enroll
+      else
+        self.enrollments.build(user_id: trainee_assign.id, course_id: self.id, 
+          status: Settings.status.new, active_flag: Settings.flag.active)
+      end
+    end
+    trainees_unassign.each do |trainee_unassign|
+      enroll = trainee_unassign.enrollments.find_by self.id
+      enroll.active_flag = Settings.flag.inactive
+      self.enrollments << enroll
+    end
+    self.update_attributes! status: Settings.status.new
   end
 
   def generate_form_data

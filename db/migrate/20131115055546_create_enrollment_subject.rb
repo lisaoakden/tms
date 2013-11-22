@@ -5,9 +5,9 @@ class CreateEnrollmentSubject < ActiveRecord::Migration
       t.integer  "user_id"
       t.integer  "course_id"
 	    t.integer  "enrollment_id"
-	    t.string  "status",                limit: 1, default: "N", null: false
+	    t.string   "status", limit: 1, default: Settings.status.new, null: false
 	    t.datetime "start_date"
-	    t.integer  "active_flag",          default: 1
+	    t.integer  "active_flag", default: 1
       t.timestamps
   	end
   	add_index "enrollment_subjects", ["enrollment_id"], name: "fk_Enroll_idx", using: :btree

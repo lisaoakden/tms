@@ -56,3 +56,6 @@
     <%= render "shared/show_user_sidebar", users: @course.users, type: "user" %>
   </div>
 </div>
+<% if current_supervisor.in?(@course.supervisors) && @course.status == Settings.status.new %>
+    <%= render "admin/shared/assign_trainees" %>
+<% end %>

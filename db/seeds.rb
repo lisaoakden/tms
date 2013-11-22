@@ -6,8 +6,7 @@ PASSWORD = "123456"
   	User.create!(name: name,
   						 email: email,
   						 password: PASSWORD,
-  						 password_confirmation: PASSWORD,
-  						 current_course_id: 1)
+  						 password_confirmation: PASSWORD)
 end
 
 (21..40).each do |i|
@@ -46,13 +45,14 @@ end
 		User.create!(name: name,
   						 email: email,
   						 password: PASSWORD,
-  						 password_confirmation: PASSWORD)
+  						 password_confirmation: PASSWORD
+  						 )
 end
 course_list = [
 	{name: "TrainingProject0110", start_date: "01-10-2013", end_date: "01-12-2013"},
-	{name: "TrainingProject0710", start_date: "07-10-2013", end_date: "07-12-2013"},
-	{name: "TrainingProject2010", start_date: "20-10-2013", end_date: "20-12-2013"},
-	{name: "TrainingProject2710", start_date: "27-10-2013", end_date: "27-12-2013"},
+	{name: "TrainingProject0710", start_date: "07-10-2013", end_date: "07-12-2013", status: Settings.status.started},
+	{name: "TrainingProject2010", start_date: "20-10-2013", end_date: "20-12-2013", status: Settings.status.started},
+	{name: "TrainingProject2710", start_date: "27-10-2013", end_date: "27-12-2013", status: Settings.status.started}
 ]
 
 course_list.each do |course|
@@ -110,19 +110,19 @@ u = Array.new(11)
 end
 
 (1..20).each do |num1|
-	Enrollment.create! user_id: u[num1].id, course_id: 1, joined_date: "01-10-2013"
+	Enrollment.create! user_id: u[num1].id, course_id: 1
 end
 
 (21..40).each do |num2|
-	Enrollment.create! user_id: u[num2].id, course_id: 2, joined_date: "07-10-2013"
+	Enrollment.create! user_id: u[num2].id, course_id: 2
 end
 
 (41..60).each do |num3|
-	Enrollment.create! user_id: u[num3].id, course_id: 3, joined_date: "20-10-2013"
+	Enrollment.create! user_id: u[num3].id, course_id: 3
 end
 
 (61..70).each do |num4|
-	Enrollment.create! user_id: u[num4].id, course_id: 4, joined_date: "27-10-2013"
+	Enrollment.create! user_id: u[num4].id, course_id: 4
 end
 
 e = Array.new(11)
