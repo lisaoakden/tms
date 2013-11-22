@@ -1,12 +1,13 @@
 <% provide(:title, "Edit Course") %>
 <h1>Edit Course</h1>
 
-<div class="row">
-  <div class="span6 offset3">
-    <%= form_for [:admin, @supervisor, @course] do |f| %>
-      <%= render "shared/course_error_messages" %>
-      <%= render "basic_form", f: f %>
-    	<%= render "edit_form", f: f %>
-    <% end %>
-  </div>
+<div class="span9">
+	<%= form_for [:admin, @supervisor, @course] do |f| %>
+		<%= render "shared/course_error_messages" %>
+		<%= render "basic_form", f: f %>
+		<%= render "edit_form", f: f %>
+		<div class="center">
+			<%= f.submit "Update Course", class: "btn btn-large btn-primary" %>
+		</div>
+	<% end %>
 </div>

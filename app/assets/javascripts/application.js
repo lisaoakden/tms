@@ -18,10 +18,21 @@
 //= require_tree .
 $(function() {
 	$('.date-field').datepicker({ 
-		nextText: "",
-		prevText: "",
-		dateFormat: "dd/mm/yy"
+		nextText: '',
+		prevText: '',
+		dateFormat: 'dd/mm/yy'
 	});
+
+  $('.subject').click(function() {
+    if($(this).is(':checked')) {
+      $(this).closest('tr').find('td.subject-duration').find('input').show();
+      $(this).closest('tr').find('td.subject-tasks').find('ul').show();
+    }
+    else {
+      $(this).closest('tr').find('td.subject-duration').find('input').hide();
+      $(this).closest('tr').find('td.subject-tasks').find('ul').hide();
+    }
+  });
 })
 
 function moveSelect(source, destination) {
