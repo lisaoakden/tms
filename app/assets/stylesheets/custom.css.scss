@@ -941,8 +941,10 @@ select[multiple].assignment-select {
 }
 
 /* Used in add / edit course */
-.subject-duration input, .subject-tasks ul {
-  display: none;
+table.add-course {
+  .subject-duration input, .subject-tasks ul {
+    display: none;
+  }
 }
 
 .subject-duration {
