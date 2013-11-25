@@ -6,15 +6,16 @@ class Enrollment < ActiveRecord::Base
   belongs_to :course
   has_many :conclusions 
   has_many :enrollment_subjects
-  
-  scope :user_enrollment_course, ->course_id, user_id do 
+  accepts_nested_attributes_for :enrollment_subjects
+
+  scope :user_enrollment_course, ->course_id, user_id do
     where course_id: course_id, user_id: user_id
   end
   scope :find_enrollments, -> course_id{where course_id: course_id, active_flag: 1}
   scope :joins_and_find_erollments_subject, -> subject_id do
     joins(:enrollment_subjects).where("enrollment_subjects.subject_id = ? AND enrollment_subjects.active_flag = 1", subject_id)
   end
-  
+
   def activated?
     self.status == ACTIVATED
   end

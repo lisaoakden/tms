@@ -3,8 +3,9 @@ class Course < ActiveRecord::Base
 
   ACTIVE    = 1
   INACTIVE  = 0
+  EXIST     = 0
   NEW       = "new"
-	ACTIVATED = "start"
+  ACTIVATED = "start"
   DONE      = "done"
   
   has_many :enrollments
@@ -18,36 +19,43 @@ class Course < ActiveRecord::Base
 
   accepts_nested_attributes_for :course_subjects, 
     reject_if: ->attributes {attributes["chosen"].blank?}
+  accepts_nested_attributes_for :enrollments
 
   scope :choose_course, ->course_id {find course_id}
-  
+
   validates :name, presence: true, length: {minimum: 6}
   validates :start_date, presence: true
   validates :end_date, presence: true, is_after_start_date: true
 
-  def activated?
-    self.status != NEW
+  def started?
+    self.status == ACTIVATED
   end
 
-  def inactivated?
-    not activated?
-  end
-
-  def finished?
-    self.status == DONE
-  end
-
-  def unfinished?
-    not finished?
+  def has_trainee?
+    self.users.count > EXIST
   end
 
   def duration
     ((self.end_date - self.start_date) / 1.day).to_i
   end
-  
-  def start
-    self.update_attributes status: Course::ACTIVATED
-  end 
+
+  def start!
+    self.enrollments.each do |enrollment| 
+      self.course_subjects.each do |course_subject|
+        enrollment_subject = enrollment.enrollment_subjects.build(
+          subject_id: course_subject.subject_id, status: NEW, 
+          course_id: enrollment.course_id, user_id: enrollment.user_id)
+        course_subject.course_subject_tasks.each do |course_subject_task|
+          enrollment_subject.enrollment_tasks.build(
+            subject_id: course_subject.subject_id, 
+            task_id: course_subject_task.task_id, status: NEW)
+        end
+      end
+      enrollment.status = ACTIVE
+      enrollment.user.current_course_id = self.id
+    end
+    self.update_attributes status: ACTIVATED
+  end
 
   def generate_form_data
     subjects = Subject.find_all_by_active_flag ACTIVE
