@@ -1,23 +1,24 @@
-<% provide :title, "All users" %>
-<h1>All trainees</h1>
-<h3>Courses:</h3>
-<div class ="select">
-<%= select_tag "course_id", options_from_collection_for_select(@courses, "id", "name", params["course_id"]), include_blank: true, id: "course_select" %> 
-</div>
+<% provide :title, "All trainees" %>
+<h1><%= yield :title %></h1>
+<h3>Courses:
+  <%= select_tag "course_id", options_from_collection_for_select(@courses, "id", "name", params["course_id"]), include_blank: true, id: "course_select", class: "courses" %>
+</h3>
 <ul class="users">
   <% @users.each do |user| %>
   <li>
     <%= gravatar_for user %>
     <div class="user-info">
-      <%= link_to user.name, admin_user_path(user.id) %><br>
+      <h3>
+        <%= link_to user.name, admin_user_path(user) %>
+        <%= link_to "delete", user, method: :delete, confirm: "Are you sure?", title: "Delete #{user.name}", class: "link-danger" %>
+      </h3>
       <% if user.unassigned? %>
         No course joined<br>
       <% else %>
-        <%= link_to user.current_course.name, [:admin, current_supervisor, user.current_course] %><br>
+        Course: <%= link_to user.current_course.name, [:admin, current_supervisor, user.current_course] %><br>
         Status:<%= user.current_enrollment.status %><br>
         Subjects:<%= user.current_enrollment.enrollment_subjects.done_subject.count %> / <%= user.current_course.subjects.count %><br>
       <% end %>
-      <%= link_to "delete", user, method: :delete, confirm: "Are you sure?", title: user.name %></td>
     </div>
   </li>
   <% end %>

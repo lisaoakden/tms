@@ -109,7 +109,9 @@ h2 {
 
 h3 {
   font-size: 16px;
+  font-family: $font_title;
   margin: 15px 0 10px 0;
+  font-weight: normal;
 }
 
 p {
@@ -272,6 +274,15 @@ input {
   margin: 5px auto;
 }
 
+.link-danger {
+  color: $color_danger_button;
+  font-size: 13px;
+
+  &:hover {
+    color: $color_danger_button_hover;
+  }
+}
+
 #error_explanation {
   color: #f00;
   ul {
@@ -348,6 +359,10 @@ input {
     margin: 0;
     display: inline-block;
     vertical-align: bottom;
+  }
+
+  h3 {
+    margin-top: 0;
   }
 
   .user-desc {
@@ -665,7 +680,6 @@ ul.users {
     display: inline;
     float: left;
     width: 48%;
-    margin-left: 15px;
   }
 
   .user-avatar {
@@ -691,9 +705,11 @@ ul.activities {
 }
 
 /* Select_tag */
-.select {
+select.courses {
   width: 200px;
   display: inline-block;
+  vertical-align: baseline;
+  margin: 7px;
 }
 
 /* Table */
