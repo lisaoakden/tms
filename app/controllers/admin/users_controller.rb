@@ -15,8 +15,7 @@ class Admin::UsersController < ApplicationController
   end
   
   def show
-    @enrollment = @user.enrollments.current_enrollment(
-      @user.current_course_id).first 
+    @enrollment = @user.current_enrollment
     @course = @user.current_course
     @activities = @user.activities
       .paginate page: params[:page], per_page: Settings.items.per_page
