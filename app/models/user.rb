@@ -1,5 +1,4 @@
 class User < ActiveRecord::Base
-  NO_COURSE = 0
   has_secure_password
   belongs_to :current_course, class_name: Course.name
   has_many :enrollment_subjects, through: :enrollments
@@ -32,8 +31,8 @@ class User < ActiveRecord::Base
     where.not(id: ids).where current_course_id: course_id
   end
 
-  def unassigned?
-    self.current_course_id == NO_COURSE
+  def free?
+    self.current_course_id.blank?
   end
 
   class << self

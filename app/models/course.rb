@@ -14,6 +14,7 @@ class Course < ActiveRecord::Base
 	has_many :subjects, through: :course_subjects
 	has_many :supervisor_courses
 	has_many :supervisors, through: :supervisor_courses
+  has_many :current_users, class_name: User.name, foreign_key: :current_course_id
 
   accepts_nested_attributes_for :course_subjects, 
     reject_if: ->attributes {attributes["chosen"].blank?}
