@@ -25,7 +25,7 @@
 <div class="dashboard-sector">
   <h2>
     Training Progress 
-    (<%= @enrollment.enrollment_subjects.subject_done.count %> / <%= @enrollment.enrollment_subjects.count %>
+    (<%= @enrollment.enrollment_subjects.finished_subject.count %> / <%= @enrollment.enrollment_subjects.count %>
     subjects finished)
   </h2>
   <% if @enrollment.enrollment_subjects.any? %>

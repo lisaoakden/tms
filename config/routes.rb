@@ -24,8 +24,7 @@ Tms::Application.routes.draw do
         resources :course_subjects, only: :update
       end
     end
-    resources :users
-
+    resources :users, only: [:index, :show]
     match "/signin",  to: "sessions#new",        via: :get
     match "/signout", to: "sessions#destroy",    via: :delete
   end

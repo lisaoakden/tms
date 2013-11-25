@@ -5,7 +5,7 @@ class Admin::UsersController < ApplicationController
   def index
     if params[:course_id]
       course = Course.find params[:course_id]
-      @users = course.users.choose_user_in_course(params[:course_id])
+      @users = course.current_users
         .paginate page: params[:page], per_page: Settings.items.per_page
     else 
       @users = User.all.paginate page: params[:page], 
