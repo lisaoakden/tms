@@ -30,7 +30,7 @@
           Start date not given
         <% end %>
         <%= course_subject.status %>
-        <% if @course.activated? && course_subject.not_done? %>
+        <% if @course.activated? && course_subject.unfinish? %>
           <%= link_to "Finish", admin_supervisor_course_course_subject_path(current_supervisor.id, 
             @course.id, course_subject.id), method: :patch, class: "btn btn-large btn-primary" %>
         <% end %>

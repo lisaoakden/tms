@@ -15,13 +15,9 @@ class CourseSubject < ActiveRecord::Base
   def finish_date
   	self.start_date + self.duration.days
   end
-  
-  def done?
-    self.status == FINISH
-  end
 
-  def not_done?
-    not done?
+  def unfinish?
+    self.status != FINISH
   end
 
   def full_course_subject_tasks
