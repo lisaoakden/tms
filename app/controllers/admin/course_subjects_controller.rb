@@ -1,5 +1,5 @@
 class Admin::CourseSubjectsController < ApplicationController
-  before_action :correct_supervisor, only: [:update]
+  before_action :correct_supervisor, only: :update
 
   def update
     @course_subject = CourseSubject.find params[:id]

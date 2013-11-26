@@ -11,8 +11,9 @@ class Course < ActiveRecord::Base
 	has_many :supervisors, through: :supervisor_courses
   has_many :current_users, class_name: User.name, foreign_key: :current_course_id
 
-  accepts_nested_attributes_for :course_subjects, 
-    reject_if: ->attributes {attributes["chosen"].blank?}
+  accepts_nested_attributes_for :course_subjects, reject_if: ->attributes do
+    attributes[:active_flag] == Settings.flag.inactive.to_s && attributes[:id].blank?
+  end
   accepts_nested_attributes_for :enrollments
 
   scope :choose_course, ->course_id {find course_id}
@@ -48,11 +49,11 @@ class Course < ActiveRecord::Base
       enrollment.status = Settings.status.started
       enrollment.user.current_course_id = self.id
     end
-    self.update_attributes status: Settings.status.started
+    self.update_attributes! status: Settings.status.started
   end
 
   def generate_form_data
-    subjects = Subject.find_all_by_active_flag Settings.flag.active
+    subjects = Subject.where active_flag: Settings.flag.active
     if subjects.present?
       subjects.each do |subject|
         course_subject = course_subjects.build subject_id: subject.id
@@ -69,42 +70,19 @@ class Course < ActiveRecord::Base
     course_subjects.each do |course_subject|
       course_subject_hash[course_subject.subject_id] = course_subject
     end
-    subjects = Subject.find_all_by_active_flag ACTIVE
+    subjects = Subject.find_all_by_active_flag Settings.flag.active
     full_course_subjects = []
     if subjects.present?
       subjects.each do |subject|
         if course_subject_hash.has_key? subject.id 
           course_subject = course_subject_hash[subject.id]
-          course_subject.chosen = true
         else
-          course_subject = CourseSubject.new subject_id: subject.id
-          course_subject.chosen = false
+          course_subject = CourseSubject.new subject_id: subject.id,
+            active_flag: Settings.flag.inactive
         end
         full_course_subjects << course_subject
       end
     end
     full_course_subjects
-  end
-
-  def save_course_subject
-    course_subjects.each do |course_subject|
-      if course_subject.chosen.blank?
-        if course_subject.id.blank?
-          course_subjects.remove course_subject
-        else
-          course_subject.active_flag = Settings.flag.inactive
-        end
-      else
-        course_subject.course_subject_tasks.each do |course_subject_task|
-          if course_subject_task.chosen.blank?
-            if course_subject_task.id.blank?
-              course_subject_tasks.remove course_subject_task
-            else
-              course_subject_task.active_flag = Settings.flag.inactive
-            end
-          end
-        end
-      end
-    end
   end
 end

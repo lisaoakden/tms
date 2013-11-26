@@ -17,7 +17,7 @@ class Admin::UserListsController < ApplicationController
 		  else
 		  	flash[:error] = "Course trainees updated failed !!"
 		  end
-	    redirect_to admin_supervisor_course_path(current_supervisor, course)
+	    redirect_to [:admin, current_supervisor, course]
   	end
 	end
 

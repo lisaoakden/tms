@@ -1,6 +1,7 @@
 class EnrollmentsController < ApplicationController
   before_action :signed_in_user, only: [:update, :show]
-  before_action :correct_user,   only: [:update]
+  before_action :correct_user,   only: :update
+
 	def update
 		user = User.find params[:user_id], include: :enrollments
     enrollment = user.enrollments.find_by course_id: user.current_course_id
@@ -28,4 +29,3 @@ class EnrollmentsController < ApplicationController
     redirect_to root_url unless current_user? user
   end 
 end
-
