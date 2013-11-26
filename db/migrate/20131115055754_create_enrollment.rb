@@ -4,7 +4,7 @@ class CreateEnrollment < ActiveRecord::Migration
 	    t.integer  "user_id"
 	    t.integer  "course_id"
 	    t.datetime "joined_date"
-	    t.integer  "status",                  null: false
+	    t.string  "status", 		limit: 1, 		default: "N",		null: false
 	    t.integer  "active_flag", default: 1
       t.timestamps
   	end

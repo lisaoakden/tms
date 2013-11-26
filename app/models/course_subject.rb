@@ -1,10 +1,5 @@
 class CourseSubject < ActiveRecord::Base
   attr_accessor :chosen
-
-  #TODO use  gem https://github.com/pluginaweek/state_machine
-  ACTIVE   = 1
-  INACTIVE = 0
-  FINISH   = "done"
   belongs_to :course
   belongs_to :subject
   has_many :course_subject_tasks
@@ -17,12 +12,12 @@ class CourseSubject < ActiveRecord::Base
   end
 
   def unfinish?
-    self.status != FINISH
+    self.status != Settings.status.finished
   end
 
   def full_course_subject_tasks
   	course_subject_task_hash = Hash.new
-    course_subject_tasks = self.course_subject_tasks.where active_flag: ACTIVE
+    course_subject_tasks = self.course_subject_tasks.where active_flag: Settings.flag.active
     course_subject_tasks.each do |course_subject_task|
       course_subject_task_hash[course_subject_task.task_id] = course_subject_task
     end

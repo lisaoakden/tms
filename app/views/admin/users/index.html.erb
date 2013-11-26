@@ -16,7 +16,7 @@
         No course joined<br>
       <% else %>
         Course: <%= link_to user.current_course.name, [:admin, current_supervisor, user.current_course] %><br>
-        Status:<%= user.current_enrollment.status %><br>
+        Status: <%= t "status.#{user.current_enrollment.status}" %><br>
         Subjects:<%= user.current_enrollment.enrollment_subjects.finished_subject.count %> / <%= user.current_course.subjects.count %><br>
       <% end %>
     </div>

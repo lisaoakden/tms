@@ -18,7 +18,6 @@ class User < ActiveRecord::Base
     uniqueness: {case_sensitive: false}
 
   validates :password, length: {minimum: 6}
-  validates :current_course_id, presence: true
 
   scope :choose_user_no_course, ->current_course_id do 
     where.not current_course_id: current_course_id

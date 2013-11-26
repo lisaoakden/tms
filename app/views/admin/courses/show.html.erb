@@ -8,7 +8,7 @@
   <div class="content">
     <p>Duration: <%= pluralize @course.duration, "day" %> 
       (from <%= "#{ l @course.start_date } to #{ l @course.end_date }" %> )</p>
-    <p>Status: <span class="course-status <%= @course.status %>"><%= @course.status %></span></p>
+    <p>Status: <span class="course-status <%= @course.status %>"><%= t "status.#{@course.status}" %></span></p>
   </div>
 </div>
 
@@ -20,9 +20,9 @@
       <h4><%= course_subject.subject.name %></h4>
       <p>
           <%= "#{l course_subject.start_date} - #{l course_subject.finish_date}" %>
-        <%= course_subject.status %>
+        <%= t "status.#{course_subject.status}" %>
         <% if @course.started? && course_subject.unfinish? %>
-          <%= link_to "Finish", admin_supervisor_course_course_subject_path(current_supervisor.id, 
+          <%= link_to "Finish", admin_supervisor_course_course_subject_path(current_supervisor.id,
             @course.id, course_subject.id), method: :patch, class: "btn btn-large btn-primary" %>
         <% end %>
       </p>

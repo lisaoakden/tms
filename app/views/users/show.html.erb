@@ -32,7 +32,7 @@
           </p>
           <p>Expect start date: <%= l enrollment_subject.start_date %></p>
           <div class="subject-status <%= enrollment_subject.status %>">
-            <%= enrollment_subject.status %>
+            <%= t "status.#{enrollment_subject.status}" %>
           </div>
         </li>
       <% end %>

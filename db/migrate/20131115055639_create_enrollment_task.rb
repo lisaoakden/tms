@@ -4,7 +4,7 @@ class CreateEnrollmentTask < ActiveRecord::Migration
 	    t.integer  "subject_id"
 	    t.integer  "task_id"
 	    t.integer  "enrollment_subject_id",                        null: false
-	    t.string   "status",                limit: 11,             null: false
+	    t.string  "status",    limit: 1,    default: "N",   null: false
 	    t.integer  "active_flag",                      default: 1
       t.timestamps
   	end

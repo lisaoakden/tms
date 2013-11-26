@@ -30,7 +30,7 @@ class TaskListsController < ApplicationController
 
   def mark_as_done tasks
     tasks.map do |task|
-      task.update_attributes status: "done"
+      task.update_attributes! status: Settings.status.finished
     end.all?
   end
 

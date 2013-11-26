@@ -6,7 +6,7 @@ class EnrollmentsController < ApplicationController
     enrollment = user.enrollments.find_by course_id: user.current_course_id
     if params[:activate] == "activate"
     	unless enrollment.blank? || enrollment.activated?
-    		enrollment.update_attributes status: Enrollment::ACTIVATED
+    		enrollment.update_attributes status: Settings.status.started
         Activity.user_enroll! enrollment
     		redirect_to root_url
     	end

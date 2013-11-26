@@ -22,6 +22,12 @@
 en:
   hello: "Hello world"
 
+  status:
+    F: "Finished"
+    I: "In Progess"
+    N: "New"    
+    S: "Started"
+
   time:
     formats:
       default: "%d/%m/%Y"
