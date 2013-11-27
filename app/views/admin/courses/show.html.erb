@@ -3,7 +3,7 @@
 <div class="dashboard-sector">
   <h2>Course information</h2>
   <div class="command">
-    <%= render "start_course" %>
+    <%= render "start_finish_button" %>
   </div>
   <div class="content">
     <p>Duration: <%= pluralize @course.duration, "day" %> 
@@ -30,7 +30,7 @@
           Start date not given
         <% end %>
         <%= course_subject.status %>
-        <% if @course.activated? && course_subject.unfinish? %>
+        <% if @course.started? && course_subject.unfinish? %>
           <%= link_to "Finish", admin_supervisor_course_course_subject_path(current_supervisor.id, 
             @course.id, course_subject.id), method: :patch, class: "btn btn-large btn-primary" %>
         <% end %>
@@ -51,7 +51,7 @@
   <div class="span4 dashboard-sector">
     <h2> Supervisors (<%= @course.supervisors.count %>) </h2>
     <div class="command">
-      <%= link_to "Edit", "#", method: :patch, class: "btn btn-large btn-primary" %>
+      <%= link_to "Edit", "#", class: "btn btn-large btn-primary" %>
     </div>
     <%= render "shared/show_user_sidebar", users: @course.supervisors, type: "supervisor" %>
   </div>
@@ -65,8 +65,3 @@
     <%= render "shared/show_user_sidebar", users: @course.users.choose_user_in_course(@course.id), type: "user" %>
   </div>
 </div>
-<% if current_supervisor.in?(@course.supervisors) %>
-  <div>
-    <%= render "admin/shared/assign_trainees" %>
-  </div>
-<% end %>

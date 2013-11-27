@@ -7,7 +7,7 @@ class Admin::UsersController < ApplicationController
       course = Course.find params[:course_id]
       @users = course.current_users
         .paginate page: params[:page], per_page: Settings.items.per_page
-    else 
+    else
       @users = User.all.paginate page: params[:page], 
         per_page: Settings.items.per_page
     end
