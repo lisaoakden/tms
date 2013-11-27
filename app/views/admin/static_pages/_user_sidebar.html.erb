@@ -21,11 +21,11 @@
 	<li class="sub-list closed">
 		<h3 class="list-header">
 			<%= link_to "No course", "#", class: "non-redirect" %>
-			(<%= unassigned_users.count %>)
+			(<%= User.free.count %>)
 			<b class="caret"></b>
 		</h3>
 		<ul>
-			<% unassigned_users.each do |user| %>
+			<% User.free.each do |user| %>
 			<li>
 				<%= gravatar_for user %>
 				<%= link_to user.name, admin_user_path(user), class: "user-name" %>
@@ -37,11 +37,11 @@
 	<li class="sub-list closed">
 		<h3 class="list-header">
 			<%= link_to course.name, "#", class: "non-redirect" %>
-			(<%= course.users.choose_user_in_course(course.id).count %>)
+			(<%= course.users.count %>)
 			<b class="caret"></b>
 		</h3>
 		<ul>
-			<% course.users.choose_user_in_course(course.id).each do |user| %>
+			<% course.users.each do |user| %>
 			<li>
 				<%= gravatar_for user %>
 				<%= link_to user.name, admin_user_path(user), class: "user-name" %>
