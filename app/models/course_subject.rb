@@ -11,7 +11,7 @@ class CourseSubject < ActiveRecord::Base
   	self.start_date + self.duration.days
   end
 
-  def unfinish?
+  def unfinished?
     self.status != Settings.status.finished
   end
 

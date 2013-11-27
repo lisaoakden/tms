@@ -3,16 +3,16 @@ class Admin::CourseSubjectsController < ApplicationController
 
   def update
     @course_subject = CourseSubject.find params[:id]
-    users = Enrollment.enrollment_subject_not_finish params[:course_id],
+    users = EnrollmentSubject.users_not_finish_subject params[:course_id],
       @course_subject.subject_id
     @course = current_supervisor.courses.find params[:course_id]
-    if @course_subject.not_done?
-      @course_subject.update_attributes! status: CourseSubject::FINISH
+    if @course_subject.unfinished?
+      @course_subject.update_attributes! status: Settings.status.finished
       if users.present?
         users.each do |user|
           enrollment_subject = user.current_enrollment.enrollment_subjects
             .find_by subject_id: @course_subject.subject_id
-          enrollment_subject.update_attributes! status: CourseSubject::FINISH
+          enrollment_subject.update_attributes! status: Settings.status.finished
         end
         string_all_user_course_subject = users.collect(&:name).*(", ")
         flash[:success] = string_all_user_course_subject
