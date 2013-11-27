@@ -19,16 +19,7 @@
     <td class="subject-info">
       <h4><%= course_subject.subject.name %></h4>
       <p>
-        <% if course_subject.start_date.present? %>
-          <%= "#{l course_subject.start_date} - " %>
-          <% if course_subject.duration.present? %>
-            <%= l course_subject.finish_date %>
-          <% else %>
-            End date not given
-          <% end %>
-        <% else %>
-          Start date not given
-        <% end %>
+          <%= "#{l course_subject.start_date} - #{l course_subject.finish_date}" %>
         <%= course_subject.status %>
         <% if @course.started? && course_subject.unfinish? %>
           <%= link_to "Finish", admin_supervisor_course_course_subject_path(current_supervisor.id, 
@@ -57,11 +48,11 @@
   </div>
   <div class="span1"></div>
   <div class="span4 dashboard-sector">
-    <h2> Trainees (<%= @course.users.choose_user_in_course(@course.id).count %>) </h2>
+    <h2> Trainees (<%= @course.users.count %>) </h2>
     <div class="command">
       <%= link_to "Edit", "#assign_trainee_modal", class: "btn btn-large btn-primary",
         data: {toggle: "modal"} %>
     </div>
-    <%= render "shared/show_user_sidebar", users: @course.users.choose_user_in_course(@course.id), type: "user" %>
+    <%= render "shared/show_user_sidebar", users: @course.users, type: "user" %>
   </div>
 </div>
