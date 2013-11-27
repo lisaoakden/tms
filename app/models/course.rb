@@ -1,13 +1,13 @@
 class Course < ActiveRecord::Base
   EXISTED = 0
   has_many :enrollments
-  has_many :activities, foreign_key: "course_id", class_name: Activity.name
-  has_many :users, through: :enrollments
-  has_many :course_subjects
-  has_many :subjects, through: :course_subjects
-  has_many :supervisor_courses
-  has_many :supervisors, through: :supervisor_courses
-  has_many :current_users, class_name: User.name, foreign_key: :current_course_id
+	has_many :activities, foreign_key: "course_id", class_name: Activity.name
+	has_many :trainees, through: :enrollments
+	has_many :course_subjects
+	has_many :subjects, through: :course_subjects
+	has_many :supervisor_courses
+	has_many :supervisors, through: :supervisor_courses
+  has_many :current_trainees, class_name: Trainee.name, foreign_key: :current_course_id
 
   accepts_nested_attributes_for :course_subjects, reject_if: ->attributes do
     attributes[:active_flag] == Settings.flag.inactive.to_s && attributes[:id].blank?
@@ -23,7 +23,7 @@ class Course < ActiveRecord::Base
   end
 
   def has_trainee?
-    self.users.count > EXISTED
+    self.trainees.count > EXISTED
   end
 
   def duration
@@ -38,7 +38,7 @@ class Course < ActiveRecord::Base
       self.course_subjects.each do |course_subject|
         enrollment_subject = enrollment.enrollment_subjects.build(
           subject_id: course_subject.subject_id, status: Settings.status.new, 
-          course_id: enrollment.course_id, user_id: enrollment.user_id)
+          course_id: enrollment.course_id, trainee_id: enrollment.trainee_id)
         course_subject.course_subject_tasks.each do |course_subject_task|
           enrollment_subject.enrollment_tasks.build(
             subject_id: course_subject.subject_id, 
@@ -46,7 +46,7 @@ class Course < ActiveRecord::Base
         end
       end
       enrollment.status = Settings.status.started
-      enrollment.user.current_course_id = self.id
+      enrollment.trainee.current_course_id = self.id
     end
     self.update_attributes! status: Settings.status.started
   end

@@ -27,7 +27,7 @@ class EnrollmentSubject < ActiveRecord::Base
   class << self
     def users_not_finish_subject course_id, subject_id
       relations = course_subject_not_finish course_id, subject_id
-      users = relations.map{|relation| User.find relation.user_id}
+      users = relations.map{|relation| Trainee.find relation.trainee_id}
     end
   end
 end

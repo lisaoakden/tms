@@ -1,8 +1,8 @@
-<% provide :title, "Trainee Profile: #{@user.name}" %>
+<% provide :title, "Trainee Profile: #{@trainee.name}" %>
 
 <h1>
-  <%= gravatar_for @user, css_class: "admin" %>
-  <%= @user.name %>
+  <%= gravatar_for @trainee, css_class: "admin" %>
+  <%= @trainee.name %>
 </h1>
 
 <div class="dashboard-sector">
@@ -11,7 +11,7 @@
     <%= link_to "Edit Profile", "#", class: "btn btn-large btn-primary" %>
   </div>
   <div class="content">
-    <p>Email: <%= @user.email %> </p>
+    <p>Email: <%= @trainee.email %> </p>
     <% if @enrollment.enrollment_subjects.any? %>
       <p>In course: <%= link_to @course.name, admin_supervisor_course_path(current_supervisor, @course) %> 
         (from <%= l(@course.start_date) %> to <%= l(@course.end_date) %>) </p>
@@ -33,8 +33,9 @@
     <% @enrollment.enrollment_subjects.each do |enrollment_subject| %>
     <tr>
       <td class="subject-info">
-        <h4><%= link_to enrollment_subject.subject.name, user_enrollment_enrollment_subject_path(@user.id,
-          enrollment_subject.enrollment_id, enrollment_subject.subject.id) %></h4>
+        <h4>
+          <%= link_to enrollment_subject.subject.name, trainee_enrollment_enrollment_subject_path(@trainee.id, enrollment_subject.enrollment_id, enrollment_subject.subject.id) %>
+        </h4>
         <p><%= "#{l(enrollment_subject.start_date)} - #{l(enrollment_subject.end_date)}" %></p>
         <p class="status">
           <%= t "status.#{enrollment_subject.status}" %>

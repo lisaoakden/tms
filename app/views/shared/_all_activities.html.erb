@@ -1,28 +1,24 @@
 <ul class="activities">
   <% @activities.each do |activity| %>
   <li>
-    <%= link_to activity.user.name, activity.user %>
+    <%= link_to activity.trainee.name, activity.trainee %>
     <% case activity.temp_type %>
     <% when Activity::START_COURSE %>
-      Start Course 
-      <%= link_to  activity.course.name, activity.course %>
+      Start Course <%= activity.course.name %>
     <% when Activity::EDIT_PROFILE %>
       Edit profile
     <% when Activity::FINISH_TASK %>
       Finish task
       <%= activity.enrollment_task.task.name %>
         Subject
-      <%= link_to activity.enrollment_subject.subject.name, user_enrollment_enrollment_subject_path(activity.user.id, activity.enrollment_subject.enrollment_id, activity.enrollment_subject.id) %>
-      Course
-      <%= link_to  activity.course.name, activity.course %>
+      <%= link_to activity.enrollment_subject.subject.name, trainee_enrollment_enrollment_subject_path(activity.trainee.id, activity.enrollment_subject.enrollment_id, activity.enrollment_subject.id) %>
+      Course <%= activity.course.name %>
     <% when Activity::FINISH_SUBJECT %>
       Finish Subject
-       <%= link_to activity.enrollment_subject.subject.name, user_enrollment_enrollment_subject_path(activity.user.id, activity.enrollment_subject.enrollment_id, activity.enrollment_subject.id) %>
-      Course
-      <%= link_to  activity.course.name, activity.course %>
+       <%= link_to activity.enrollment_subject.subject.name, trainee_enrollment_enrollment_subject_path(activity.trainee.id, activity.enrollment_subject.enrollment_id, activity.enrollment_subject.id) %>
+      Course <%= activity.course.name %>
     <% when Activity::FINISH_COURSE %>
-      Finish Course
-      <%= link_to  activity.course.name, activity.course %>
+      Finish Course <%= activity.course.name %>
     <% end %>
       <%= time_ago_in_words activity.created_at %> ago
   <% end %>

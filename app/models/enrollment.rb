@@ -1,5 +1,5 @@
 class Enrollment < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :trainee
   belongs_to :course
   has_many :conclusions
   has_many :enrollment_subjects
@@ -11,5 +11,9 @@ class Enrollment < ActiveRecord::Base
   end
   def activated?
     self.status == Settings.status.started
+  end
+
+  def inactivated?
+    not activated?
   end
 end

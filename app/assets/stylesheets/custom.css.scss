@@ -458,7 +458,7 @@ ul.user-sidebar {
         color: $color_black;
       }
 
-      .subject-status.done {
+      .subject-status.F {
         background-color: $color_mil_finished;
         color: $color_white;
       }
@@ -478,7 +478,7 @@ ul.milestones {
   text-align: center;
 }
 
-ul.milestones li.done {
+ul.milestones li.F {
   opacity: $mil_finished_opacity;
   
   .milestone-status {
@@ -587,7 +587,7 @@ ul.tasks {
   margin: 0 auto 10px;
 }
 
-ul.tasks li.done {
+ul.tasks li.F {
   background-color: $color_mil_new;
   opacity: $mil_finished_opacity;
 
@@ -665,7 +665,7 @@ ul.tasks-sup {
     color: $color_mil_new;
   }
 
-  li.done {
+  li.F {
     color: $color_mil_finished;
   }
 }
@@ -762,7 +762,7 @@ td.subject-info {
     display: none;
   }
 
-  .status.done {
+  .status.F {
     display: block;
     color: $color_mil_finished;
   }
@@ -900,7 +900,7 @@ table.ui-datepicker-calendar {
 }
 
 /* Course status */
-.course-status.done {
+.course-status.F {
   text-transform: uppercase;
   font-weight: bold;
   color: $color_mil_finished;

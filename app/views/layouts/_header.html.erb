@@ -9,10 +9,10 @@
           <li><%= link_to "Home", root_path %></li>
           <li id="" class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              Welcome, <i> <%= current_user.name %> </i> <b class="caret"></b>
+              Welcome, <i> <%= current_trainee.name %> </i> <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-              <li><%= link_to "Profile", current_user %></li>
+              <li><%= link_to "Profile", current_trainee %></li>
               <li class="divider"></li>
               <li>
                 <%= link_to "Sign out", signout_path, method: :delete %>
@@ -21,7 +21,7 @@
           </li>
           <% elsif supervisor_signed_in? %>
           <li><%= link_to "Home", admin_root_path %></li>
-          <li><%= link_to "Trainees", admin_users_path %></li>
+          <li><%= link_to "Trainees", admin_trainees_path %></li>
           <li><%= link_to "Courses", admin_supervisor_courses_path(current_supervisor.id) %></li>
           <li id="" class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">

@@ -11,10 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131115061028) do
+ActiveRecord::Schema.define(version: 20131127035806) do
 
   create_table "activities", force: true do |t|
-    t.integer  "user_id"
+    t.integer  "trainee_id"
     t.integer  "course_id"
     t.integer  "subject_id"
     t.integer  "task_id"
@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(version: 20131115061028) do
 
   create_table "enrollment_subjects", force: true do |t|
     t.integer  "subject_id"
-    t.integer  "user_id"
+    t.integer  "trainee_id"
     t.integer  "course_id"
     t.integer  "enrollment_id"
     t.string   "status",        limit: 1, default: "N", null: false
@@ -96,7 +96,7 @@ ActiveRecord::Schema.define(version: 20131115061028) do
   add_index "enrollment_tasks", ["enrollment_subject_id"], name: "fk_Subject_idx", using: :btree
 
   create_table "enrollments", force: true do |t|
-    t.integer  "user_id"
+    t.integer  "trainee_id"
     t.integer  "course_id"
     t.string   "status",      limit: 1, default: "N", null: false
     t.integer  "active_flag",           default: 1
@@ -105,7 +105,7 @@ ActiveRecord::Schema.define(version: 20131115061028) do
   end
 
   add_index "enrollments", ["course_id"], name: "fk_Enrollments_2", using: :btree
-  add_index "enrollments", ["user_id"], name: "fk_Enrollments_1", using: :btree
+  add_index "enrollments", ["trainee_id"], name: "fk_Enrollments_1", using: :btree
 
   create_table "subjects", force: true do |t|
     t.string   "name",        limit: 128,             null: false
@@ -145,7 +145,7 @@ ActiveRecord::Schema.define(version: 20131115061028) do
 
   add_index "tasks", ["subject_id"], name: "fk_Tasks_1", using: :btree
 
-  create_table "users", force: true do |t|
+  create_table "trainees", force: true do |t|
     t.string   "name",              limit: 45,              null: false
     t.string   "email",             limit: 45,              null: false
     t.string   "password_digest",   limit: 200,             null: false
@@ -156,7 +156,7 @@ ActiveRecord::Schema.define(version: 20131115061028) do
     t.datetime "updated_at"
   end
 
-  add_index "users", ["email"], name: "email_UNIQUE", unique: true, using: :btree
-  add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
+  add_index "trainees", ["email"], name: "email_UNIQUE", unique: true, using: :btree
+  add_index "trainees", ["remember_token"], name: "index_trainees_on_remember_token", using: :btree
 
 end

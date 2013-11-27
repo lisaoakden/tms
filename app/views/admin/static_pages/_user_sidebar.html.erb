@@ -21,14 +21,14 @@
 	<li class="sub-list closed">
 		<h3 class="list-header">
 			<%= link_to "No course", "#", class: "non-redirect" %>
-			(<%= User.not_in_active_course.count %>)
+			(<%= Trainee.not_in_active_course.count %>)
 			<b class="caret"></b>
 		</h3>
 		<ul>
-			<% User.not_in_active_course.each do |user| %>
+			<% Trainee.not_in_active_course.each do |trainee| %>
 			<li>
-				<%= gravatar_for user %>
-				<%= link_to user.name, admin_user_path(user), class: "user-name" %>
+				<%= gravatar_for trainee %>
+				<%= link_to trainee.name, admin_trainee_path(trainee), class: "user-name" %>
 			</li>
 			<% end %>
 		</ul>
@@ -37,14 +37,14 @@
 	<li class="sub-list closed">
 		<h3 class="list-header">
 			<%= link_to course.name, "#", class: "non-redirect" %>
-			(<%= course.users.count %>)
+			(<%= course.trainees.count %>)
 			<b class="caret"></b>
 		</h3>
 		<ul>
-			<% course.users.each do |user| %>
+			<% course.trainees.each do |trainee| %>
 			<li>
-				<%= gravatar_for user %>
-				<%= link_to user.name, admin_user_path(user), class: "user-name" %>
+				<%= gravatar_for trainee %>
+				<%= link_to trainee.name, admin_trainee_path(trainee), class: "user-name" %>
 			</li>
 			<% end %>
 		</ul>

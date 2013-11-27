@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class Trainee < ActiveRecord::Base
   has_secure_password
   belongs_to :current_course, class_name: Course.name
   has_many :enrollment_subjects, through: :enrollments
@@ -27,11 +27,17 @@ class User < ActiveRecord::Base
     self.current_course_id.blank?
   end
 
-  def User.new_remember_token
+  class << self
+    def update_coure_id! trainee, course_id
+      trainee.update_attribute :current_course_id, course_id
+    end
+  end
+  
+  def Trainee.new_remember_token
     SecureRandom.urlsafe_base64
   end
 
-  def User.encrypt token
+  def Trainee.encrypt token
     Digest::SHA1.hexdigest token.to_s
   end
 
@@ -43,6 +49,6 @@ class User < ActiveRecord::Base
 
   private
   def create_remember_token
-    self.remember_token = User.encrypt User.new_remember_token
+    self.remember_token = Trainee.encrypt Trainee.new_remember_token
   end
 end

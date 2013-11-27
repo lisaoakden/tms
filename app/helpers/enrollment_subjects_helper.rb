@@ -1,7 +1,7 @@
 module EnrollmentSubjectsHelper
 	def get_start_date enrollment_subject
 		if enrollment_subject.start_date.present?
-			"Started on #{enrollment_subject.start_date.strftime("%d/%m/%Y")}"
+			"Started on #{l enrollment_subject.start_date}"
 		else 
 			"Not started"
 		end

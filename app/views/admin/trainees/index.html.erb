@@ -1,0 +1,39 @@
+<% provide :title, "All trainees" %>
+<h1><%= yield :title %></h1>
+<h3>Courses:
+  <%= select_tag "course_id", options_from_collection_for_select(@courses, "id", "name", params["course_id"]), include_blank: true, id: "course_select", class: "courses" %>
+</h3>
+<ul class="users">
+  <% @trainees.each do |trainee| %>
+  <li>
+    <%= gravatar_for trainee %>
+    <div class="user-info">
+      <h3>
+        <%= link_to trainee.name, admin_trainee_path(trainee) %>
+        <%= link_to "delete", trainee, method: :delete, confirm: "Are you sure?",
+          title: "Delete #{trainee.name}", class: "link-danger" %>
+      </h3>
+      <% if trainee.free? %>
+        No course joined<br>
+      <% else %>
+        Course: <%= link_to trainee.current_course.name, 
+          admin_supervisor_course_path(current_supervisor, trainee.current_course) %><br>
+        Status: <%= t "status.#{trainee.current_enrollment.status}" %><br>
+        Subjects:<%= trainee.current_enrollment.enrollment_subjects.finished_subject.count %> / <%= trainee.current_course.subjects.count %><br>
+      <% end %>
+    </div>
+  </li>
+  <% end %>
+</ul>
+<%= will_paginate %>
+<script>
+  $(function() {
+    $('#course_select').change(function() {
+      if($(this).val()) {
+        window.location.href = '<%= admin_trainees_path %>?course_id=' + $(this).val();
+      } else {
+        window.location.href = '<%= admin_trainees_path %>';
+      }
+    });
+  });
+</script>

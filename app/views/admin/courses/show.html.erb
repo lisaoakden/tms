@@ -1,4 +1,4 @@
-<% provide :title, "All users" %>
+<% provide :title, "All Trainees" %>
 <h1><%= @course.name %></h1>
 <div class="dashboard-sector">
   <h2>Course information</h2>
@@ -48,12 +48,12 @@
   </div>
   <div class="span1"></div>
   <div class="span4 dashboard-sector">
-    <h2> Trainees (<%= @course.users.count %>) </h2>
+    <h2> Trainees (<%= @course.trainees.count %>) </h2>
     <div class="command">
       <%= link_to "Edit", "#assign_trainee_modal", class: "btn btn-large btn-primary",
         data: {toggle: "modal"} %>
     </div>
-    <%= render "shared/show_user_sidebar", users: @course.users, type: "user" %>
+    <%= render "shared/show_user_sidebar", users: @course.trainees, type: "trainee" %>
   </div>
 </div>
 <% if current_supervisor.in?(@course.supervisors) && @course.status == Settings.status.new %>
