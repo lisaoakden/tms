@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131118074357) do
+ActiveRecord::Schema.define(version: 20131115061028) do
 
   create_table "activities", force: true do |t|
     t.integer  "user_id"
@@ -47,11 +47,11 @@ ActiveRecord::Schema.define(version: 20131118074357) do
   create_table "course_subjects", force: true do |t|
     t.integer  "course_id"
     t.integer  "subject_id"
-    t.integer  "active_flag", default: 1
+    t.string   "status",      limit: 1, default: "N", null: false
+    t.integer  "active_flag",           default: 1
     t.integer  "duration"
     t.datetime "start_date"
     t.datetime "end_date"
-    t.string   "status",      default: "new"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -60,21 +60,23 @@ ActiveRecord::Schema.define(version: 20131118074357) do
   add_index "course_subjects", ["subject_id"], name: "fk_Course_Subject_2", using: :btree
 
   create_table "courses", force: true do |t|
-    t.string   "name",        limit: 128,                 null: false
+    t.string   "name",        limit: 128,               null: false
     t.datetime "start_date"
     t.datetime "end_date"
     t.integer  "active_flag",             default: 1
-    t.string   "status",                  default: "new", null: false
+    t.string   "status",      limit: 1,   default: "N", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "enrollment_subjects", force: true do |t|
     t.integer  "subject_id"
+    t.integer  "user_id"
+    t.integer  "course_id"
     t.integer  "enrollment_id"
-    t.string   "status",        limit: 11,             null: false
+    t.string   "status",        limit: 1, default: "N", null: false
     t.datetime "start_date"
-    t.integer  "active_flag",              default: 1
+    t.integer  "active_flag",             default: 1
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -84,9 +86,9 @@ ActiveRecord::Schema.define(version: 20131118074357) do
   create_table "enrollment_tasks", force: true do |t|
     t.integer  "subject_id"
     t.integer  "task_id"
-    t.integer  "enrollment_subject_id",                        null: false
-    t.string   "status",                limit: 11,             null: false
-    t.integer  "active_flag",                      default: 1
+    t.integer  "enrollment_subject_id",                         null: false
+    t.string   "status",                limit: 1, default: "N", null: false
+    t.integer  "active_flag",                     default: 1
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -97,8 +99,8 @@ ActiveRecord::Schema.define(version: 20131118074357) do
     t.integer  "user_id"
     t.integer  "course_id"
     t.datetime "joined_date"
-    t.integer  "status",                  null: false
-    t.integer  "active_flag", default: 1
+    t.string   "status",      limit: 1, default: "N", null: false
+    t.integer  "active_flag",           default: 1
     t.datetime "created_at"
     t.datetime "updated_at"
   end

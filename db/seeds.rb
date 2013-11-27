@@ -46,8 +46,7 @@ end
 		User.create!(name: name,
   						 email: email,
   						 password: PASSWORD,
-  						 password_confirmation: PASSWORD,
-  						 current_course_id: 0)
+  						 password_confirmation: PASSWORD)
 end
 course_list = [
 	{name: "TrainingProject0110", start_date: "01-10-2013", end_date: "01-12-2013"},
@@ -68,9 +67,9 @@ subject_list = [
 ]
 
 supervisors_list = [
-	{name: "TuanCA", email: "tuan@framgia.com", password: PASSWORD, password_confirmation: PASSWORD},
-	{name: "KienBT", email: "kien@framgia.com", password: PASSWORD, password_confirmation: PASSWORD},
-	{name: "KhanhHD", email: "khanh.hd@framgia.com", password: PASSWORD, password_confirmation: PASSWORD}
+	{name: "Chu Anh Tuan", email: "tuan@framgia.com", password: PASSWORD, password_confirmation: PASSWORD},
+	{name: "Bui Trung Kien", email: "kien@framgia.com", password: PASSWORD, password_confirmation: PASSWORD},
+	{name: "Hoang Dang Khanh", email: "khanh.hd@framgia.com", password: PASSWORD, password_confirmation: PASSWORD}
 ]
 
 supervisors_list.each do |supervisor|
@@ -111,22 +110,22 @@ u = Array.new(11)
 end
 
 (1..20).each do |num1|
-	Enrollment.create! user_id: u[num1].id, course_id: 1, joined_date: "01-10-2013", status: 0
+	Enrollment.create! user_id: u[num1].id, course_id: 1, joined_date: "01-10-2013"
 end
 
 (21..40).each do |num2|
-	Enrollment.create! user_id: u[num2].id, course_id: 2, joined_date: "07-10-2013", status: 0
+	Enrollment.create! user_id: u[num2].id, course_id: 2, joined_date: "07-10-2013"
 end
 
 (41..60).each do |num3|
-	Enrollment.create! user_id: u[num3].id, course_id: 3, joined_date: "20-10-2013", status: 0
+	Enrollment.create! user_id: u[num3].id, course_id: 3, joined_date: "20-10-2013"
 end
 
 (61..70).each do |num4|
-	Enrollment.create! user_id: u[num4].id, course_id: 4, joined_date: "27-10-2013", status: 0
+	Enrollment.create! user_id: u[num4].id, course_id: 4, joined_date: "27-10-2013"
 end
 
-e = Array.new(11) 
+e = Array.new(11)
 (1..10).each do |num|
 	e[num] = Enrollment.find num
 end
@@ -141,10 +140,10 @@ c = Array.new(5)
 end
 
 (1..3).each do |num|
-	CourseSubject.create! course_id: c[num].id, subject_id: s1.id, duration: 10, start_date: "2013-11-11", status: "new"
-	CourseSubject.create! course_id: c[num].id, subject_id: s2.id, duration: 10, start_date: "2013-11-11", status: "new"
-	CourseSubject.create! course_id: c[num].id, subject_id: s3.id, duration: 10, start_date: "2013-11-11", status: "new"
-	CourseSubject.create! course_id: c[num].id, subject_id: s4.id, duration: 10, start_date: "2013-11-11", status: "new"
+	CourseSubject.create! course_id: c[num].id, subject_id: s1.id, duration: 10, start_date: "2013-11-11"
+	CourseSubject.create! course_id: c[num].id, subject_id: s2.id, duration: 10, start_date: "2013-11-11"
+	CourseSubject.create! course_id: c[num].id, subject_id: s3.id, duration: 10, start_date: "2013-11-11"
+	CourseSubject.create! course_id: c[num].id, subject_id: s4.id, duration: 10, start_date: "2013-11-11"
 end
 	CourseSubject.create! course_id: c[4].id, subject_id: s1.id
 	CourseSubject.create! course_id: c[4].id, subject_id: s3.id
@@ -160,14 +159,14 @@ end
 Enrollment.all.each do |el|
 	subjects = el.course.subjects
 	subjects.each do |sj|
-		EnrollmentSubject.create! enrollment_id: el.id, subject_id: sj.id, status: "new", start_date: "01-10-2013"
+		EnrollmentSubject.create! enrollment_id: el.id, subject_id: sj.id, user_id: el.user_id, course_id: el.course_id, start_date: "01-10-2013"
 	end
 end
 
 EnrollmentSubject.all.each do |es|
 	course_subject = es.enrollment.course.course_subjects.find_by subject_id: es.subject_id
 	course_subject.course_subject_tasks.each do |t|
-		EnrollmentTask.create! enrollment_subject_id: es.id, subject_id: es.subject_id, task_id: t.task_id, status: "new"
+		EnrollmentTask.create! enrollment_subject_id: es.id, subject_id: es.subject_id, task_id: t.task_id
 	end
 end
 
