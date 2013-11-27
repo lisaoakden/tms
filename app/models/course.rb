@@ -1,12 +1,7 @@
 class Course < ActiveRecord::Base
-  before_update :save_course_subject
-
-  ACTIVE    = 1
-  INACTIVE  = 0
-  NEW       = "new"
-	ACTIVATED = "start"
-  DONE      = "done"
+  EXIST     = 0
   
+  before_update :save_course_subject
   has_many :enrollments
 	has_many :activities,  foreign_key: "course_id", class_name: Activity.name
 	has_many :users, through: :enrollments
@@ -18,39 +13,46 @@ class Course < ActiveRecord::Base
 
   accepts_nested_attributes_for :course_subjects, 
     reject_if: ->attributes {attributes["chosen"].blank?}
+  accepts_nested_attributes_for :enrollments
 
   scope :choose_course, ->course_id {find course_id}
-  
+
   validates :name, presence: true, length: {minimum: 6}
   validates :start_date, presence: true
   validates :end_date, presence: true, is_after_start_date: true
 
-  def activated?
-    self.status != NEW
+  def started?
+    self.status == Settings.status.started
   end
 
-  def inactivated?
-    not activated?
-  end
-
-  def finished?
-    self.status == DONE
-  end
-
-  def unfinished?
-    not finished?
+  def has_trainee?
+    self.users.count > EXIST
   end
 
   def duration
     ((self.end_date - self.start_date) / 1.day).to_i
   end
-  
-  def start
-    self.update_attributes status: Course::ACTIVATED
-  end 
+
+  def start!
+    self.enrollments.each do |enrollment| 
+      self.course_subjects.each do |course_subject|
+        enrollment_subject = enrollment.enrollment_subjects.build(
+          subject_id: course_subject.subject_id, status: Settings.status.new, 
+          course_id: enrollment.course_id, user_id: enrollment.user_id)
+        course_subject.course_subject_tasks.each do |course_subject_task|
+          enrollment_subject.enrollment_tasks.build(
+            subject_id: course_subject.subject_id, 
+            task_id: course_subject_task.task_id, status: Settings.status.new)
+        end
+      end
+      enrollment.status = Settings.status.started
+      enrollment.user.current_course_id = self.id
+    end
+    self.update_attributes status: Settings.status.started
+  end
 
   def generate_form_data
-    subjects = Subject.find_all_by_active_flag ACTIVE
+    subjects = Subject.find_all_by_active_flag Settings.flag.active
     if subjects.present?
       subjects.each do |subject|
         course_subject = course_subjects.build subject_id: subject.id
@@ -63,7 +65,7 @@ class Course < ActiveRecord::Base
 
   def full_course_subjects
     course_subject_hash = Hash.new
-    course_subjects = self.course_subjects.where active_flag: ACTIVE
+    course_subjects = self.course_subjects.where active_flag: Settings.flag.active
     course_subjects.each do |course_subject|
       course_subject_hash[course_subject.subject_id] = course_subject
     end
@@ -90,7 +92,7 @@ class Course < ActiveRecord::Base
         if course_subject.id.blank?
           course_subjects.remove course_subject
         else
-          course_subject.active_flag = INACTIVE
+          course_subject.active_flag = Settings.flag.inactive
         end
       else
         course_subject.course_subject_tasks.each do |course_subject_task|
@@ -98,7 +100,7 @@ class Course < ActiveRecord::Base
             if course_subject_task.id.blank?
               course_subject_tasks.remove course_subject_task
             else
-              course_subject_task.active_flag = INACTIVE
+              course_subject_task.active_flag = Settings.flag.inactive
             end
           end
         end

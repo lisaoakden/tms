@@ -1,9 +1,9 @@
 class Activity < ActiveRecord::Base
-  START_COURSE = 1
-  EDIT_PROFILE = 2
-  FINISH_TASK = 3
+  START_COURSE   = 1
+  EDIT_PROFILE   = 2
+  FINISH_TASK    = 3
   FINISH_SUBJECT = 4
-  FINISH_COURSE = 5
+  FINISH_COURSE  = 5
   belongs_to :user
   belongs_to :enrollment_task, foreign_key: "task_id", class_name: EnrollmentTask.name
   belongs_to :enrollment_subject, foreign_key: "subject_id", class_name: EnrollmentSubject.name

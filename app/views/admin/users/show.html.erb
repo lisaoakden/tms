@@ -15,7 +15,7 @@
     <% if @enrollment.enrollment_subjects.any? %>
       <p>In course: <%= link_to @course.name, admin_supervisor_course_path(current_supervisor, @course) %> 
         (from <%= l(@course.start_date) %> to <%= l(@course.end_date) %>) </p>
-      <p>Course status: <%= @enrollment.status %></p>
+      <p>Course status: <%= t "status.#{@enrollment.status}" %></p>
     <% else %>
       <p>No course joined.</p>
     <% end %>
@@ -37,7 +37,7 @@
           enrollment_subject.enrollment_id, enrollment_subject.subject.id) %></h4>
         <p><%= "#{l(enrollment_subject.start_date)} - #{l(enrollment_subject.end_date)}" %></p>
         <p class="status">
-          <%= enrollment_subject.status %>
+          <%= t "status.#{enrollment_subject.status}" %>
         </p>
       </td>
       <td>

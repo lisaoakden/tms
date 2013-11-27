@@ -3,6 +3,7 @@ class CreateCourseSubject < ActiveRecord::Migration
   	create_table "course_subjects", force: true do |t|
 	    t.integer  "course_id"
 	    t.integer  "subject_id"
+	    t.string  "status", 		limit: 1,		default: "N",		null: false
 	    t.integer  "active_flag", default: 1
 	    t.integer  "duration"
 	    t.datetime "start_date"

@@ -18,11 +18,7 @@ class User < ActiveRecord::Base
     uniqueness: {case_sensitive: false}
 
   validates :password, length: {minimum: 6}
-  validates :current_course_id, presence: true
 
-  scope :choose_user_in_course, ->current_course_id do 
-    where current_course_id: current_course_id
-  end
   scope :choose_user_no_course, ->current_course_id do 
     where.not current_course_id: current_course_id
   end
@@ -30,6 +26,8 @@ class User < ActiveRecord::Base
   scope :choose_user_not_in_course, ->ids, course_id do 
     where.not(id: ids).where current_course_id: course_id
   end
+
+  scope :free, ->{where current_course_id: nil}
 
   def free?
     self.current_course_id.blank?
