@@ -1,11 +1,11 @@
 class CourseSubject < ActiveRecord::Base
-  attr_accessor :chosen
   belongs_to :course
   belongs_to :subject
   has_many :course_subject_tasks
 
-  accepts_nested_attributes_for :course_subject_tasks, 
-  	reject_if: ->attributes {attributes["chosen"].blank?}
+  accepts_nested_attributes_for :course_subject_tasks, reject_if: ->attributes do
+    attributes[:active_flag] == Settings.flag.inactive.to_s && attributes[:id].blank?
+  end
 
   def finish_date
   	self.start_date + self.duration.days
@@ -27,10 +27,9 @@ class CourseSubject < ActiveRecord::Base
       tasks.each do |task|
         if course_subject_task_hash.has_key? task.id 
           course_subject_task = course_subject_task_hash[task.id]
-          course_subject_task.chosen = true
         else
-          course_subject_task = CourseSubjectTask.new task_id: task.id
-          course_subject_task.chosen = false
+          course_subject_task = CourseSubjectTask.new task_id: task.id,
+            active_flag: Settings.flag.inactive
         end
         full_course_subject_tasks << course_subject_task
       end

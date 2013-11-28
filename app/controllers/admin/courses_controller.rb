@@ -1,9 +1,9 @@
 class Admin::CoursesController < ApplicationController
   layout "admin"
-  before_action :signed_in_supervisor,  only: [:show, :index, :update]
-  before_action :accessible_course,     only: :show
-  before_action :correct_supervisor,    except: [:destroy, :show]
-  before_action :load_object,           except: :destroy
+	before_action :signed_in_supervisor, only: [:show, :update, :index]
+  before_action :accessible_course, only: :show
+  before_action :correct_supervisor, except: :show
+  before_action :load_object
 
   def show
     @course = Course.find params[:id]
@@ -32,7 +32,6 @@ class Admin::CoursesController < ApplicationController
   end
 
   def edit
-    @supervisor = Supervisor.find params[:supervisor_id]
     @course = Course.find params[:id]
   end
 
@@ -41,14 +40,17 @@ class Admin::CoursesController < ApplicationController
     if params[:course]
       if course.update_attributes course_params
         flash[:success] = "#{course.name} has been successfully edited"
+        redirect_to [:admin, current_supervisor, course]
       else
-        flash[:error] = "Something happen. Course update is failed"
+        flash[:error] = "Course update failed. Please try again"
+        @course = Course.find params[:id]
+        render :edit
       end
     else
       course.start! unless course.started?
-      flash[:success] = "#{course.name} has been successfully started" 
+      flash[:success] = "#{course.name} has been successfully started"
+      redirect_to [:admin, current_supervisor, course]
     end
-    redirect_to [:admin, current_supervisor, course]
   end
 
   private
@@ -63,9 +65,9 @@ class Admin::CoursesController < ApplicationController
 
   def course_params
     params.require(:course).permit :name, :start_date, :end_date,
-      course_subjects_attributes: [:id, :course_id, :subject_id, :duration, :chosen,
-      course_subject_tasks_attributes: [:id, :course_subject_id, :task_id, :chosen,
-        :subject_id]]
+      course_subjects_attributes: [:id, :course_id, :subject_id, :duration,
+        :start_date, :active_flag, course_subject_tasks_attributes: [:id, 
+        :course_subject_id, :task_id, :subject_id, :active_flag]]
   end
 
   def accessible_course
