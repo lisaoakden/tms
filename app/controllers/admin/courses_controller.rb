@@ -1,7 +1,7 @@
 class Admin::CoursesController < ApplicationController
   include AssignedTrainees
   layout "admin"
-	before_action :signed_in_supervisor, only: [:show, :update, :index]
+  before_action :signed_in_supervisor, only: [:show, :update, :index]
   before_action :accessible_course, only: :show
   before_action :correct_supervisor, except: :show
   before_action :load_object
@@ -19,19 +19,19 @@ class Admin::CoursesController < ApplicationController
   end
 
   def new
-  	@course = Course.new
-  	@course.generate_form_data
+    @course = Course.new
+    @course.generate_form_data
   end
 
   def create
-  	@course = Course.new course_params
-  	if @course.save
+    @course = Course.new course_params
+    if @course.save
       if @supervisor.courses << @course
         flash[:success] = "You have created a new course"
       end
-      redirect_to [:admin, @supervisor, @course]
+      redirect_to admin_supervisor_course_path(current_supervisor, @course)
     else
-    	render :new
+      render :new
     end
   end
 
@@ -44,16 +44,16 @@ class Admin::CoursesController < ApplicationController
     if params[:course]
       if course.update_attributes course_params
         flash[:success] = "#{course.name} has been successfully edited"
-        redirect_to [:admin, current_supervisor, course]
+        redirect_to admin_supervisor_course_path(current_supervisor, course)
       else
         flash[:error] = "Course update failed. Please try again"
         @course = Course.find params[:id]
         render :edit
       end
-    else
+    elsif params[:start] == "start"
       course.start! unless course.started?
       flash[:success] = "#{course.name} has been successfully started"
-      redirect_to [:admin, current_supervisor, course]
+      redirect_to admin_supervisor_course_path(current_supervisor, course)
     end
   end
 
