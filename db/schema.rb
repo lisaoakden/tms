@@ -49,8 +49,8 @@ ActiveRecord::Schema.define(version: 20131115061028) do
     t.integer  "subject_id"
     t.string   "status",      limit: 1, default: "N", null: false
     t.integer  "active_flag",           default: 1
-    t.integer  "duration"
     t.datetime "start_date"
+    t.integer  "duration"
     t.datetime "end_date"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -98,7 +98,6 @@ ActiveRecord::Schema.define(version: 20131115061028) do
   create_table "enrollments", force: true do |t|
     t.integer  "user_id"
     t.integer  "course_id"
-    t.datetime "joined_date"
     t.string   "status",      limit: 1, default: "N", null: false
     t.integer  "active_flag",           default: 1
     t.datetime "created_at"
