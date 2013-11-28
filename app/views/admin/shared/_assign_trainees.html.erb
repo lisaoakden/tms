@@ -10,7 +10,7 @@
         <div class="center-child">
           <div class="span3">
             <div class="assignment-list-title">Unassigned trainees</div>
-            <%= select_tag :select_trainees, options_from_collection_for_select(@free_users, "id", "name"), 
+            <%= select_tag :select_trainee_ids, options_from_collection_for_select(User.free, :id, :name), 
               multiple: true, class: "assignment-select" %>
           </div>
           <div class="span1 center assignment-button-wrap">
@@ -19,7 +19,7 @@
           </div>
           <div class="span3">
             <div class="assignment-list-title">Trainees in course</div>
-            <%= select_tag :trainees, options_from_collection_for_select(@assigned_trainees, "id", "name"), 
+            <%= select_tag :trainee_ids, options_from_collection_for_select(@course.trainees, :id, :name), 
               multiple: true, class: "assignment-select" %>
           </div>
         </div>
@@ -31,17 +31,3 @@
     </form>
   </div>
 </div>
-
-<script>
-  $(function(){
-    $('#user_list_form').on("submit", function(){
-      selectAll($('#trainees'));
-    });
-    $('#left').click(function(){
-      moveSelect($('#select_trainees'), $('#trainees'));
-    });
-    $('#right').click(function(){
-      moveSelect($('#trainees'), $('#select_trainees'));
-    });
-  });
-</script>

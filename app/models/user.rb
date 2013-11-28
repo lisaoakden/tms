@@ -18,8 +18,11 @@ class User < ActiveRecord::Base
   validates :name,  presence: true, length: {maximum: 50}
   validates :password, length: {minimum: 6}
 
-  scope :free, ->{where current_course_id: nil}
+  scope :not_in_active_course, ->{where current_course_id: nil}
 
+  scope :free, -> do 
+    where(current_course_id: nil).where.not id: Enrollment.active
+  end
   def free?
     self.current_course_id.blank?
   end
@@ -30,6 +33,12 @@ class User < ActiveRecord::Base
 
   def User.encrypt token
     Digest::SHA1.hexdigest token.to_s
+  end
+
+  class << self
+    def selected_trainees ids
+      self.find ids if ids.present?
+    end
   end
 
   private

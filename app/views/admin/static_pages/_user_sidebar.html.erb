@@ -21,11 +21,11 @@
 	<li class="sub-list closed">
 		<h3 class="list-header">
 			<%= link_to "No course", "#", class: "non-redirect" %>
-			(<%= User.free.count %>)
+			(<%= User.not_in_active_course.count %>)
 			<b class="caret"></b>
 		</h3>
 		<ul>
-			<% User.free.each do |user| %>
+			<% User.not_in_active_course.each do |user| %>
 			<li>
 				<%= gravatar_for user %>
 				<%= link_to user.name, admin_user_path(user), class: "user-name" %>
