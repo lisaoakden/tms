@@ -2,10 +2,22 @@
 <h1>Edit Course</h1>
 
 <div class="span9">
-	<%= form_for [:admin, @supervisor, @course] do |f| %>
+	<%= form_for [:admin, current_supervisor, @course] do |f| %>
 		<%= render "shared/course_error_messages" %>
-		<%= render "basic_form", f: f %>
-		<%= render "edit_form", f: f %>
+		<fieldset>
+			<legend>Course Info</legend>
+			<div class="span4 offset2">
+				<%= f.label :name, "Course Name" %>
+				<%= f.text_field :name %>
+
+				<%= f.label :start_date, "Start Date" %>
+				<%= f.text_field :start_date, value: l(f.object.start_date), class: "date-field" %>
+
+				<%= f.label :end_date, "End Date" %>
+				<%= f.text_field :end_date, value: l(f.object.end_date), class: "date-field" %>
+			</div>
+		</fieldset>
+		<%= render "edit_course_form", f: f %>
 		<div class="center">
 			<%= f.submit "Update Course", class: "btn btn-large btn-primary" %>
 		</div>

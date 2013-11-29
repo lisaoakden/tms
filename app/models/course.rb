@@ -1,5 +1,5 @@
 class Course < ActiveRecord::Base
-  EXISTED = 0  
+  EXISTED = 0
   has_many :enrollments
 	has_many :activities,  foreign_key: "course_id", class_name: Activity.name
 	has_many :users, through: :enrollments
@@ -67,26 +67,14 @@ class Course < ActiveRecord::Base
     self.update_attributes! status: Settings.status.new
   end
 
-  def generate_form_data
-    subjects = Subject.where active_flag: Settings.flag.active
-    if subjects.present?
-      subjects.each do |subject|
-        course_subject = course_subjects.build subject_id: subject.id
-        subject.tasks.each do |task|
-          course_subject.course_subject_tasks.build task_id: task.id
-        end
-      end
-    end
-  end
-
-  def full_course_subjects
+  def init_course_subjects
     course_subject_hash = Hash.new
     course_subjects = self.course_subjects.where active_flag: Settings.flag.active
     course_subjects.each do |course_subject|
       course_subject_hash[course_subject.subject_id] = course_subject
     end
     subjects = Subject.find_all_by_active_flag Settings.flag.active
-    full_course_subjects = []
+    full_course_subjects = Array.new
     if subjects.present?
       subjects.each do |subject|
         if course_subject_hash.has_key? subject.id 
