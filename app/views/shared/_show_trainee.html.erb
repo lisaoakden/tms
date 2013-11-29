@@ -1,0 +1,8 @@
+<ul class="user-sidebar">
+  <% @course.trainees.each do |trainee| %>
+    <li>
+      <%= gravatar_for trainee %>
+      <%= link_to trainee.name, trainee, class: "user-name" %>
+    </li>
+  <% end %>
+</ul>

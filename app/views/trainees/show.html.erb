@@ -1,14 +1,13 @@
 <div class="user-info-wrap">
-  <%= image_tag "default_user.png", alt: @user.name, class: "user-avatar" %>
+  <%= image_tag "default_user.png", alt: @trainee.name, class: "user-avatar" %>
   <div class="user-info">
     <div class="user-name">
-      <h1><%= @user.name %></h1>
-      <% if current_user? @user %>
-      <%= button_to "Edit Profile", edit_user_path, method: :get,
-      class: "btn btn-primary small" %>
+      <h1><%= @trainee.name %></h1>
+      <% if current_trainee? @trainee %>
+        <%= link_to "Edit Profile", edit_trainee_path, method: :get, class: "btn btn-primary small" %>
       <% end %>
     </div>
-    <div class="user-desc"> <%= @user.email %> </div>
+    <div class="user-desc"> <%= @trainee.email %> </div>
   </div>
 </div>
 <div class="span7 subject-list">
@@ -18,8 +17,7 @@
       <% @enrollment.enrollment_subjects.each do |enrollment_subject| %>
         <li>
           <h3 class="subject-name">
-            <%= link_to enrollment_subject.subject.name, user_enrollment_enrollment_subject_path(@user.id,
-            enrollment_subject.enrollment_id, enrollment_subject.subject.id) %>
+            <%= link_to enrollment_subject.subject.name, trainee_enrollment_enrollment_subject_path(@trainee.id, enrollment_subject.enrollment_id, enrollment_subject.subject.id) %>
           </h3>
           <p><%= get_start_date enrollment_subject %>,
             <strong>

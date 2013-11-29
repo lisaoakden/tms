@@ -3,7 +3,7 @@ PASSWORD = "123456"
 (1..20).each do |i|
 	name = "Example #{i}"
 	email = "example-#{i}@framgia.com"
-  	User.create!(name: name,
+  	Trainee.create!(name: name,
   						 email: email,
   						 password: PASSWORD,
   						 password_confirmation: PASSWORD)
@@ -12,7 +12,7 @@ end
 (21..40).each do |i|
 	name = "Example #{i}"
 	email = "example-#{i}@framgia.com"
-		User.create!(name: name,
+		Trainee.create!(name: name,
   						 email: email,
   						 password: PASSWORD,
   						 password_confirmation: PASSWORD,
@@ -22,7 +22,7 @@ end
 (41..60).each do |i|
 	name = "Example #{i}"
 	email = "example-#{i}@framgia.com"
-		User.create!(name: name,
+		Trainee.create!(name: name,
   						 email: email,
   						 password: PASSWORD,
   						 password_confirmation: PASSWORD,
@@ -32,7 +32,7 @@ end
 (61..70).each do |i|
 	name = "Example #{i}"
 	email = "example-#{i}@framgia.com"
-		User.create!(name: name,
+		Trainee.create!(name: name,
   						 email: email,
   						 password: PASSWORD,
   						 password_confirmation: PASSWORD,
@@ -42,7 +42,7 @@ end
 (71..99).each do |i|
 	name = "Example #{i}"
 	email = "example-#{i}@framgia.com"
-		User.create!(name: name,
+		Trainee.create!(name: name,
   						 email: email,
   						 password: PASSWORD,
   						 password_confirmation: PASSWORD
@@ -106,23 +106,23 @@ s4 = Subject.find(4)
 	Task.create!(subject_id: s4.id, name: "final PHP test", description: "abc1234566")
 u = Array.new(11) 
 (1..99).each do |num|
-	u[num] = User.find num
+	u[num] = Trainee.find num
 end
 
 (1..20).each do |num1|
-	Enrollment.create! user_id: u[num1].id, course_id: 1
+	Enrollment.create! trainee_id: u[num1].id, course_id: 1
 end
 
 (21..40).each do |num2|
-	Enrollment.create! user_id: u[num2].id, course_id: 2
+	Enrollment.create! trainee_id: u[num2].id, course_id: 2
 end
 
 (41..60).each do |num3|
-	Enrollment.create! user_id: u[num3].id, course_id: 3
+	Enrollment.create! trainee_id: u[num3].id, course_id: 3
 end
 
 (61..70).each do |num4|
-	Enrollment.create! user_id: u[num4].id, course_id: 4
+	Enrollment.create! trainee_id: u[num4].id, course_id: 4
 end
 
 e = Array.new(11)
@@ -159,7 +159,7 @@ end
 Enrollment.all.each do |el|
 	subjects = el.course.subjects
 	subjects.each do |sj|
-		EnrollmentSubject.create! enrollment_id: el.id, subject_id: sj.id, user_id: el.user_id, course_id: el.course_id, start_date: "01-10-2013"
+		EnrollmentSubject.create! enrollment_id: el.id, subject_id: sj.id, trainee_id: el.trainee_id, course_id: el.course_id, start_date: "01-10-2013"
 	end
 end
 

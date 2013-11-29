@@ -1,9 +1,9 @@
 module SessionsHelper
-  def sign_in user
-    remember_token = User.new_remember_token
+  def sign_in trainee
+    remember_token = Trainee.new_remember_token
     cookies.permanent[:remember_token] = remember_token
-    user.update_attribute(:remember_token, User.encrypt(remember_token))
-    self.current_user = user
+    trainee.update_attribute(:remember_token, Trainee.encrypt(remember_token))
+    self.current_trainee = trainee
   end
 
   def supervisor_sign_in supervisor
@@ -14,24 +14,24 @@ module SessionsHelper
   end
 
   def signed_in?
-    current_user.present?
+    current_trainee.present?
   end
 
   def supervisor_signed_in?
     current_supervisor.present?
   end
 
-  def current_user= user
-    @current_user = user
+  def current_trainee= trainee
+    @current_trainee = trainee
   end
 
   def current_supervisor= supervisor
     @current_supervisor = supervisor
   end
 
-  def current_user
-    remember_token = User.encrypt cookies[:remember_token]
-    @current_user ||= User.find_by remember_token: remember_token
+  def current_trainee
+    remember_token = Trainee.encrypt cookies[:remember_token]
+    @current_trainee ||= Trainee.find_by remember_token: remember_token
   end
 
   def current_supervisor
@@ -39,15 +39,15 @@ module SessionsHelper
     @current_supervisor ||= Supervisor.find_by remember_token: remember_token
   end
 
-  def current_user? user
-    user == current_user
+  def current_trainee? trainee
+    trainee == current_trainee
   end
 
   def current_supervisor? supervisor
     supervisor == current_supervisor
   end
 
-  def signed_in_user
+  def signed_in_trainee
     unless signed_in?
       store_location!
       redirect_to signin_url, notice: "Please sign in."
@@ -62,7 +62,7 @@ module SessionsHelper
   end
 
   def sign_out
-    self.current_user = nil
+    self.current_trainee = nil
     cookies.delete :remember_token
   end
 

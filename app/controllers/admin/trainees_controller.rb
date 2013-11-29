@@ -1,24 +1,24 @@
-class Admin::UsersController < ApplicationController
+class Admin::TraineesController < ApplicationController
   layout "admin"
   before_action :signed_in_supervisor
 
   def index
     if params[:course_id]
       course = Course.find params[:course_id]
-      @users = course.current_users
+      @trainees = course.current_trainees
         .paginate page: params[:page], per_page: Settings.items.per_page
     else
-      @users = User.all.paginate page: params[:page], 
+      @trainees = Trainee.paginate page: params[:page], 
         per_page: Settings.items.per_page
     end
     @courses = Course.all
   end
   
   def show
-    @user = User.find params[:id]
-    @enrollment = @user.current_enrollment
-    @course = @user.current_course
-    @activities = @user.activities
+    @trainee = Trainee.find params[:id]
+    @enrollment = @trainee.current_enrollment
+    @course = @trainee.current_course
+    @activities = @trainee.activities
       .paginate page: params[:page], per_page: Settings.items.per_page
   end
 end

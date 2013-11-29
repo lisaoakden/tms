@@ -5,12 +5,10 @@
     <li class="<%= enrollment_subject.status %>" 
       title="Duration: <%= pluralize enrollment_subject.subject.duration, "day" %>">
       <div class="milestone-name">
-      <%= link_to enrollment_subject.subject.name,
-        user_enrollment_enrollment_subject_path(current_user, @enrollment, enrollment_subject) %>
+      <%= link_to enrollment_subject.subject.name, trainee_enrollment_enrollment_subject_path(current_trainee, @enrollment, enrollment_subject) %>
       </div>
       <div class="milestone-status">
-      <%= link_to "✓", user_enrollment_enrollment_subject_path(@current_user,
-        @enrollment, enrollment_subject) %>
+      <%= link_to "✓", trainee_enrollment_enrollment_subject_path(@current_trainee, @enrollment, enrollment_subject) %>
       </div>
       <div class="line-linkage">  </div>
     </li>
@@ -25,10 +23,9 @@
   </h2>
   <div id="intro">
     <% I18n.locale = :vi %>
-    <%= t "course_intro.text_html", trainee: current_user.name,
+    <%= t "course_intro.text_html", trainee: current_trainee.name,
       doc_link: t("course_intro.doc_link"), 
-      duration: (distance_of_time_in_words(current_course.start_date, 
-        current_course.end_date)), 
+      duration: (distance_of_time_in_words(current_course.start_date, current_course.end_date)), 
       start_date: l(current_course.start_date),
       end_date: l(current_course.end_date), 
       test_date: l(current_course.end_date + 1.day) %>
@@ -39,7 +36,7 @@
 </div>
 <div class="span3">
   <h2>In the same course</h2>
-  <%= render "shared/show_user" %>
+  <%= render "shared/show_trainee" %>
 </div>
 <script>
   $(function(){
