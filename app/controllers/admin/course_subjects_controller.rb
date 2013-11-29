@@ -10,7 +10,8 @@ class Admin::CourseSubjectsController < ApplicationController
       @course_subject.update_attributes! status: Settings.status.finished
       if users.present?
         users.each do |user|
-          enrollment_subject = user.current_enrollment.enrollment_subjects
+          enrollment = user.enrollments.find_by course_id: user.current_course_id
+          enrollment_subject = enrollment.enrollment_subjects
             .find_by subject_id: @course_subject.subject_id
           enrollment_subject.update_attributes! status: Settings.status.finished
         end
@@ -25,5 +26,5 @@ class Admin::CourseSubjectsController < ApplicationController
   def correct_supervisor
     supervisor = Supervisor.find params[:supervisor_id]
     redirect_to root_url unless current_supervisor? supervisor
-  end 
+  end
 end
