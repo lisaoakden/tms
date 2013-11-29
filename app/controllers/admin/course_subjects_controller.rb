@@ -1,5 +1,5 @@
 class Admin::CourseSubjectsController < ApplicationController
-  before_action :correct_supervisor, only: :update
+  before_action :correct_supervisor
 
   def update
     @course_subject = CourseSubject.find params[:id]
@@ -18,7 +18,7 @@ class Admin::CourseSubjectsController < ApplicationController
         flash[:success] = string_all_user_course_subject
       end
     end
-    redirect_to admin_supervisor_course_path(current_supervisor.id, @course.id)
+    redirect_to admin_supervisor_course_path current_supervisor, @course
   end
 
   private

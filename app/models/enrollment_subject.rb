@@ -3,7 +3,9 @@ class EnrollmentSubject < ActiveRecord::Base
   belongs_to :subject
   has_many :enrollment_tasks
   has_many :activities, foreign_key: "subject_id", class_name: Activity.name
+
   accepts_nested_attributes_for :enrollment_tasks
+  
   scope :finished_subject, ->{where status: Settings.status.finished}
   scope :current_enrollment_subject, ->subject_id{where subject_id: subject_id}
   scope :course_subject_not_finish, ->course_id, subject_id do

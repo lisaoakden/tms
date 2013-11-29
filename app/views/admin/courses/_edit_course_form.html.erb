@@ -6,11 +6,11 @@
       <th>Duration (days)</th>
       <th>Choose Tasks</th>
     </tr>
-    <%= f.fields_for :course_subjects, @course.full_course_subjects do |builder| %>
+    <%= f.fields_for :course_subjects, @course.init_course_subjects do |builder| %>
     <tr>
       <td>
         <%= builder.check_box :active_flag, {class: "subject", checked: (builder.object.active_flag == Settings.flag.active)}, 1, 0 %>
-        <%= builder.object.subject.name if builder.object.subject_id %>
+        <%= builder.object.subject.name %>
         <%= builder.label :start_date, "Start Date" %>
         <% if builder.object.start_date %>
           <%= builder.text_field :start_date, value: l(builder.object.start_date), class: "date-field" %>
@@ -24,7 +24,7 @@
       </td>
       <td class="subject-tasks">
         <ul class="tasks-sup">
-          <%= builder.fields_for :course_subject_tasks, builder.object.full_course_subject_tasks do |sub_builder| %>
+          <%= builder.fields_for :course_subject_tasks, builder.object.init_course_subject_tasks do |sub_builder| %>
           <li>
             <%= sub_builder.check_box :active_flag, {checked: (sub_builder.object.active_flag == Settings.flag.active)}, 1, 0 %>
             <%= sub_builder.object.task.name if sub_builder.object.task_id %>

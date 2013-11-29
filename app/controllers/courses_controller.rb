@@ -1,9 +1,7 @@
 class CoursesController < ApplicationController
+	before_action :signed_in_user
+
   def show
-  	if signed_in?
-  		@course = Course.find params[:id], include: @users
-  	else
-  		redirect_to root_url
-  	end
+  	@course = Course.find params[:id], include: @users
   end
 end

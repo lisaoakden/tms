@@ -1,6 +1,6 @@
 class Admin::UsersController < ApplicationController
   layout "admin"
-  before_action :signed_in_supervisor, only: [:show, :index]
+  before_action :signed_in_supervisor
 
   def index
     if params[:course_id]

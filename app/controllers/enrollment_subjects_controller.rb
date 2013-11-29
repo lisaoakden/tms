@@ -1,6 +1,6 @@
 class EnrollmentSubjectsController < ApplicationController
 	before_action :signed_in_user
-	before_action :create_objects, only: [:show, :update]
+	before_action :init_objects, only: [:show, :update]
 
   def index
     @user = User.find params[:user_id]
@@ -26,7 +26,7 @@ class EnrollmentSubjectsController < ApplicationController
   end
 
   private
-  def create_objects
+  def init_objects
   	@user = User.find params[:user_id]
   	@enrollment = Enrollment.find params[:enrollment_id]
   	@enrollment_subject = EnrollmentSubject.find params[:id]

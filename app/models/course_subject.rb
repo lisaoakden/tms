@@ -15,14 +15,14 @@ class CourseSubject < ActiveRecord::Base
     self.status != Settings.status.finished
   end
 
-  def full_course_subject_tasks
+  def init_course_subject_tasks
   	course_subject_task_hash = Hash.new
     course_subject_tasks = self.course_subject_tasks.where active_flag: Settings.flag.active
     course_subject_tasks.each do |course_subject_task|
       course_subject_task_hash[course_subject_task.task_id] = course_subject_task
     end
     tasks = Task.find_all_by_subject_id self.subject_id
-    full_course_subject_tasks = []
+    full_course_subject_tasks = Array.new
     if tasks.present?
       tasks.each do |task|
         if course_subject_task_hash.has_key? task.id 
