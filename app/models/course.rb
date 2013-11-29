@@ -1,12 +1,12 @@
 class Course < ActiveRecord::Base
   EXISTED = 0
   has_many :enrollments
-	has_many :activities,  foreign_key: "course_id", class_name: Activity.name
-	has_many :users, through: :enrollments
-	has_many :course_subjects
-	has_many :subjects, through: :course_subjects
-	has_many :supervisor_courses
-	has_many :supervisors, through: :supervisor_courses
+  has_many :activities, foreign_key: "course_id", class_name: Activity.name
+  has_many :users, through: :enrollments
+  has_many :course_subjects
+  has_many :subjects, through: :course_subjects
+  has_many :supervisor_courses
+  has_many :supervisors, through: :supervisor_courses
   has_many :current_users, class_name: User.name, foreign_key: :current_course_id
 
   accepts_nested_attributes_for :course_subjects, reject_if: ->attributes do
@@ -31,7 +31,10 @@ class Course < ActiveRecord::Base
   end
 
   def start!
-    self.enrollments.each do |enrollment| 
+    self.users.each do |user|
+      user.update_attribute(:current_course_id, self.id)
+    end
+    self.enrollments.each do |enrollment|
       self.course_subjects.each do |course_subject|
         enrollment_subject = enrollment.enrollment_subjects.build(
           subject_id: course_subject.subject_id, status: Settings.status.new, 

@@ -3,6 +3,7 @@
     <%= link_to "Finish Course", "#", class: "btn btn-large btn-primary" %>
   <% else %>
     <%= link_to "Start Course", admin_supervisor_course_path(current_supervisor, @course,
-      start: "start"), method: :patch, confirm: "Start this course?", class: "btn btn-large btn-primary" %>
+      start: Settings.action.course.start), method: :patch, confirm: "Start this course?",
+      class: "btn btn-large btn-primary" %>
   <% end %>
 <% end %>

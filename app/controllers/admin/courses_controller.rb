@@ -48,7 +48,7 @@ class Admin::CoursesController < ApplicationController
         @course = Course.find params[:id]
         render :edit
       end
-    elsif params[:start] == "start"
+    elsif params[:start] == Settings.action.course.start
       course.start! unless course.started?
       flash[:success] = "#{course.name} has been successfully started"
       redirect_to admin_supervisor_course_path current_supervisor, course
