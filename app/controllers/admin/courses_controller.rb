@@ -1,15 +1,11 @@
 class Admin::CoursesController < ApplicationController
-  include AssignedTrainees
   layout "admin"
   before_action :signed_in_supervisor, only: [:show, :update, :index]
   before_action :accessible_course, only: :show
   before_action :correct_supervisor, except: :show
 
   def show
-    users = User.free
     @course = Course.find params[:id]
-    find_assigned_trainees @course
-    @free_users = users - @assigned_trainees
   end
 
   def index

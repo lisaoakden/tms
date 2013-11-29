@@ -57,5 +57,5 @@
   </div>
 </div>
 <% if current_supervisor.in?(@course.supervisors) && @course.status == Settings.status.new %>
-    <%= render "admin/shared/assign_trainees" %>
+  <%= render "admin/shared/assign_trainees" %>
 <% end %>

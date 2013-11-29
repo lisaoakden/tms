@@ -51,21 +51,29 @@ class Course < ActiveRecord::Base
     self.update_attributes! status: Settings.status.started
   end
 
-  def assign_unassign trainees_assign, trainees_unassign
-    trainees_assign.each do |trainee_assign|
-      enroll = trainee_assign.enrollments.find_by self.id
-      if enroll
-        enroll.active_flag = Settings.flag.active
-        self.enrollments << enroll
-      else
-        self.enrollments.build(user_id: trainee_assign.id, course_id: self.id, 
-          status: Settings.status.new, active_flag: Settings.flag.active)
+  def allocate! ids
+    selected_trainees = User.selected_trainees ids
+    if selected_trainees.present?
+      deselected_trainees = self.trainees - selected_trainees
+      selected_trainees.each do |selected_trainee|
+        enroll = selected_trainee.enrollments.find_by self.id
+        if enroll
+          enroll.active_flag = Settings.flag.active
+          self.enrollments << enroll
+        else
+          self.enrollments.build(user_id: selected_trainee.id, course_id: self.id, 
+            status: Settings.status.new, active_flag: Settings.flag.active)
+        end
       end
+    else
+      deselected_trainees = self.trainees
     end
-    trainees_unassign.each do |trainee_unassign|
-      enroll = trainee_unassign.enrollments.find_by self.id
-      enroll.active_flag = Settings.flag.inactive
-      self.enrollments << enroll
+    if deselected_trainees.present?
+      deselected_trainees.each do |deselected_trainee|
+        enroll = deselected_trainee.enrollments.find_by self.id
+        enroll.active_flag = Settings.flag.inactive
+        self.enrollments << enroll
+      end
     end
     self.update_attributes! status: Settings.status.new
   end
@@ -90,5 +98,12 @@ class Course < ActiveRecord::Base
       end
     end
     full_course_subjects
+  end
+
+  def trainees 
+    if self.enrollments
+      enrollments = self.enrollments.active
+      enrollments.map{|enrollment| enrollment.user}
+    end
   end
 end
