@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   def show
     enrollment = @user.enrollments.find_by course_id: @user.current_course_id
     @enrollment = @user.enrollments.find_by course_id: @user.current_course_id 
-    @activities = current_user.activities.order_desc_created_at
+    @activities = @user.activities.order_desc_created_at
       .paginate page: params[:page], per_page: Settings.items.per_page
   end
 
@@ -34,6 +34,6 @@ class UsersController < ApplicationController
   
   def correct_user
     @user = User.find params[:id]
-    redirect_to root_url unless current_user? @user
+    redirect_to root_url unless current_trainee? @user
   end 
 end

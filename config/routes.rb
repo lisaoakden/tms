@@ -13,7 +13,7 @@ Tms::Application.routes.draw do
   match "/signin",  to: "sessions#new",         via: :get
   match "/signout", to: "sessions#destroy",     via: :delete
   match "/trainees/:trainee_id/enrollments/:enrollment_id/:activate", 
-    to: "enrollments#update", as: "activate", via: :patch
+    to: "enrollments#update", as: "trainee_enrollment_activate", via: :patch
 
   namespace :admin do
     root "static_pages#dashboard"

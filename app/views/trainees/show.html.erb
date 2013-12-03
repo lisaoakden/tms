@@ -17,7 +17,7 @@
       <% @enrollment.enrollment_subjects.each do |enrollment_subject| %>
         <li>
           <h3 class="subject-name">
-            <%= link_to enrollment_subject.subject.name, trainee_enrollment_enrollment_subject_path(@trainee.id, enrollment_subject.enrollment_id, enrollment_subject.subject.id) %>
+            <%= link_to enrollment_subject.subject.name, trainee_enrollment_enrollment_subject_path(@trainee.id, enrollment_subject.enrollment_id, enrollment_subject.id) %>
           </h3>
           <p><%= get_start_date enrollment_subject %>,
             <strong>

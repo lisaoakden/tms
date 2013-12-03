@@ -30,8 +30,12 @@ class EnrollmentSubjectsController < ApplicationController
     @trainee = Trainee.find params[:trainee_id]
     @enrollment = Enrollment.find params[:enrollment_id]
     @enrollment_subject = EnrollmentSubject.find params[:id]
-    unless current_trainee? @trainee && current_enrollment? && current_subject? && @enrollment.activated?
-      redirect_to @trainee
+    unless current_trainee?(@trainee) && current_enrollment? && current_subject? && @enrollment.activated?
+      flash[:error] = "You are restricted to view this subject :" + ((current_trainee? @trainee) && current_enrollment? && current_subject? && @enrollment.activated?).to_s
+      unless @enrollment.activated?
+        flash[:error] = "You must start this course before"
+      end
+      redirect_to trainee_enrollment_path(@trainee, @enrollment)
     end
   end
 

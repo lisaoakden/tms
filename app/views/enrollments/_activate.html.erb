@@ -1,5 +1,5 @@
 <% if @enrollment %>
   <% unless @enrollment.activated? %>
-  	<%= link_to "Start Course", trainee_enrollment_path(current_trainee.id, @enrollment.id), method: :patch, class: "btn btn-large btn-primary" %>
+  	<%= link_to "Start Course", trainee_enrollment_activate_path(current_trainee.id, @enrollment.id, "activate"), method: :patch, class: "btn btn-large btn-primary" %>
 	<% end %>  		
 <% end %>

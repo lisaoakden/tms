@@ -23,7 +23,7 @@ class TaskListsController < ApplicationController
     @enrollment = Enrollment.find params[:enrollment_id]
     @enrollment_subject = @enrollment.enrollment_subjects
       .find params[:enrollment_subject_id]
-    unless current_trainee? @trainee && current_enrollment? && @enrollment_subject && @enrollment.activated?
+    unless current_trainee?(@trainee) && current_enrollment? && @enrollment_subject && @enrollment.activated?
       redirect_to @trainee
     end
   end
