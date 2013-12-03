@@ -103,7 +103,7 @@ class Course < ActiveRecord::Base
   def trainees 
     if self.enrollments
       enrollments = self.enrollments.active
-      enrollments.map{|enrollment| enrollment.user}
+      enrollments.map{|enrollment| enrollment.trainee}
     end
   end
 end

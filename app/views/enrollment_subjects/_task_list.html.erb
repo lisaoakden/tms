@@ -1,4 +1,4 @@
-<%= form_tag trainee_enrollment_enrollment_subject_task_list_path(current_trainee, @enrollment_subject.enrollment, @enrollment_subject, method: :patch) %>
+<%= form_tag trainee_enrollment_enrollment_subject_task_list_path(current_trainee, @enrollment_subject.enrollment, @enrollment_subject), method: :patch %>
   <div class="center">
     <ul class="tasks">
       <% @enrollment_subject.enrollment_tasks.each do |enrollment_task| %>

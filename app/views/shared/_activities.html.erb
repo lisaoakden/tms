@@ -5,25 +5,27 @@
     <%= link_to activity.trainee.name, activity.trainee %>
     <% case activity.temp_type %>
     <% when Activity::START_COURSE %>
-      Start Course 
-      <%= link_to  activity.course.name, activity.course %>
+      start <%= activity.course.name %> course
     <% when Activity::EDIT_PROFILE %>
       Edit profile
     <% when Activity::FINISH_TASK %>
-      Finish task
+      finish task
       <%= activity.enrollment_task.task.name %>
-        Subject
+        of
       <%= link_to activity.enrollment_subject.subject.name, trainee_enrollment_enrollment_subject_path(activity.trainee.id, activity.enrollment_subject.enrollment_id, activity.enrollment_subject.id) %>
-      Course
-      <%= link_to  activity.course.name, activity.course %>
+      in
+      <%= activity.course.name %>
+      course
     <% when Activity::FINISH_SUBJECT %>
-      Finish Subject
+      finish
        <%= link_to activity.enrollment_subject.subject.name, trainee_enrollment_enrollment_subject_path(activity.trainee.id, activity.enrollment_subject.enrollment_id, activity.enrollment_subject.id) %>
-      Course
-      <%= link_to  activity.course.name, activity.course %>
+      in
+      <%= activity.course.name %>
+      course
     <% when Activity::FINISH_COURSE %>
-      Finish Course
-      <%= link_to  activity.course.name, activity.course %>
+      finish
+      <%= activity.course.name %>
+      course
     <% end %>
       <%= time_ago_in_words activity.created_at %> ago
   <% end %>
