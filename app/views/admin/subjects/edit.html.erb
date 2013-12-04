@@ -1,0 +1,7 @@
+<% provide(:title, "Edit subject") %>
+<h1>Edit subject</h1>
+
+<%= render 'error_messages', :object => @subject %>
+<%= render 'error_messages', :object => @task if @task %>
+
+<%= render 'form' %>

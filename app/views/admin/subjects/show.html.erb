@@ -1,0 +1,42 @@
+<% provide :title, "#{@subject.name}" %>
+
+<h1>
+  <%= @subject.name %>
+</h1>
+
+<div id="show-subject" class="row-fluid">
+  <fieldset>
+    <legend>Subject Infomation</legend>
+    
+    <dl class="dl-horizontal">
+      <dt>Duration</dt>
+      <dd><%= pluralize @subject.duration, "day" %></dd>
+
+      <dt>Description</dt>
+      <dd><%= @subject.description %></dd>
+    </dl>
+  </fieldset>
+
+  <fieldset>
+    <legend>Task List</legend>
+    
+    <div class="span9 offset1" style="max-height: 200px; overflow-y: auto;">
+      <table>
+        <% @subject.tasks.each do |task| %>
+        <tr>
+          <td><%= task.name %></td>
+        </tr>
+        <% end %>
+      </table>
+    </div>
+  </fieldset>
+</div>
+
+<div id="show-subject" class="row-fluid">
+  <div class="center" style="margin-top: 50px;">
+    <%= link_to 'Edit', edit_admin_subject_path(@subject.id),
+          :class => "btn btn-large btn-primary" %>
+    <%= link_to 'Delete', admin_subject_path(@subject.id), 
+          :confirm => 'Are you sure?', :method => :delete, :class => "btn btn-large btn-primary" %>
+  </div>
+</div>
