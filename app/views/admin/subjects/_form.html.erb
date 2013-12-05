@@ -1,0 +1,82 @@
+<div id="admin-subject" class="row-fluid">
+  <%= form_for [:admin, @subject] do |f| %>
+    <fieldset>
+      <legend>Subject</legend>
+
+      <div class="row-fluid">
+        <div class="span7 offset2">
+          <%= f.label :name, "Name" %>
+          <%= f.text_field :name, placeholder: "Subject name" %>
+        </div>
+      </div>
+
+      <div class="row-fluid">
+        <div class="span1 offset2">
+          <%= f.label :duration, "Duration" %>
+          <%= f.text_field :duration, placeholder: "Day" %>
+        </div>
+      </div>
+
+      <div class="row-fluid">
+        <div class="span7 offset2">
+          <%= f.label :description, "Description" %>
+          <%= f.text_area :description, placeholder: "Descriptions" %>
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Tasks</legend>
+
+      <div class="row-fluid">
+        <div class="span7 offset2">
+          <ul id="sortable">
+            <% if @subject.tasks.any? %>
+              <% @subject.tasks.each do |task| %>
+                <li class="ui-state-default">
+                  <%= task.name %>
+                  <input type="hidden" name="tasks[]" value="<%= task.name %>" />
+                  <a href="javascript:void(0)" class="remove-task pull-right">X</a>
+                </li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="row-fluid">
+        <div class="input-append span7 offset2">
+          <input id="input-new-task" type="text" placeholder="Add new task">
+          <button id="add-new-task" class="btn" type="button">Add!</button>
+        </div>
+      </div>
+    </fieldset>
+
+    <div class="center">
+      <%= f.submit "Save subject", class: "btn btn-large btn-primary" %>
+    </div>
+  <% end %>
+</div>
+
+<script>
+  $(function() {
+    $("#sortable").sortable().disableSelection();
+    
+    $('#add-new-task').click(function(){
+      var newTask = $('#input-new-task').val();
+
+      if ($.trim(newTask) != "") {
+        var html = $('<li class="ui-state-default"></li>');
+        $(html).text(newTask);
+        $(html).append($('<input type="hidden" name="tasks[]" />').val(newTask));
+        $(html).append($('<a href="javascript:void(0)" class="remove-task pull-right">X</a>'));
+        $('#sortable').append(html);
+        $('#input-new-task').val('');
+      }
+    });
+    
+    $('body').on("click", '.remove-task', function(){
+      $(this).closest('li').remove();
+    });
+  });
+</script>
