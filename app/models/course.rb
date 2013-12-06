@@ -21,6 +21,10 @@ class Course < ActiveRecord::Base
   def started?
     self.status == Settings.status.started
   end
+  
+  def finished?
+    self.status == Settings.status.finished
+  end
 
   def has_trainee?
     self.trainees.count > EXISTED
@@ -49,6 +53,19 @@ class Course < ActiveRecord::Base
       enrollment.trainee.current_course_id = self.id
     end
     self.update_attributes! status: Settings.status.started
+  end
+  
+  def finish!
+    self.enrollments.each do |enrollment|
+      enrollment.enrollment_subjects.each do |enrollment_subject|
+        enrollment_subject.status = Settings.status.finished
+      end
+      enrollment.status = Settings.status.finished
+    end
+    self.course_subjects.each do |course_subject|
+      course_subject.status = Settings.status.finished
+    end
+    self.update_attributes! status: Settings.status.finished
   end
 
   def allocate! ids

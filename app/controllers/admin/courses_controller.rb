@@ -48,6 +48,10 @@ class Admin::CoursesController < ApplicationController
       course.start! unless course.started?
       flash[:success] = "#{course.name} has been successfully started"
       redirect_to admin_supervisor_course_path current_supervisor, course
+    elsif params[:finish] == Settings.action.course.finish
+      course.finish! unless course.finished?
+      flash[:success] = "#{course.name} has been successfully finished"
+      redirect_to admin_supervisor_course_path current_supervisor, course
     end
   end
 
