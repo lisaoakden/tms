@@ -33,13 +33,27 @@
           <ul id="sortable">
             <% if @subject.tasks.any? %>
               <% @subject.tasks.each do |task| %>
-                <li class="ui-state-default">
-                  <%= task.name %>
-                  <input type="hidden" name="tasks[]" value="<%= task.name %>" />
-                  <a href="javascript:void(0)" class="remove-task pull-right">X</a>
+                <li class="ui-state-default old-task">
+                  <div class="input-append-box">
+                    <div class="first">
+                      <input type="text" class="task-name" placeholder="Task name" name="tasks[][name]" value="<%= task.name %>" />
+                      <input type="hidden" class="task-id" name="tasks[][id]" value="<%= task.id %>" />
+                      <input type="hidden" class="task-sort" name="tasks[][sort_index]" value="<%= task.sort_index %>" />
+                    </div>
+                    <div class="second">
+                      <button class="btn btn-large remove-task" type="button">
+                        &times;
+                      </button>
+                    </div>
+                  </div>
                 </li>
               <% end %>
             <% end %>
+            <li class="last ui-state-disabled">
+              <button id="add-task" type="button" class="btn btn-large btn-success">
+                ADD TASK!
+              </button>
+            </li>
           </ul>
         </div>
       </div>
@@ -58,9 +72,43 @@
   <% end %>
 </div>
 
+<div id="original-template" style="display: none;">
+  <li class="ui-state-default">
+    <div class="input-append-box">
+      <div class="first">
+        <input type="text" class="task-name" placeholder="Task name" name="tasks[][name]" />
+        <input type="hidden" class="task-id" name="tasks[][id]" />
+        <input type="hidden" class="task-sort" name="tasks[][sort_index]" />
+      </div>
+      <div class="second">
+        <button class="btn btn-large remove-task" type="button">
+          &times;
+        </button>
+      </div>
+    </div>
+  </li>
+</div>
+
 <script>
+ function reIndex() {
+    $('.ui-state-default:visible').each(function(index, item){
+      $(item).find('.task-sort').val(index + 1);
+    });
+  }
   $(function() {
-    $("#sortable").sortable().disableSelection();
+    $("#sortable").sortable({
+      items: "li:not(.ui-state-disabled)",
+      cursor: 'move',
+      update: reIndex
+    });
+    
+    $('#add-task').click(function(){
+      var html = $('#original-template').clone().html();
+      $(html).insertBefore('#sortable .last');
+      reIndex();
+    });
+    
+    
     
     $('#add-new-task').click(function(){
       var newTask = $('#input-new-task').val();
@@ -76,7 +124,13 @@
     });
     
     $('body').on("click", '.remove-task', function(){
-      $(this).closest('li').remove();
+      var parent = $(this).closest('li');
+      if ($(parent).hasClass('old-task')) {
+        $(parent).removeClass('old-task').addClass('deleted');
+        $(parent).find('.first').append($('<input type="hidden" class="task-sort" name="tasks[][active_flag]" value="<%= Settings.flag.inactive %>" />'));
+      } else {
+        $(parent).remove();
+      }
     });
   });
 </script>
