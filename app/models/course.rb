@@ -123,4 +123,26 @@ class Course < ActiveRecord::Base
       enrollments.map{|enrollment| enrollment.trainee}
     end
   end
+  
+  def delete! (supervisor_id)
+    supervisorCourse = self.supervisor_courses.find_by_supervisor_id(supervisor_id)
+    supervisorCourse.active_flag = Settings.flag.inactive
+    supervisorCourse.save
+    self.active_flag = Settings.flag.inactive
+    self.enrollments.each do |enrollment|
+      enrollment.active_flag = Settings.flag.inactive
+      enrollment.enrollment_subjects.each do |enrollment_subject|
+        enrollment_subject.active_flag = Settings.flag.inactive
+        enrollment_subject.enrollment_tasks.each do |enrollment_task|
+          enrollment_task.active_flag = Settings.flag.inactive
+        end
+      end
+    end
+    self.course_subjects.each do |course_subject|
+      course_subject.active_flag = Settings.flag.inactive
+      course_subject.course_subject_tasks.each do |course_subject_tasks|
+        course_subject_tasks.active_flag = Settings.flag.inactive
+      end
+    end
+  end
 end
