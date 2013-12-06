@@ -9,7 +9,8 @@ class Admin::CoursesController < ApplicationController
   end
 
   def index
-    @courses = current_supervisor.courses.paginate page: params[:page],
+    @courses = current_supervisor.courses.paginate page: params[:page], 
+      conditions: "supervisor_courses.active_flag = 1",
       per_page:Settings.items.per_page
   end
 
@@ -49,6 +50,32 @@ class Admin::CoursesController < ApplicationController
       flash[:success] = "#{course.name} has been successfully started"
       redirect_to admin_supervisor_course_path current_supervisor, course
     end
+  end
+  
+  def destroy
+    @course = Course.find(params[:id])
+    @course.update_attribute(:active_flag, 0)
+    @supervisorCourse = @course.supervisor_courses.find_by_supervisor_id(params[:supervisor_id])
+    @supervisorCourse.active_flag = 0
+    # binding.pry
+    @course.enrollments.each do |enrollment|
+      enrollment.update_attribute(:active_flag, 0)
+      enrollment.enrollment_subjects.each do |enrollment_subject|
+        enrollment_subject.update_attribute(:active_flag, 0)
+        enrollment_subject.enrollment_tasks.each do |enrollment_task|
+          enrollment_task.update_attribute(:active_flag, 0)
+        end
+      end
+    end
+    @course.course_subjects.each do |course_subject|
+      course_subject.update_attribute(:active_flag, 0)
+      course_subject.course_subject_tasks.each do |course_subject_tasks|
+        course_subject_tasks.update_attribute(:active_flag, 0)
+      end
+    end
+    @supervisorCourse.save
+    @course.save
+    redirect_to admin_supervisor_courses_path(params[:supervisor_id])
   end
 
   private
