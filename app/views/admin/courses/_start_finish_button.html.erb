@@ -1,6 +1,8 @@
 <% if @course.has_trainee? %>
   <% if @course.started? %>
-    <%= link_to "Finish Course", "#", class: "btn btn-large btn-primary" %>
+    <%= link_to "Finish Course", admin_supervisor_course_path(current_supervisor, @course,
+      finish: Settings.action.course.finish), method: :patch, confirm: "Finish this course?",
+      class: "btn btn-large btn-primary" %>
   <% else %>
     <%= link_to "Start Course", admin_supervisor_course_path(current_supervisor, @course,
       start: Settings.action.course.start), method: :patch, confirm: "Start this course?",
