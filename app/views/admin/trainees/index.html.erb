@@ -2,6 +2,7 @@
 <h1><%= yield :title %></h1>
 <h3>Courses:
   <%= select_tag "course_id", options_from_collection_for_select(@courses, "id", "name", params["course_id"]), include_blank: true, id: "course_select", class: "courses" %>
+  <%= link_to "Add trainee", new_admin_trainee_path, :class => 'btn btn-medium btn-primary'%>
 </h3>
 <ul class="users">
   <% @trainees.each do |trainee| %>
@@ -10,7 +11,7 @@
     <div class="user-info">
       <h3>
         <%= link_to trainee.name, admin_trainee_path(trainee) %>
-        <%= link_to "delete", trainee, method: :delete, confirm: "Are you sure?",
+        <%= link_to "delete", admin_trainee_path(trainee.id), method: :delete, confirm: "Are you sure?",
           title: "Delete #{trainee.name}", class: "link-danger" %>
       </h3>
       <% if trainee.free? %>
