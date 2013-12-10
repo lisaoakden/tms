@@ -3,5 +3,5 @@ class Task < ActiveRecord::Base
 	has_many :customer_courses
 	has_many :course_subject_tasks
 	
-	validates :name, presence: { message: "Task name can't be blank" }
+	validates :name, presence: true
 end

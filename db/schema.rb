@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131127035806) do
+ActiveRecord::Schema.define(version: 20131209103116) do
 
   create_table "activities", force: true do |t|
     t.integer  "trainee_id"
@@ -141,6 +141,7 @@ ActiveRecord::Schema.define(version: 20131127035806) do
     t.integer  "active_flag",             default: 1
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "sort_index"
   end
 
   add_index "tasks", ["subject_id"], name: "fk_Tasks_1", using: :btree

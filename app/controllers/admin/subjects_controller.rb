@@ -8,7 +8,7 @@ class Admin::SubjectsController < ApplicationController
   end
 
   def show
-    @subject = Subject.find params[:id], include: @tasks
+    @subject = Subject.find params[:id]
   end
 
   def new
@@ -16,56 +16,42 @@ class Admin::SubjectsController < ApplicationController
   end
 
   def create
-    Subject.transaction do
-      @subject = Subject.new subject_params
-      if @subject.save
-        Task.transaction do
-          if params[:tasks].present?
-            params[:tasks].each do |t|
-              @task = Task.new subject_id: @subject.id, name: t
-              render 'new' unless @task.save
-            end
-          end
-        end
-        redirect_to admin_subject_url @subject
-      else
-        render 'new'
-      end
+    @subject = Subject.new subject_params
+    if @subject.save
+      redirect_to admin_subject_url @subject
+    else
+      render 'new'
     end
   end
 
   def edit
-    @subject = Subject.find params[:id], include: @tasks
+    @subject = Subject.find params[:id]
   end
 
   def update
-    @subject = Subject.find params[:id], include: @tasks
-    Subject.transaction do
-      if @subject.update_attributes subject_params
-        Task.transaction do
-          @subject.tasks.destroy_all if @subject.tasks.any?
-          if params[:tasks].present?
-            params[:tasks].each do |t|
-              @task = Task.new subject_id: @subject.id, name: t
-              render 'edit' unless @task.save
-            end
-          end
-        end
-        redirect_to admin_subject_url @subject
-      else
-        render 'edit'
-      end
+    @subject = Subject.find params[:id]
+    if @subject.update_attributes subject_params
+      redirect_to admin_subject_url @subject
+    else
+      render 'edit'
     end
   end
 
   def destroy
-    Subject.find(params[:id]).destroy
+    subject = Subject.find params[:id]
+    subject.update_attribute :active_flag, Settings.flag.inactive if subject.present?
     flash[:success] = "Subject deleted."
     redirect_to admin_subjects_url
   end
 
   private
   def subject_params
-    params.require(:subject).permit :name, :duration, :description
+    tasks_params = Hash.new()
+    params[:tasks].each_with_index do |task, index|
+      tasks_params[index] = task
+    end
+    params.require(:subject).permit(:name, :duration, :description).tap do |whitelisted|
+      whitelisted[:tasks_attributes] = tasks_params
+    end
   end
 end
