@@ -1,0 +1,23 @@
+<% provide :title, "All supervisor" %>
+
+<h1>
+	<%= yield :title %>
+</h1>
+<%= will_paginate %>
+<ul class="user-sidebar">
+  <% @supervisors.each do |supervisor| %>
+    <li class="sub-list">
+      <% if supervisor.active_flag == 1 %>
+      	<%= gravatar_for supervisor %>
+      	<%= link_to supervisor.name, admin_supervisor_path(supervisor), class: "user-name" %>
+      	<% if current_supervisor != supervisor %>
+      		| <%= link_to "delete", admin_supervisor_path(supervisor), method: :delete,
+                                  data: { confirm: "You sure?" } %>
+        <% end %>
+      <% end %>
+    </li>
+   <% end %>
+</ul>
+<%= will_paginate %>
+
+<%= link_to "Add new", [:new, :admin, :supervisor], class: "btn btn-primary" %>

@@ -7,6 +7,7 @@ Tms::Application.routes.draw do
       end
     end
   end
+  
   resources :sessions, only: [:new, :create, :destroy]
   resources :enrollment_subjects
   resources :activities
