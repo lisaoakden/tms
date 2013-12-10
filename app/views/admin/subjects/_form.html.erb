@@ -33,7 +33,7 @@
           <ul id="sortable">
             <% if @subject.tasks.any? %>
               <% @subject.tasks.each do |task| %>
-                <li class="ui-state-default old-task">
+                <li class="ui-state-default<%= ' old-task' if task.id.present? %>">
                   <div class="input-append-box">
                     <div class="first">
                       <input type="text" class="task-name" placeholder="Task name" name="tasks[][name]" value="<%= task.name %>" />
@@ -106,21 +106,6 @@
       var html = $('#original-template').clone().html();
       $(html).insertBefore('#sortable .last');
       reIndex();
-    });
-    
-    
-    
-    $('#add-new-task').click(function(){
-      var newTask = $('#input-new-task').val();
-
-      if ($.trim(newTask) != "") {
-        var html = $('<li class="ui-state-default"></li>');
-        $(html).text(newTask);
-        $(html).append($('<input type="hidden" name="tasks[]" />').val(newTask));
-        $(html).append($('<a href="javascript:void(0)" class="remove-task pull-right">X</a>'));
-        $('#sortable').append(html);
-        $('#input-new-task').val('');
-      }
     });
     
     $('body').on("click", '.remove-task', function(){
