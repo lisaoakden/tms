@@ -1,4 +1,6 @@
 class Supervisor < ActiveRecord::Base
+  include Active
+
 	has_secure_password
 
   before_save {self.email = email.downcase}

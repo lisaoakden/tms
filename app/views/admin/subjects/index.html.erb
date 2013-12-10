@@ -19,7 +19,7 @@
       <tr>
         <td><%= link_to subject.name, [:admin, subject] %></td>
         <td><%= pluralize subject.duration, "day" %></td>
-        <td><%= subject.tasks.count %></td>
+        <td><%= subject.tasks.active.count %></td>
         <td>
           <%= link_to 'edit', edit_admin_subject_path(subject.id),
                       :class => "btn btn-primary small" %>

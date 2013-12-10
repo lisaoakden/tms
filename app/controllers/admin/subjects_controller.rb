@@ -3,12 +3,12 @@ class Admin::SubjectsController < ApplicationController
   before_action :signed_in_supervisor
 
   def index
-    @subjects = Subject.all
+    @subjects = Subject.active
         .paginate page: params[:page], per_page: Settings.items.per_page
   end
 
   def show
-    @subject = Subject.find params[:id]
+    @subject = Subject.active.find params[:id]
   end
 
   def new
@@ -25,11 +25,11 @@ class Admin::SubjectsController < ApplicationController
   end
 
   def edit
-    @subject = Subject.find params[:id]
+    @subject = Subject.active.find params[:id]
   end
 
   def update
-    @subject = Subject.find params[:id]
+    @subject = Subject.active.find params[:id]
     if @subject.update_attributes subject_params
       redirect_to admin_subject_url @subject
     else
@@ -38,7 +38,7 @@ class Admin::SubjectsController < ApplicationController
   end
 
   def destroy
-    subject = Subject.find params[:id]
+    subject = Subject.active.find params[:id]
     subject.update_attribute :active_flag, Settings.flag.inactive if subject.present?
     flash[:success] = "Subject deleted."
     redirect_to admin_subjects_url

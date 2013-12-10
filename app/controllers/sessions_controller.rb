@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-  	trainee = Trainee.find_by email: params[:session][:email].downcase
+  	trainee = Trainee.active.find_by email: params[:session][:email].downcase
     if trainee && trainee.authenticate(params[:session][:password])
       sign_in trainee
       redirect_to root_path

@@ -22,7 +22,7 @@
     
     <div class="span9 offset1" style="max-height: 200px; overflow-y: auto;">
       <table>
-        <% @subject.tasks.each do |task| %>
+        <% @subject.tasks.active.sort_asc.each do |task| %>
         <tr>
           <td><%= task.name %></td>
         </tr>

@@ -1,4 +1,6 @@
 class Course < ActiveRecord::Base
+  include Active
+  
   EXISTED = 0
   has_many :enrollments
 	has_many :activities, foreign_key: "course_id", class_name: Activity.name
