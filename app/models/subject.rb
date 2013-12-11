@@ -1,7 +1,9 @@
 class Subject < ActiveRecord::Base
+  include Active
+
   has_many :course_subjects
   has_many :enrollment_subjects
-  has_many :tasks, ->{where active_flag: Settings.flag.active},:dependent => :destroy
+  has_many :tasks,:dependent => :destroy
 
   accepts_nested_attributes_for :tasks
 

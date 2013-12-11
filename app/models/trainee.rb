@@ -1,4 +1,6 @@
 class Trainee < ActiveRecord::Base
+  include Active
+
   has_secure_password
   belongs_to :current_course, class_name: Course.name
   has_many :enrollment_subjects, through: :enrollments

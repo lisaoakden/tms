@@ -3,7 +3,7 @@ class Admin::SessionsController < ApplicationController
   end
 
   def create
-  	supervisor = Supervisor.find_by email: params[:session][:email].downcase
+  	supervisor = Supervisor.active.find_by email: params[:session][:email].downcase
     if supervisor && supervisor.authenticate(params[:session][:password])
       supervisor_sign_in supervisor
       redirect_to admin_root_path
@@ -15,6 +15,6 @@ class Admin::SessionsController < ApplicationController
 
   def destroy
     supervisor_sign_out
-    redirect_to root_url
+    redirect_to admin_root_path
   end
 end
