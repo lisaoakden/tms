@@ -1,16 +1,18 @@
-<h2>Supervisors</h2>
+<h2><%= link_to "Supervisors", admin_supervisors_path, class: "btn btn-primary" %></h2>
+
 <ul class="user-sidebar">
 	<li class="sub-list">
 		<h3 class="list-header">
 			<%= link_to "All Supervisors", "#", class: "non-redirect" %>
-			(<%= all_supervisors.count %>)
 			<b class="caret"></b>
 		</h3>
 		<ul>
 			<% all_supervisors.each do |sup| %>
 			<li>
-				<%= gravatar_for sup %>
-				<%= link_to sup.name, admin_supervisor_path(sup), class: "user-name" %>
+				<% if sup.active_flag == 1 %>
+					<%= gravatar_for sup %>
+					<%= link_to sup.name, admin_supervisor_path(sup), class: "user-name" %>
+				<% end %>
 			</li>
 			<% end %>
 		</ul>
