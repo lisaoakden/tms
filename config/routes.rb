@@ -21,6 +21,7 @@ Tms::Application.routes.draw do
     resources :sessions, only: [:new, :create, :destroy]
     resources :supervisors do
       resources :courses do
+        resource :conclusion, only: [:show, :update]
         resource :trainee_list, only: [:show, :update]
         resources :course_subjects, only: :update
       end

@@ -1,0 +1,26 @@
+<%= form_tag admin_supervisor_course_conclusion_path(current_supervisor, @course), method: :patch  do %>
+<h1> Trainees (<%= @course.trainees.count %>) </h1>
+<div class="center">
+  <table>
+    <tr>
+      <th> # </th>
+      <th> Image </th>
+      <th> Name </th>
+      <th> Conclusion </th>
+    </tr>
+    <% @course.enrollments.each_with_index do |enrollment, i| %>
+    <%= hidden_field_tag "enrollment_ids[]", enrollment.id %>
+      <tr>
+        <td><%= item_index i %></td>
+        <td><%= gravatar_for enrollment.trainee %></td>
+        <td><%= link_to enrollment.trainee.name, admin_trainee_path(enrollment.trainee), class: "user-name" %></td>
+        <% if @course.enrollments[i].conclusion_id != nil %>
+        <td><%= select_tag "conclusion_ids[]", options_from_collection_for_select(@conclusions, "id", "content", @course.enrollments[i].conclusion_id)%></td>
+        <% else %><td><%= select_tag "conclusion_ids[]", options_from_collection_for_select(@conclusions, "id", "content", 1)%></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+</div>
+<%= submit_tag "Submit", class: "btn btn-primary" %>
+<% end %>

@@ -98,12 +98,14 @@ ActiveRecord::Schema.define(version: 20131209103116) do
   create_table "enrollments", force: true do |t|
     t.integer  "trainee_id"
     t.integer  "course_id"
-    t.string   "status",      limit: 1, default: "N", null: false
-    t.integer  "active_flag",           default: 1
+    t.string   "status",        limit: 1, default: "N", null: false
+    t.integer  "active_flag",             default: 1
+    t.integer  "conclusion_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "enrollments", ["conclusion_id"], name: "fk_Enrollments_3", using: :btree
   add_index "enrollments", ["course_id"], name: "fk_Enrollments_2", using: :btree
   add_index "enrollments", ["trainee_id"], name: "fk_Enrollments_1", using: :btree
 
