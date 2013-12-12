@@ -1,4 +1,6 @@
 class EnrollmentSubject < ActiveRecord::Base
+  include Active
+  
   belongs_to :enrollment
   belongs_to :subject
   has_many :enrollment_tasks
@@ -19,13 +21,20 @@ class EnrollmentSubject < ActiveRecord::Base
   def done?
     self.status == Settings.status.finished
   end
+  
+  def all_task_finished?
+    self.enrollment_tasks.active.each do |enrollment_task|
+      return false unless enrollment_task.done?
+    end
+    true
+  end
 
   def end_date
     self.start_date + self.subject.duration.day
   end
   
   class << self
-    def users_not_finish_subject course_id, subject_id
+    def trainees_not_finish_subject course_id, subject_id
       relations = course_subject_not_finish course_id, subject_id
       users = relations.map{|relation| Trainee.find relation.trainee_id}
     end

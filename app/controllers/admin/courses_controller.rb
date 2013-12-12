@@ -57,27 +57,7 @@ class Admin::CoursesController < ApplicationController
   
   def destroy
     @course = Course.active.find(params[:id])
-    @course.update_attribute(:active_flag, 0)
-    @supervisorCourse = @course.supervisor_courses.find_by_supervisor_id(params[:supervisor_id])
-    @supervisorCourse.active_flag = 0
-    @course.enrollments.each do |enrollment|
-      enrollment.update_attribute(:active_flag, 0)
-      enrollment.enrollment_subjects.each do |enrollment_subject|
-        enrollment_subject.update_attribute(:active_flag, 0)
-        enrollment_subject.enrollment_tasks.each do |enrollment_task|
-          enrollment_task.update_attribute(:active_flag, 0)
-        end
-      end
-    end
-    @course.course_subjects.each do |course_subject|
-      course_subject.update_attribute(:active_flag, 0)
-      course_subject.course_subject_tasks.each do |course_subject_tasks|
-        course_subject_tasks.update_attribute(:active_flag, 0)
-      end
-    end
-    @supervisorCourse.save
-    @course.save
-    redirect_to admin_supervisor_courses_path(params[:supervisor_id])
+    redirect_to admin_supervisor_courses_path(params[:supervisor_id]) if @course.delete! current_supervisor.id
   end
 
   private
