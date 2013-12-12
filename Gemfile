@@ -10,6 +10,7 @@ gem "rails", "4.0.0"
 group :development do
 	# Use mysql2 as the database for Active Record
 	gem "mysql2"
+	gem "rails-erd"
 end
 
 # Use Sass with Bootstrap
