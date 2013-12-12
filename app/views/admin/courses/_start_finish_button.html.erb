@@ -1,7 +1,11 @@
 <% if @course.has_trainee? %>
   <% if @course.started? %>
+    <%
+      course_finish_msg = @course.all_subject_finished? ? "Finish this course?" :
+        "Some of subject is not finished. Do you still want finish this course?"
+    %>
     <%= link_to "Finish Course", admin_supervisor_course_path(current_supervisor, @course,
-      finish: Settings.action.course.finish), method: :patch, confirm: "Finish this course?",
+      finish: Settings.action.course.finish), method: :patch, confirm: course_finish_msg,
       class: "btn btn-large btn-primary" %>
   <% else %>
     <%= link_to "Start Course", admin_supervisor_course_path(current_supervisor, @course,

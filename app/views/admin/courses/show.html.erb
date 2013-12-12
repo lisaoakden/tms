@@ -22,8 +22,14 @@
           <%= "#{l course_subject.start_date} - #{l course_subject.finish_date}" %>
         <%= t "status.#{course_subject.status}" %>
         <% if @course.started? && course_subject.unfinished? %>
+          <%
+            subject_finish_msg = "Finish this subject?"
+            if (EnrollmentSubject.course_subject_not_finish(@course.id, course_subject.subject_id).present?)
+              subject_finish_msg = "Some of trainees is not finish. Do you still want finish this subject?"
+            end
+          %>
           <%= link_to "Finish", admin_supervisor_course_course_subject_path(current_supervisor.id,
-            @course.id, course_subject.id), method: :patch, class: "btn btn-large btn-primary" %>
+            @course.id, course_subject.id), confirm: subject_finish_msg, method: :patch, class: "btn btn-large btn-primary" %>
         <% end %>
       </p>
     </td>

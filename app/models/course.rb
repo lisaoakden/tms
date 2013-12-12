@@ -37,29 +37,26 @@ class Course < ActiveRecord::Base
   end
 
   def start!
-    self.users.each do |user|
-      user.update_attribute(:current_course_id, self.id)
-    end
-    self.enrollments.each do |enrollment|
-      self.course_subjects.each do |course_subject|
-        enrollment_subject = enrollment.enrollment_subjects.build(
-          subject_id: course_subject.subject_id, status: Settings.status.new, 
-          course_id: enrollment.course_id, trainee_id: enrollment.trainee_id)
-        course_subject.course_subject_tasks.each do |course_subject_task|
-          enrollment_subject.enrollment_tasks.build(
-            subject_id: course_subject.subject_id, 
-            task_id: course_subject_task.task_id, status: Settings.status.new)
-        end
-      end
-      enrollment.status = Settings.status.started
-      enrollment.trainee.current_course_id = self.id
+    self.trainees.each do |trainee|
+      trainee.update_attributes current_course_id: self.id
     end
     self.update_attributes! status: Settings.status.started
   end
   
+  def all_subject_finished?
+    self.enrollments.active.each do |enrollment|
+      enrollment.enrollment_subjects.active.each do |enrollment_subject|
+        if enrollment_subject.status != Settings.status.finished
+          return false
+        end
+      end
+    end
+    true
+  end
+  
   def finish!
-    self.enrollments.each do |enrollment|
-      enrollment.enrollment_subjects.each do |enrollment_subject|
+    self.enrollments.active.each do |enrollment|
+      enrollment.enrollment_subjects.active.each do |enrollment_subject|
         enrollment_subject.status = Settings.status.finished
       end
       enrollment.status = Settings.status.finished
@@ -71,7 +68,7 @@ class Course < ActiveRecord::Base
   end
 
   def allocate! ids
-    selected_trainees = User.selected_trainees ids
+    selected_trainees = Trainee.selected_trainees ids
     if selected_trainees.present?
       deselected_trainees = self.trainees - selected_trainees
       selected_trainees.each do |selected_trainee|
@@ -80,7 +77,7 @@ class Course < ActiveRecord::Base
           enroll.active_flag = Settings.flag.active
           self.enrollments << enroll
         else
-          self.enrollments.build(user_id: selected_trainee.id, course_id: self.id, 
+          self.enrollments.build(trainee_id: selected_trainee.id, course_id: self.id, 
             status: Settings.status.new, active_flag: Settings.flag.active)
         end
       end
@@ -99,11 +96,11 @@ class Course < ActiveRecord::Base
 
   def init_course_subjects
     course_subject_hash = Hash.new
-    course_subjects = self.course_subjects.where active_flag: Settings.flag.active
+    course_subjects = self.course_subjects.active
     course_subjects.each do |course_subject|
       course_subject_hash[course_subject.subject_id] = course_subject
     end
-    subjects = Subject.find_all_by_active_flag Settings.flag.active
+    subjects = Subject.active
     full_course_subjects = Array.new
     if subjects.present?
       subjects.each do |subject|
@@ -129,22 +126,22 @@ class Course < ActiveRecord::Base
   def delete! (supervisor_id)
     supervisorCourse = self.supervisor_courses.find_by_supervisor_id(supervisor_id)
     supervisorCourse.active_flag = Settings.flag.inactive
-    supervisorCourse.save
-    self.active_flag = Settings.flag.inactive
-    self.enrollments.each do |enrollment|
+    supervisorCourse.save!
+    self.enrollments.active.each do |enrollment|
       enrollment.active_flag = Settings.flag.inactive
-      enrollment.enrollment_subjects.each do |enrollment_subject|
+      enrollment.enrollment_subjects.active.each do |enrollment_subject|
         enrollment_subject.active_flag = Settings.flag.inactive
         enrollment_subject.enrollment_tasks.each do |enrollment_task|
           enrollment_task.active_flag = Settings.flag.inactive
         end
       end
     end
-    self.course_subjects.each do |course_subject|
+    self.course_subjects.active.each do |course_subject|
       course_subject.active_flag = Settings.flag.inactive
-      course_subject.course_subject_tasks.each do |course_subject_tasks|
+      course_subject.course_subject_tasks.active.each do |course_subject_tasks|
         course_subject_tasks.active_flag = Settings.flag.inactive
       end
     end
+    self.update_attributes! active_flag: Settings.flag.inactive
   end
 end

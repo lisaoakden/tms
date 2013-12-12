@@ -1,4 +1,6 @@
 class EnrollmentTask < ActiveRecord::Base
+  include Active
+
 	belongs_to :enrollment_subject
 	belongs_to :subject
 	belongs_to :task

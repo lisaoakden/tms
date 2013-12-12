@@ -7,9 +7,21 @@ class EnrollmentsController < ApplicationController
     if trainee
       enrollment = trainee.enrollments
         .find_by course_id: trainee.current_course_id
+      course = Course.find trainee.current_course_id
       if params[:activate] == "activate"
         if enrollment && enrollment.inactivated?
-          enrollment.update_attributes status: Settings.status.started
+          course.course_subjects.each do |course_subject|
+            enrollment_subject = enrollment.enrollment_subjects.build(
+              subject_id: course_subject.subject_id, course_id: course.id,
+              trainee_id: trainee.id, status: Settings.status.new,
+              start_date: DateTime.current() )
+            course_subject.course_subject_tasks.each do |course_subject_task|
+              enrollment_subject.enrollment_tasks.build(
+                subject_id: course_subject.subject_id,
+                task_id: course_subject_task.task_id, status: Settings.status.new )
+            end
+          end
+          enrollment.update_attributes! status: Settings.status.started
           Activity.trainee_enroll! enrollment
           redirect_to root_url
         end

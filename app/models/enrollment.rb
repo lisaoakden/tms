@@ -1,4 +1,6 @@
 class Enrollment < ActiveRecord::Base
+  include Active
+  
   belongs_to :trainee
   belongs_to :course
   has_many :conclusions
@@ -6,9 +8,8 @@ class Enrollment < ActiveRecord::Base
 
   accepts_nested_attributes_for :enrollment_subjects
   
-  scope :active, -> do 
-    where active_flag: Settings.flag.active, status:Settings.status.new
-  end
+  scope :new, -> { where status: Settings.status.new }
+  
   def activated?
     self.status == Settings.status.started
   end

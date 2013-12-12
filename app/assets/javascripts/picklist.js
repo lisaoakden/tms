@@ -10,13 +10,14 @@ function selectAll(source){
   });
 }
 $(function(){
-  $('#user_list_form').on('submit', function(){
+  $('#trainee_list_form').on('submit', function(){
     selectAll($('#trainee_ids'));
+    return true;
   });
-  $('#left').click(function(){
+  $('body').on("click", '#left', function(){
     moveSelect($('#select_trainee_ids'), $('#trainee_ids'));
   });
-  $('#right').click(function(){
+  $('body').on("click", '#right', function(){
     moveSelect($('#trainee_ids'), $('#select_trainee_ids'));
   });
 });

@@ -2,7 +2,11 @@
 <% if @enrollment_subject.done? %>
   <span class="completed">(Completed)</span>
 <% else %>
-  <%= link_to "Finish Subject", trainee_enrollment_enrollment_subject_path, method: :patch, class: "btn small btn-primary" %>
+  <%
+    finish_msg = @enrollment_subject.all_task_finished? ? "Finish this subject?" :
+      "You don't finish some task. Do you still want finish this subject?"
+  %>
+  <%= link_to "Finish Subject", trainee_enrollment_enrollment_subject_path, method: :patch, confirm: finish_msg, class: "btn small btn-primary" %>
 <% end %>
 </h1>
 <%= render "shared/error_messages" %>
